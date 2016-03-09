@@ -1,0 +1,77 @@
+<div class="page-header">
+  <h1>Поставщики шин</h1>
+</div>
+
+<? if ($providers->count()) : ?>
+<table class="table table-striped table-sortable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Файлы</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    <? foreach ($providers as $provider) : ?>
+        <tr id="<?=$provider->id;?>" class="table-row-item-id-<?=$provider->id;?>">
+            <td><input type="checkbox" name="ids[]" value="<?=$provider->id;?>" class="js-item-checkbox"/></td>
+            <td><?=$provider->id;?></td>
+            <td>
+                <?=$provider->name; ?>
+            </td>
+            <td>
+                <a href="<?=$this->url('admin/default', ['controller'=>'items', 'action'=>'edit', 'id'=> $provider->id]);?>">
+                    <?=$provider->name;?>
+                </a><br/>
+                <?=$provider->files;?>
+            </td>
+            <td>
+                <a href="<?=$this->url('admin/default', array('controller'=>'variants', 'action'=>'index', 'id'=>$provider->id));?>" class="btn btn-default btn-xs" role="button" title="Модификации">
+                  <span class="glyphicon glyphicon-th" aria-hidden="true"></span> 
+                </a>
+                <a href="<?=$this->url('admin/default', array('controller'=>'items', 'action'=>'edit', 'id'=>$provider->id));?>" class="btn btn-default btn-xs" role="button" title="Редактировать">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+                </a>
+                <a href="<?=$this->url(
+                        'home/catalog/group/item', 
+                        [   'groupId'=>$providerParentGroup->id, 
+                            'groupName'=>$this->translit($providerParentGroup->name),
+                            'itemId'=>$provider->id, 
+                            'itemName'=>$this->translit($provider->name),
+                            ]);?>" target="_blank" class="btn btn-default btn-xs" role="button" title="На сайте">
+                  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> 
+                </a>
+                <button title="Удалить" role="button" class="js-ajax-remove btn btn-default btn-xs" 
+                        postparamname="itemid" 
+                        itemid="<?=$provider->id;?>" 
+                        url="<?=$this->url('admin/default', ['controller'=>'items', 'action'=>'remove']);?>" 
+                        confirm='Удалить товар "<?=$provider->name;?>"?' 
+                        removeselector=".table-row-item-id-<?=$provider->id;?>">
+                    <span aria-hidden="true" class="glyphicon glyphicon-remove"></span>
+                </button>
+            </td>
+        </tr>
+    <? endforeach; ?>
+    </tbody>
+</table>
+<?php /*if ($providers instanceof Catalog\Paginator\MorePaginator) { //@TODO pagination
+    $last = $providers->getItem($providers->getItemCountPerPage());
+    echo $this->paginationControl($providers, 'sliding', ['partial/morepaginator.phtml', 'catalog'],
+        array(
+            'route' => 'admin/default', 
+            'params' => ['controller'=>'items', 'action'=>'index', 'id' => $group->id, 'lastId' => ($last instanceof \Catalog\Model\Item ? $last->id : null)]
+        ));
+}*/
+?>
+<? endif; ?>
+
+<button title="Удалить отмеченные" class="js-ajax-bulk-remove btn btn-default btn-md" role="button"
+        checkboxselector=".js-item-checkbox" 
+        postparamname="itemid" 
+        url="<?=$this->url('admin/default', ['controller'=>'items', 'action'=>'remove']);?>" 
+        confirm='Удалить отмеченные товары?' 
+        removeselector=".table-row-item-id-">
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+</button>

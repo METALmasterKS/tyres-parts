@@ -1,0 +1,22 @@
+<?php 
+$title = 'Вход в личный кабинет';
+$this->headtitle($title);
+?>
+
+<h3><?= $this->escapehtml($title); ?></h3>
+<div class="form-type1">
+<?php
+$form->prepare();
+echo $this->form()->openTag($form);
+echo $this->formCollection($form);
+echo $this->form()->closeTag($form); 
+?>
+</div>
+
+<div>
+    <a href="<?=$this->url('auth/default', ['controller'=>'user', 'action'=>'registration']);?>">Регистрация</a>
+</div>
+
+<div>
+    <a href="<?=$this->url('auth/default', ['controller'=>'user', 'action'=>'resetpassword']);?>">Восстановить пароль</a>
+</div>

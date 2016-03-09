@@ -1,0 +1,50 @@
+<?php 
+$IMG = $this->layout()->settings['img']; 
+$title = 'Редактирование модификации';
+$this->headtitle($title);
+?>
+
+<h3><?= $this->escapehtml($title); ?></h3>
+
+<?php
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+<h4>Информация о модификации</h4>
+<?php $elem = $form->get('model');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('descr');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+
+<h4>Изображение</h4>
+<?php echo $this->formElement($form->get('image')) ?>
+<div class="form-group">
+    <? $elem = $form->get('imagefile'); ?>
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? if ($form->get('image')->getValue() != null) { ?>
+        <img width="400px" src="<?=implode('/', [$IMG['HOST'].$IMG['VARIANTS_ORIGINAL_IMAGES'], $form->get('image')->getValue().'?'.rand()])?>"/>
+            <div class="checkbox"><label><? echo $this->formElement($form->get('removeimagefile')) ?>
+            <? echo $form->get('removeimagefile')->getAttribute('placeholder'); ?></label></div>
+        <? } ?>
+        <?php
+        echo $this->formElement($elem);
+        echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <?php echo $this->formElement($form->get('saveVariant')) ?>
+</div>
+<?php echo $this->form()->closeTag() ?>
+

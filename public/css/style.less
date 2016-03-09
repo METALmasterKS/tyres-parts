@@ -1,0 +1,36 @@
+.clear(){
+    content:'';
+    display:block;
+    clear: both;
+}
+
+#navigation {
+    li {
+        &#menu-item-cart.menu-item {
+            margin-left: 10px;
+            a {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                span.cmsms-icon-cart.cmsms_title_box_icon:before {
+                    color: rgba(219, 76, 89, 1);
+                    font-size: 32px;
+                    line-height: 36px;
+                }
+            }
+        }
+    }
+}
+
+.type1-form{
+    .row {
+        margin:10px 0;
+        .field-name {
+            float: left;
+            //width: 5em;
+        }
+        .field {
+            float: left;
+        }
+        &:after{.clear();}
+    }
+}

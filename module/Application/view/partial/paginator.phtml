@@ -1,0 +1,59 @@
+<?php 
+$params = isset($this->params) ? $this->params : array();
+if ($this->pageCount): ?>
+    <div>
+        <div class="pagination">
+                <span>
+                    <a href="<?=$this->url($this->route, array_merge($params, array('page' => $this->first)), $this->options) ?>">
+                        first
+                    </a>
+                </span>
+            <!-- Previous page link -->
+            <?php if (isset($this->previous)): ?>
+                <span>
+                    <a href="<?=$this->url($this->route, array_merge($params, array('page' => $this->previous)), $this->options) ?>">
+                        <<
+                    </a>
+                </span>
+            <?php else: ?>
+                <span class="disabled">
+                    <<
+                </span>
+            <?php endif; ?>
+
+            <!-- Numbered page links -->
+            <?php foreach ($this->pagesInRange as $page): ?>
+                <?php if ($page != $this->current): ?>
+                    <span>
+                        <a href="<?=$this->url($this->route, array_merge($params, array('page' => $page)), $this->options) ?>
+                           ">
+                            <?php echo $page; ?>
+                        </a>
+                    </span>
+                <?php else: ?>
+                    <span class="active">
+                        <?php echo $page; ?>
+                    </span>
+                <?php endif; ?>
+            <?php endforeach; ?>
+
+            <!-- Next page link -->
+            <?php if (isset($this->next)): ?>
+                <span>
+                    <a href="<?=$this->url($this->route, array_merge($params, array('page' => $this->next)), $this->options) ?>">
+                        >>
+                    </a>
+                </span>
+            <?php else: ?>
+                <span class="disabled">
+                    >>
+                </span>
+            <?php endif; ?>
+                <span>
+                    <a href="<?=$this->url($this->route, array_merge($params, array('page' => $this->last)), $this->options) ?>">
+                        last
+                    </a>
+                </span>
+        </div>
+    </div>
+<?php endif; ?>

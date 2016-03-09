@@ -1,0 +1,27 @@
+<div class="page-header">
+  <h1>Импорт</h1>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Файл</th>
+            <th>Создан</th>
+            <th>Изменен</th>
+            <th>Размер</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?  foreach ($files as $file) { ?>
+        <tr>
+            <td><?=$file->getBasename();?></td>
+            <td><?=$this->dateFormat($file->getCTime(), IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM, "ru_RU");?></td>
+            <td><?=$this->dateFormat($file->getATime(), IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM, "ru_RU");?></td>
+            <td><?=sprintf("%.1f", (float) $file->getSize() / 1024.0)?> KB</td>
+        </tr>
+        <? } ?>
+    </tbody>
+</table>
+<form id="Import" name="Import" method="post">
+    <input type="submit" value="Импортировать" class="btn btn-default" name="import">
+</form>

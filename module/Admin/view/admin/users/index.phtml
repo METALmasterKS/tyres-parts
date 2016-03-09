@@ -1,0 +1,147 @@
+<div class="page-header">
+  <h1>Управление пользователями <small>Все пользователи</small></h1>
+</div>
+
+<?php
+$form->prepare();
+$formLabel = $this->plugin('formLabel');
+
+// Render the opening tag
+echo $this->form()->openTag($form);
+?>
+<div class="row">
+    <div class='col-xs-2'>
+        <?php $name = $form->get('username');
+        echo $this->formInput($name);
+        echo $this->formElementErrors($name); ?>
+    </div>
+    <div class='col-xs-2'>
+        <?php
+            $email = $form->get('email');
+            echo $this->formInput($email);
+            echo $this->formElementErrors($email);
+        ?>
+    </div>
+    <div class='col-xs-2'>
+        <?php $elem = $form->get('phone');
+            echo $this->formInput($elem);
+            echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<div class="row">
+    <div class='col-xs-2'>
+        <?php
+            $code_1c = $form->get('code_1c');
+            echo $this->formInput($code_1c);
+            echo $this->formElementErrors($code_1c);
+        ?>
+    </div>
+</div>
+<div class="row js-datetimepicker-start-end">
+    <div class='col-xs-2'>
+        <div class="input-group date datetimepicker-start" >
+            <?php $elem = $form->get('date_register_start'); echo $this->formInput($elem); ?>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        <? echo $this->formElementErrors($elem);?>
+    </div>
+    <div class='col-xs-2'>
+        <div class='input-group date datetimepicker-end'>
+            <?php $elem = $form->get('date_register_end'); echo $this->formInput($elem); ?>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        <? echo $this->formElementErrors($elem);?>
+    </div>
+    <div class='col-xs-2'>
+        <?php $elem = $form->get('ip_register'); echo $this->formInput($elem); ?>
+        <? echo $this->formElementErrors($elem);?>
+    </div>
+</div>    
+<div class="row js-datetimepicker-start-end">
+    <div class='col-xs-2'>
+        <div class="input-group date datetimepicker-start" >
+            <?php $elem = $form->get('date_last_login_start'); echo $this->formInput($elem); ?>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        <? echo $this->formElementErrors($elem);?>
+    </div>
+    <div class='col-xs-2'>
+        <div class='input-group date datetimepicker-end'>
+            <?php $elem = $form->get('date_last_login_end'); echo $this->formInput($elem); ?>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        <? echo $this->formElementErrors($elem);?>
+    </div>
+    <div class='col-xs-2'>
+        <?php $elem = $form->get('ip_last_login'); echo $this->formInput($elem); ?>
+        <? echo $this->formElementErrors($elem);?>
+    </div>
+</div>    
+
+
+<?php echo $this->formElement($form->get('search')) ?>
+
+<?php echo $this->form()->closeTag() ?>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Логин</th>
+            <th>Email</th>
+            <th>Телефон</th>
+            <th>Код 1С</th>
+            <th>Баллы<br/>Акт./Возм.</th>
+            <th>Регистрация</th>
+            <th>IP Регистрации</th>
+            <th>Последний вход</th>
+            <th>IP Входа</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?  foreach ($users as $user) { ?>
+        <tr>
+            <td><?=$user->id;?></td>
+            <td><?=$user->username;?></td>
+            <td><?=$user->email;?></td>
+            <td><?=$user->phone;?></td>
+            <td><?=$user->code_1c;?></td>
+            <td><?=$user->points;?> / <?=$user->chance_points;?></td>
+            <td><?=$this->dateFormat($user->date_register, IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM, "ru_RU");?></td>
+            <td><?=$user->ip_register;?></td>
+            <td><?=$this->dateFormat($user->date_last_login, IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM, "ru_RU");?></td>
+            <td><?=$user->ip_last_login;?></td>
+            <td>
+                <a href="#" class="btn btn-default btn-xs" role="button" title="Контакты">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 
+                </a>
+                <a href="#" class="btn btn-default btn-xs" role="button" title="Адреса">
+                  <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> 
+                </a>
+                <a href="#" class="btn btn-default btn-xs" role="button" title="Организации">
+                  <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> 
+                </a>
+                <?=$user->id;?>
+            </td>
+        </tr>
+        <? } ?>
+    </tbody>
+</table>
+
+<?php if ($users instanceof Zend\Paginator\Paginator)  
+        echo $this->paginationControl($users, 'sliding', array('partial/paginatorAdmin.phtml', 'admin'),
+            array(
+                'route' => 'admin/default', 
+                'params' => ['controller' => 'users', 'action' => 'index'],
+                'options' => ['query' => $query],
+            ));
+    ?>

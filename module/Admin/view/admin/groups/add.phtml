@@ -1,0 +1,125 @@
+<?php 
+$title = 'Добавление группы';
+$this->headtitle($title);
+?>
+
+<h3><?= $this->escapehtml($title); ?></h3>
+
+<?php
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+<h4>Информация о группе</h4>
+<?php $elem = $form->get('name');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('fullname');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('descr');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('attach_descr');?>
+<div class="form-group">
+    <div class='col-xs-offset-2 col-xs-4 checkbox'>
+        <label>
+            <? echo $this->formElement($elem); ?>
+            <? echo $elem->getOption('label'); ?>
+        </label>
+        <? echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('merge_variant_item_descr');?>
+<div class="form-group">
+    <div class='col-xs-offset-2 col-xs-4 checkbox'>
+        <label>
+            <? echo $this->formElement($elem); ?>
+            <? echo $elem->getOption('label'); ?>
+        </label>
+        <? echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?/*
+<div class="row">
+    <? $elem = $form->get('imagefile'); ?>
+    <div class='col-xs-2'>
+        <? echo $elem->getAttribute('placeholder'); ?>
+    </div>
+    <div class='col-xs-2'>
+        <?php
+        echo $this->formFile($elem);
+        echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+*/?>
+
+<h4>SEO</h4>
+<?php $elem = $form->get('title_one');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('meta_title');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('meta_descr');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('yandex_market_category');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('google_product_category');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+
+<h4>Сортировка по умолчанию</h4>
+<?php $elem = $form->get('sort');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('way');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <?php echo $this->formElement($form->get('addGroup')) ?>
+</div>
+<?php echo $this->form()->closeTag() ?>
+

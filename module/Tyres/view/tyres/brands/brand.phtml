@@ -1,0 +1,14 @@
+<? $this->layout()->title = 'Модели шин '.$brand->name; ?>
+<div class="cmsms_row cmsms_color_scheme_default" id="cmsms_row_56c81bb8b9a85">
+    <div class="cmsms_row_outer_parent">
+        <div class="cmsms_row_outer">
+            <div class="cmsms_row_inner">
+                <? foreach ($tyreModels as $tyreModel) { ?>
+                    <p>
+                        <a href="<?= $this->url('home/tyres/tyre', ['brandName' => $brand->name, 'modelName' => $tyreModel->name]); ?>"><?= $tyreModel->name; ?></a>
+                    </p>
+                <? } ?>
+            </div>
+        </div>
+    </div>
+</div>

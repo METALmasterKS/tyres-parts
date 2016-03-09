@@ -1,0 +1,66 @@
+<? $form->prepare();
+echo $this->form()->openTag($form);
+?>
+<div class="form_info cmsms_select row">
+    <? $element = $form->get('brandName'); ?>
+    <div class="field-name one_sixth">
+        Бренд:&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_select row">
+    <? $element = $form->get('modelName'); ?>
+    <div class="field-name one_sixth">
+        <?=$element->getLabel()?>:&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_select row">
+    <? $element = $form->get('width'); ?>
+    <div class="field-name one_sixth">
+        <?=$element->getLabel()?>:&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+    <? $element = $form->get('height'); ?>
+    <div class="field-name">
+        <?=$element->getLabel()?>&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+    <? $element = $form->get('diameter'); ?>
+    <div class="field-name">
+        <?=$element->getLabel()?>&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_radio row">
+    <? $element = $form->get('season'); ?>
+    <div class="field-name one_sixth">
+        <?=$element->getLabel()?>&nbsp;
+    </div>
+    <div class="field check_parent">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_radio row">
+    <? $element = $form->get('search'); ?>
+    <div class="form_info submit_wrap">
+        <a href="" class="cmsms_button" onclick="jQuery(this).parents('form').submit();return false;"><span><?php echo $element->getValue(); ?></span></a>
+    </div>
+</div>
+<? echo $this->form()->closeTag($form); ?>

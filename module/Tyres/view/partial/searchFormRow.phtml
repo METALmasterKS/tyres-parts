@@ -1,0 +1,117 @@
+<?php if ($this->element instanceof \Zend\Form\Element\Select) : ?>
+    <? $column = ''; 
+    if (in_array($this->element->getName(), ['width', 'height', 'diameter']))
+        $column = 'one_third';
+    elseif (in_array($this->element->getName(), ['brand', 'model'])) 
+        $column = 'one_half';
+    ?>
+    
+    <div class="form_info cmsms_select row <?=$column;?>">
+        <div class="field-name">
+            <? if ($this->element->getName() == 'width') { ?>
+            Размер:&nbsp;
+            <? } elseif (in_array($this->element->getName(), ['width', 'height', 'diameter'])) { ?>
+            <?=$this->element->getLabel()?>
+            <? } else { ?>
+            <?php echo /*$this->formLabel*/($this->element->getLabel()); ?>:&nbsp;
+            <? } ?>
+        </div>
+        <div class="form_field_wrap">
+            <?php echo $this->formElement($this->element) ?>
+            <?php echo $this->formElementErrors($this->element) ?>
+        </div>
+        <div class="cl"></div>
+    </div>
+<?php elseif ($this->element instanceof \Zend\Form\Element\Submit) : ?>
+    <div class="form_info submit_wrap">
+        <a href="" class="cmsms_button" onclick="jQuery(this).parents('form').submit();return false;"><span><?php echo $this->element->getValue(); ?></span></a>
+    </div>
+    <div class="cl"></div>
+<?php endif; ?>
+<?/*
+    <div class="form_info cmsms_input">
+        <label for="cmsms_your_name">Your Name <span class="color_2">*</span></label>
+        <div class="form_field_wrap">
+            <input type="text" class="validate[required]" size="35" value="" id="cmsms_your_name" name="cmsms_your_name">
+        </div>
+    </div>
+    <div class="form_info cmsms_radio">
+        <label>Age Group</label>
+        <div class="check_parent">
+            <input type="radio" checked="checked" value="Below 21" id="cmsms_age_group1" name="cmsms_age_group">
+            <label for="cmsms_age_group1">Below 21</label>
+        </div>
+        <div class="cl"></div>
+        <div class="check_parent">
+            <input type="radio" value="21-35" id="cmsms_age_group2" name="cmsms_age_group">
+            <label for="cmsms_age_group2">21-35</label>
+        </div>
+        <div class="cl"></div>
+        <div class="check_parent">
+            <input type="radio" value="35-55" id="cmsms_age_group3" name="cmsms_age_group">
+            <label for="cmsms_age_group3">35-55</label>
+        </div>
+        <div class="cl"></div>
+        <div class="check_parent">
+            <input type="radio" value="Over 55" id="cmsms_age_group4" name="cmsms_age_group">
+            <label for="cmsms_age_group4">Over 55</label>
+        </div>
+        <div class="cl"></div>
+    </div>
+    <div class="form_info cmsms_select">
+        <label>Gender</label>
+        <div class="form_field_wrap">
+            <select id="cmsms_gender" name="cmsms_gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="cl"></div>
+    </div>
+    <div class="form_info cmsms_checkboxes">
+        <label>Which statements are true for you?</label>
+        <div class="check_parent">
+            <input type="checkbox" value="I am concerned about clean water problem" id="cmsms_which_statements_are_true_for1" name="cmsms_which_statements_are_true_for">
+            <label for="cmsms_which_statements_are_true_for1">I am concerned about clean water problem</label>
+        </div>
+        <div class="cl"></div>
+        <div class="check_parent">
+            <input type="checkbox" value="Panda population is something that bothers me" id="cmsms_which_statements_are_true_for2" name="cmsms_which_statements_are_true_for">
+            <label for="cmsms_which_statements_are_true_for2">Panda population is something that bothers me</label>
+        </div>
+        <div class="cl"></div>
+        <div class="check_parent">
+            <input type="checkbox" value="I support Green Peace" id="cmsms_which_statements_are_true_for3" name="cmsms_which_statements_are_true_for">
+            <label for="cmsms_which_statements_are_true_for3">I support Green Peace</label>
+        </div>
+        <div class="cl"></div>
+        <div class="check_parent">
+            <input type="checkbox" value="I would like to be a volunteer" id="cmsms_which_statements_are_true_for4" name="cmsms_which_statements_are_true_for">
+            <label for="cmsms_which_statements_are_true_for4">I would like to be a volunteer</label>
+        </div>
+        <div class="cl"></div>
+        <div class="check_parent">
+            <input type="checkbox" value="Sign me up now!" id="cmsms_which_statements_are_true_for5" name="cmsms_which_statements_are_true_for">
+            <label for="cmsms_which_statements_are_true_for5">Sign me up now!</label>
+        </div>
+        <div class="cl"></div>
+    </div>
+    <div class="form_info cmsms_input one_half">
+        <label for="cmsms_your_email_is">Your email is</label>
+        <div class="form_field_wrap">
+            <input type="text" size="35" value="" id="cmsms_your_email_is" name="cmsms_your_email_is">
+        </div>
+    </div>
+    <div class="form_info cmsms_input one_half">
+        <label for="cmsms_your_phone_number_is">Your phone number is</label>
+        <div class="form_field_wrap">
+            <input type="text" size="35" value="" id="cmsms_your_phone_number_is" name="cmsms_your_phone_number_is">
+        </div>
+    </div>
+    <div class="cl"></div>
+    <div class="loading"></div>
+    <div class="form_info submit_wrap">
+        <a href="#" class="cmsms_button" id="cmsms_565_formsend"><span>Send Message</span></a>
+    </div>
+    <div class="cl"></div>
+*/?>

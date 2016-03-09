@@ -1,0 +1,75 @@
+<nav role="navigation">
+    <div class="menu-home-garage-container">
+        <ul id="navigation" class="navigation">
+            <?php foreach ($this->container as $i => $page) : ?>
+                <? if ($this->navigation()->accept($page)) { ?>
+                <li id="menu-item-1557" class="menu-item menu-item-type-post_type menu-item-object-page <?=$page->isActive(true) ? 'current-menu-item':'';?> page_item page-item-10 current_page_item menu-item-depth-0">
+                    <a href="<?=$page->getHref();?>"><span class="nav_bg_clr"></span><span><?=$page->getLabel();?></span></a>
+                    <? if ($page->hasPages()) { ?>
+                    <ul class="sub-menu">
+                        <? foreach ($page->getPages() as $subPage) { ?>
+                        <li id="menu-item-1547" class="menu-item menu-item-type-post_type menu-item-object-page <?=$subPage->isActive(true) ? 'current-menu-item':'';?> menu-item-depth-1">
+                            <a href="<?=$subPage->getHref();?>"><span><?=$subPage->getLabel();?></span></a>	
+                        </li>
+                        <? } ?>
+                    </ul>
+                    <? } ?>
+                </li>
+                <? } ?>
+            <?php endforeach; ?>
+            <?/*
+            <li id="menu-item-1476" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1476 menu-item-depth-0">
+                <a><span class="nav_bg_clr"></span><span>Шины</span></a>
+                <ul class="sub-menu">
+                    <li id="menu-item-1547" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1547 menu-item-depth-1">
+                        <a href="index.html%3Fp=1138.html"><span>About Us</span></a>	
+                    </li>
+                    <li id="menu-item-1562" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1562 menu-item-depth-1"><a href="index.html%3Fp=1560.html"><span>Services</span></a>	</li>
+                    <li id="menu-item-1549" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1549 menu-item-depth-1"><a href="index.html%3Fp=1252.html"><span>Our Prices</span></a>	</li>
+                    <li id="menu-item-1550" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1550 menu-item-depth-1"><a href="index.html%3Fp=1263.html"><span>Typography</span></a>	</li>
+                </ul>
+            </li>
+            <li id="menu-item-1918" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1918 menu-item-depth-0">
+                <a href="shop/index.html"><span class="nav_bg_clr"></span><span>Запчасти</span></a>
+            </li>
+            <li id="menu-item-1477" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1477 menu-item-mega menu-item-mega-cols-four menu-item-depth-0">
+                <a><span class="nav_bg_clr"></span><span>Сервис</span></a>
+                <div class="menu-item-mega-container">
+                    <ul class="sub-menu">
+                        <li id="menu-item-1449" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1449 menu-item-depth-1"><a><span>01</span></a>
+                            <ul class="sub-menu">
+                                <li id="menu-item-1503" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1503 menu-item-depth-subitem"><a href="index.html%3Fp=221.html"><span>Counters &#038; Progress Bars</span></a>		</li>
+                                <li id="menu-item-1504" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1504 menu-item-depth-subitem"><a href="index.html%3Fp=233.html"><span>Dividers</span></a>		</li>
+                                <li id="menu-item-1505" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1505 menu-item-depth-subitem"><a href="index.html%3Fp=252.html"><span>Featured Blocks</span></a>		</li>
+                                <li id="menu-item-1506" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1506 menu-item-depth-subitem"><a href="index.html%3Fp=338.html"><span>Icon Boxes</span></a>		</li>
+                                <li id="menu-item-1507" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1507 menu-item-depth-subitem"><a href="index.html%3Fp=383.html"><span>Quotes</span></a>		</li>
+                                <li id="menu-item-1508" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1508 menu-item-depth-subitem"><a href="index.html%3Fp=412.html"><span>Gallery</span></a>		</li>
+                                <li id="menu-item-1509" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1509 menu-item-depth-subitem"><a href="index.html%3Fp=427.html"><span>Images</span></a>		</li>
+                            </ul>
+                        </li>
+                        <li id="menu-item-1450" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1450 menu-item-depth-1"><a><span>02</span></a>
+                            <ul class="sub-menu">
+                                <li id="menu-item-1510" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1510 menu-item-depth-subitem"><a href="index.html%3Fp=443.html"><span>Icon List</span></a>		</li>
+                                <li id="menu-item-1511" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1511 menu-item-depth-subitem"><a href="index.html%3Fp=472.html"><span>Buttons &#038; Icons</span></a>		</li>
+                                <li id="menu-item-1512" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1512 menu-item-depth-subitem"><a href="index.html%3Fp=525.html"><span>Clients</span></a>		</li>
+                                <li id="menu-item-1513" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1513 menu-item-depth-subitem"><a href="index.html%3Fp=544.html"><span>Contact Forms</span></a>		</li>
+                                <li id="menu-item-1514" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1514 menu-item-depth-subitem"><a href="index.html%3Fp=578.html"><span>Special Headings</span></a>		</li>
+                                <li id="menu-item-1515" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1515 menu-item-depth-subitem"><a href="portfolio-shortcode/page/1/index.html"><span>Portfolio Shortcode</span></a>		</li>
+                                <li id="menu-item-1516" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1516 menu-item-depth-subitem"><a href="index.html%3Fp=623.html"><span>Posts or Projects Slider</span></a>		</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li id="menu-item-cart" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-cart menu-item-depth-0">
+                <a href="index.html%3Fp=1122.html"><span class="nav_bg_clr"></span><span class="cmsms-icon-cart cmsms_title_box_icon"></span></a>
+            </li>
+            */?>
+        </ul>
+    </div>
+    <div class="cmsms_dynamic_cart">
+        <a href="javascript:void(0);" class="cmsms_dynamic_cart_button cmsms_theme_icon_basket"></a>
+        <div class="widget_shopping_cart_content"></div>
+    </div>
+    <div class="cl"></div>
+</nav>

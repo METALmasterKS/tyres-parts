@@ -1,0 +1,132 @@
+<?$this->layout()->title = 'Поиск шин';?>
+<style>
+    #cmsms_row_56db2fe61faed .cmsms_row_outer_parent { 
+	padding-top: 50px; 
+} 
+
+#cmsms_row_56db2fe61faed .cmsms_row_outer_parent { 
+	padding-bottom: 40px; 
+} 
+
+</style>
+<div id="cmsms_row_56db2fe61faed" class="cmsms_row cmsms_color_scheme_default">
+    <div class="cmsms_row_outer_parent">
+        <div class="cmsms_row_outer">
+            <div class="cmsms_row_inner">
+                <div class="cmsms_row_margin cmsms_11">
+                    <div class="cmsms_column one_half">
+                        <h2 class="entry-title">
+                            По параметрам
+                        </h2>
+                        <?php echo $this->partial('partial/form/search.phtml', array( 'form' => $form, )); ?>
+                        <?php
+                        //echo $this->formRow($form->get('width'), null, null, 'partial/form.phtml');
+                        //$this->formRow()->setPartial('partial/searchFormRow.phtml');
+                        //echo $this->Form($form);
+                        //$form->prepare();
+                        //echo $this->form($form);
+                        /*echo $this->formRow($form->get('width'));
+                        echo $this->tyresFormCollection($form);
+                        echo $this->form()->closeTag($form);*/
+                        ?>
+                    </div>
+                    <div class="cmsms_column one_half">
+                        <article class="post-1031 profile type-profile status-publish has-post-thumbnail hentry pl-categs-horizontal" id="post-1031">
+                            <div class="pl_content_wrap">
+                                <div class="pl_content">
+                                    <h2 class="entry-title">
+                                        <a href="<?=$this->url('home/tyres/brands');?>">По производителю</a>
+                                    </h2>
+                                    <div class="cmsms_divider"></div>
+
+                                    <div class="entry-content">
+                                        <? foreach ($popBrands as $popBrand) { ?>
+                                        <? if ($popBrand->getTyresCount() > 0) { ?>
+                                            <a href="<?=$this->url('home/tyres/brands/brand', ['name' => $popBrand->name]);?>">
+                                                <?=$popBrand->name;?> (<?=$popBrand->getTyresCount();?>)
+                                            </a><br/>
+                                        <? } ?>
+                                        <? } ?>
+                                        <a href="<?=$this->url('home/tyres/brands');?>">Еще...</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cl"></div>
+                        </article>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cmsms_row cmsms_color_scheme_default" id="cmsms_row_search_tyres">
+    <div class="cmsms_row_outer_parent">
+        <div class="cmsms_row_outer">
+            <div class="cmsms_row_inner">
+                <div class="cmsms_row_margin cmsms_11">
+                    <div class="cmsms_column one_first">
+                        <? if (isset($brands) && count($brands) > 0) { ?>
+                            <? foreach ($brands as $brand) { ?>
+                            <table class="cmsms_table">
+                                <caption><?=$brand->name;?></caption>
+                                <? foreach ($brand->getModels() as $model) { ?>
+                                <thead>
+                                    <tr class="cmsms_table_row_header">
+                                        <th class="cmsms_table_cell_alignleft">
+                                            <a href="<?=$this->url('home/tyres/tyre', ['brandName' => $brand->name, 'modelName' => $model->name,]);?>">
+                                                <?=$brand->name;?> <?=$model->name;?>
+                                            </a>
+                                        </th>
+                                        <th class="cmsms_table_cell_alignleft">Размер</th>
+                                        <th class="cmsms_table_cell_alignleft">Индексы</th>
+                                        <th class="cmsms_table_cell_alignleft">Кол-во</th>
+                                        <th class="cmsms_table_cell_alignleft">Цена</th>
+                                        <th class="cmsms_table_cell_alignleft">Поставщик</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <? $i=0; foreach ($model->getTyres() as $key => $tyre) { ?>
+                                    <? foreach ($tyre->getPrices() as $price) { ?>
+                                    <tr>
+                                        <? if ($i == 0) { ?>
+                                        <td class="cmsms_table_cell_alignleft">
+                                            <a href="<?=$this->url('home/tyres/tyre', ['brandName' => $brand->name, 'modelName' => $model->name]); ?>">
+                                                <img src="holder.js/150x200/#aaa:#fff/text:Нет фото" />
+                                            </a>
+                                        </td>
+                                        <? } else { ?><td></td><? } ?>
+                                        <td class="cmsms_table_cell_alignleft">
+                                            <a href="<?=$this->url('home/tyres/tyre', ['brandName'=>$brand->name, 'modelName'=>$model->name, 'width' => $tyre->width, 'height' => $tyre->height, 'diameter'=>$tyre->diameter]);?>">
+                                                <?=sprintf("%s/%s R%s", $tyre->width, $tyre->height, $tyre->diameter)?>
+                                            </a>
+                                        </td>
+                                        <td class="cmsms_table_cell_alignleft"><?=sprintf("%s %s", $tyre->load, $tyre->speed)?></td>
+                                        <td class="cmsms_table_cell_alignleft"><?=$price->quantity?></td>
+                                        <td class="cmsms_table_cell_alignleft"><?=$price->price?></td>
+                                        <td class="cmsms_table_cell_alignleft"><?=$price->getProvider()->name;?></td>
+                                        <td>В корзину</td>
+                                    </tr>
+                                    <? $i++; } ?>
+                                    <? } ?>
+                                </tbody>
+                                <!--tfoot>
+                                    <tr class="cmsms_table_row_footer">
+                                        <td class="cmsms_table_cell_alignleft">FOOTER</td><td class="cmsms_table_cell_alignleft">FOOTER</td>
+                                    </tr>
+                                </tfoot-->
+                                <? } ?>
+                            </table>
+                            <? } ?>
+                        <? } elseif (isset($isFoundTyres) && $isFoundTyres == false) { ?>
+                            Шин по заданным параметрам не найдено
+                        <? } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

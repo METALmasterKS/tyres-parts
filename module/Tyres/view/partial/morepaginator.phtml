@@ -1,0 +1,20 @@
+<?php 
+$params = isset($this->params) ? $this->params : array();
+if ($this->pageCount): ?>
+    <div>
+        <div class="pagination">
+            <!-- Next page link -->
+            <?php if (isset($this->next)): ?>
+                <span>
+                    <a class="js-ajax-loadmoreitems" href="<?=$this->url($this->route, $params, $this->options) ?>">
+                        ЕЩЕ + 12 товаров
+                    </a>
+                </span>
+            <?php else: ?>
+                <span class="disabled">
+                    ЕЩЕ + 12 товаров
+                </span>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>

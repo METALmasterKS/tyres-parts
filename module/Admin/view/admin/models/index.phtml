@@ -1,0 +1,95 @@
+<? 
+$title = 'Модели шин бренда.';
+$this->headtitle('Администрирование. '.$title);
+?>
+<div class="page-header">
+  <h1><?=$title;?></h1>
+</div>
+
+<a href="<?=$this->url('admin/default', array('controller'=>'models', 'action'=>'add', 'id' => $brand->id));?>" class="btn btn-primary btn-lg mrg-b-lg">
+  Добавить модель
+</a>
+
+<?php $form->prepare(); echo $this->form()->openTag($form); ?>
+<div class="row">
+    <div class='col-xs-2'>
+        <?php $elem = $form->get('name');
+        echo $this->formInput($elem);
+        echo $this->formElementErrors($elem); ?>
+    </div>
+    <div class='col-xs-2'>
+        <?php $elem = $form->get('aliases');
+            echo $this->formInput($elem);
+            echo $this->formElementErrors($elem); ?>
+    </div>
+    <div class='col-xs-2'>
+        <?php $elem = $form->get('season');
+            echo $this->formInput($elem);
+            echo $this->formElementErrors($elem); ?>
+    </div>
+    <div class='col-xs-2'>
+        <?php echo $this->formElement($form->get('search')) ?>
+    </div>
+</div>
+<div class="row"><div class='col-xs-6 mrg-b-lg'>В полях поиска можно применять <a target="_blank" href="http://www.google.ru/search?q=sql+%D0%BC%D0%B0%D1%81%D0%BA%D0%B8">SQL маски</a></div></div>
+<?php echo $this->form()->closeTag() ?>
+
+<? if (isset($models) && count($models)) { ?>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Модель</th>
+            <th>Алиасы</th>
+            <th>Сезонность</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?  foreach ($models as $model) { ?>
+        <tr id="table-row-brand-id-<?=$model->id;?>">
+            <td><input type="checkbox" name="ids[]" value="<?=$model->id;?>" class="js-brand-checkbox"/></td>
+            <td><?=$model->id;?></td>
+            <td><?=$model->name;?></td>
+            <td><?=$model->aliases;?></td>
+            <td><?=$model->season;?></td>
+            <td>
+                <a href="<?=$this->url('home/tyres/tyre', ['brandName' => $brand->name, 'modelName' => $model->name]);?>" target="_blank" class="btn btn-default btn-xs" role="button" title="На сайте">
+                  <span class="glyphicon glyphicon-th" aria-hidden="true"></span> 
+                </a>
+                <a href="<?=$this->url('admin/default', array('controller'=>'models', 'action'=>'edit', 'id'=>$model->id));?>" class="btn btn-default btn-xs" role="button" title="Редактировать">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+                </a>
+                <button title="Удалить" role="button" class="js-ajax-remove btn btn-default btn-xs" 
+                        postparamname="brandid" 
+                        brandid="<?=$model->id;?>" 
+                        url="<?=$this->url('admin/default', ['controller'=>'models', 'action'=>'remove']);?>" 
+                        confirm='Удалить бренд "<?=$model->name;?>"?' 
+                        removeselector="#table-row-brand-id-<?=$model->id;?>">
+                  <span aria-hidden="true" class="glyphicon glyphicon-remove"></span> 
+                </button>
+            </td>
+        </tr>
+        <? } ?>
+    </tbody>
+</table>
+<button title="Удалить отмеченные" class="js-ajax-bulk-remove btn btn-default btn-md" role="button"
+        checkboxselector=".js-brand-checkbox" 
+        postparamname="brandid" 
+        url="<?=$this->url('admin/default', ['controller'=>'models', 'action'=>'remove']);?>" 
+        confirm='Удалить отмеченные бренды?' 
+        removeselector="#table-row-brand-id-">
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+</button>
+
+<?php if ($models instanceof Zend\Paginator\Paginator)  
+        echo $this->paginationControl($models, 'sliding', array('partial/paginatorAdmin.phtml', 'admin'),
+            array(
+                'route' => 'admin/default', 
+                'params' => ['controller' => 'models', 'action' => 'index', 'sub' => $sub],
+                'options' => ['query' => $query],
+            ));
+    ?>
+
+<? } ?>

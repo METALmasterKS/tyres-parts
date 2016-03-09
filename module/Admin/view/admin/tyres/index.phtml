@@ -1,0 +1,84 @@
+<? $IMG = $this->layout()->settings['img']; ?>
+
+<div class="page-header">
+  <h1><?=isset($groupId) ? $group->name : 'Каталог'?></h1>
+  <? if (isset($group) ) { ?>
+    <div>
+        <a href="<?=$this->url('admin/default', array('controller'=>'items', 'action'=>'index', 'id'=>$groupId));?>" class="btn btn-default btn-md" role="button" title="Товары">
+          <span class="glyphicon glyphicon-th" aria-hidden="true"></span> 
+        </a>
+        <a href="<?=$this->url('admin/default', array('controller'=>'groups', 'action'=>'edit', 'id'=>$groupId));?>" class="btn btn-default btn-md" role="button" title="Редактировать">
+          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+        </a>
+    </div>
+  <? } ?>
+</div>
+
+<a href="<?=$this->url('admin/default', array('controller'=>'groups', 'action'=>'add', 'id'=> isset($groupId) ? $groupId : ''));?>" class="btn btn-primary btn-lg mrg-b-lg">
+  Добавить группу
+</a>
+
+<? $activePage = $this->navigation('Navigation')->findOneBy('id', isset($groupId) ? 'admin-group-'.$groupId : 'admin-catalog-groups'); ?> 
+
+<? if ($activePage instanceof \Zend\Navigation\Page\AbstractPage) { ?>
+<table class="table table-striped table-sortable">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>ID</th>
+            <th>Изображение</th>
+            <th>Имя</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <? foreach ($activePage->getPages() as $page): ?>
+        <tr id="<?=$page->get('groupId');?>" class="table-row-group-id-<?=$page->get('groupId');?>">
+            <td><span class="glyphicon glyphicon-move"></span></td>
+            <td><input type="checkbox" name="ids[]" value="<?=$page->get('groupId');?>" class="js-group-checkbox"/></td>
+            <td><?=$page->get('groupId');?></td>
+            <td>
+                <? if ($page->get('groupImage') != null) { ?>
+                <img width="60px" src="<?=$IMG['HOST'].$IMG['GROUPS_IMAGES'];?>/<?=$page->get('groupImage');?>" />
+                <? } ?>
+            </td>
+            <td><? echo $this->navigation()->menu()->htmlify($page);?></td>
+            <td>
+                <a href="<?=$this->url('admin/default', array('controller'=>'items', 'action'=>'index', 'id'=>$page->get('groupId')));?>" class="btn btn-default btn-xs" role="button" title="Товары">
+                  <span class="glyphicon glyphicon-th" aria-hidden="true"></span> 
+                </a>
+                <a href="<?=$this->url('admin/default', array('controller'=>'groups', 'action'=>'edit', 'id'=>$page->get('groupId')));?>" class="btn btn-default btn-xs" role="button" title="Редактировать">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+                </a>
+                <a href="<?=$this->navigation('Navigation')->findOneBy('id', 'group-'.$page->get('groupId'))->getHref();?>" target="_blank" class="btn btn-default btn-xs" role="button" title="На сайте">
+                  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> 
+                </a>
+                <button title="Удалить" role="button" class="js-ajax-remove btn btn-default btn-xs" 
+                        postparamname="groupid" 
+                        groupid="<?=$page->get('groupId');?>" 
+                        url="<?=$this->url('admin/default', ['controller'=>'groups', 'action'=>'remove']);?>" 
+                        confirm='Удалить группу "<?=$page->getLabel();?>"?' 
+                        removeselector=".table-row-group-id-<?=$page->get('groupId');?>">
+                    <span aria-hidden="true" class="glyphicon glyphicon-remove"></span>
+                </button>
+            </td>
+        </tr>
+        <? endforeach; ?>
+    </tbody>
+</table>
+<button title="Удалить отмеченные" class="js-ajax-bulk-remove btn btn-default btn-md" role="button"
+        checkboxselector=".js-group-checkbox" 
+        postparamname="groupid" 
+        url="<?=$this->url('admin/default', ['controller'=>'groups', 'action'=>'remove']);?>" 
+        confirm='Удалить отмеченные группы?' 
+        removeselector=".table-row-group-id-">
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+</button>
+<button title="Сохранить порядок" class="js-ajax-save-sort btn btn-default btn-md" role="button"
+        url="<?=$this->url('admin/default', ['controller'=>'groups', 'action'=>'savesort']);?>" 
+        parentgroupid="<?=isset($groupId) ? $groupId:'';?>">
+  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 
+  <span class="glyphicon glyphicon-sort" aria-hidden="true"></span> 
+</button>
+<? } ?>

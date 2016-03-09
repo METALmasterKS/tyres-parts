@@ -1,0 +1,22 @@
+<ul class="nav nav-sidebar">
+    <?php foreach ($this->container as $page) : ?>
+        <? if ($this->navigation()->accept($page)) { ?>
+            <? if ($page->isActive(true)) { ?>
+            <li class="active"><a href="<?=$page->getHref();?>"><?=$page->getLabel();?> <span class="sr-only">(current)</span></a></li>
+            <? } else { ?>
+            <li><a href="<?=$page->getHref();?>"><?=$page->getLabel();?></a></li>
+            <? } ?>
+            <? if ($page->hasPages()) { ?>
+            <ul>
+            <? foreach ($page->getPages() as $page) { ?>
+                <? if ($page->isActive(true)) { ?>
+                <li class="active"><a href="<?=$page->getHref();?>"><?=$page->getLabel();?> <span class="sr-only">(current)</span></a></li>
+                <? } else { ?>
+                <li><a href="<?=$page->getHref();?>"><?=$page->getLabel();?></a></li>
+                <? } ?>
+            <? } ?>
+            </ul>
+            <? } ?>
+        <? } ?>
+    <?php endforeach; ?>
+</ul>

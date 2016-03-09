@@ -1,0 +1,30 @@
+<div class="page-header">
+  <h1>Управление ролями <small>Все роли</small></h1>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>group</th>
+            <th>name</th>
+            <th>value</th>
+            <th>valueId</th>
+            <th>validator</th>
+            <th>options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <? foreach ($permissions as $permission) { ?>
+        <tr>
+            <td><?=$permission->getId();?></td>
+            <td><?=$permission->getGroup();?></td>
+            <td><?=$permission->getName();?></td>
+            <td><?=$permission->getValue();?></td>
+            <td><?=$permission->getValueId();?></td>
+            <td><?=$permission->getValidator();?></td>
+            <td><?=$permission->getValidatorOptions();?></td>
+        </tr>
+        <? } ?>
+    </tbody>
+</table>
+ 

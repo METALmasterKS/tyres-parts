@@ -1,0 +1,136 @@
+<?php 
+$IMG = $this->layout()->settings['img']; 
+$title = 'Редактирование товара';
+$this->headtitle($title);
+?>
+
+<h3><?= $this->escapehtml($title); ?></h3>
+
+<?php
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+<h4>Информация о товаре</h4>
+<?php $elem = $form->get('type_prefix');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('model');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('short_descr');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('descr');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+
+<h4>Изображения и видео</h4>
+<?php echo $this->formElement($form->get('image')) ?>
+<div class="form-group">
+    <? $elem = $form->get('imagefile'); ?>
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? if ($form->get('image')->getValue() != null) { ?>
+        <img width="400px" src="<?=implode('/', [$IMG['HOST'].$IMG['ITEMS_ORIGINAL_IMAGES'], $form->get('image')->getValue().'?'.rand()])?>"/>
+            <div class="checkbox"><label><? echo $this->formElement($form->get('removeimagefile')) ?>
+            <? echo $form->get('removeimagefile')->getAttribute('placeholder'); ?></label></div>
+        <? } ?>
+        <?php
+        echo $this->formElement($elem);
+        echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php echo $this->formElement($form->get('small_image')) ?>
+<div class="form-group">
+    <? $elem = $form->get('smallimagefile'); ?>
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? if ($form->get('small_image')->getValue() != null) { ?>
+            <img width="120px" src="<?=implode('/', [$IMG['HOST'].$IMG['ITEMS_ORIGINAL_SMALLIMAGES'], $form->get('small_image')->getValue().'?'.rand()])?>"/>
+            <div class="checkbox"><label><? echo $this->formElement($form->get('removesmallimagefile')) ?>
+            <? echo $form->get('removesmallimagefile')->getAttribute('placeholder'); ?></label></div>
+        <? } ?>
+        <?php
+        echo $this->formElement($elem);
+        echo $this->formElementErrors($elem); ?>
+        <div class="checkbox"><label>
+        <? echo $this->formElement($form->get('makesmallimagefromimage')) ?>
+        <? echo $form->get('makesmallimagefromimage')->getAttribute('placeholder'); ?>
+        </label></div>
+    </div>
+</div>
+<?php echo $this->formElement($form->get('add_images')) ?>
+<div class="form-group">
+    <? $elem = $form->get('addimagefile'); ?>
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? if ($form->get('add_images')->getValue() != null) { ?>
+            <? foreach (explode(';', $form->get('add_images')->getValue()) as $key => $addImage) { ?>
+            <div class="inline addimage-block-<?=$key?>" >
+                <img width="120px" src="<?=implode('/', [$IMG['HOST'].$IMG['ITEMS_ORIGINAL_ADDITIONALIMAGES'], $addImage.'?'.rand()])?>"/>
+                <div class="checkbox">
+                    <button title="Удалить" role="button" class="js-ajax-remove btn btn-default btn-xs" 
+                        postparamname="itemid,addimagename" 
+                        itemid="<?=$itemId;?>"
+                        addimagename="<?=$addImage;?>"
+                        url="<?=$this->url('admin/default', ['controller'=>'items', 'action'=>'addimageremove']);?>" 
+                        confirm='Удалить дополнительное изображение "<?=$addImage;?>"?' 
+                        removeselector=".addimage-block-<?=$key;?>">
+                        <span aria-hidden="true" class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <? } ?>
+        <? } ?>
+        <?php
+        echo $this->formElement($elem);
+        echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('video');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+
+
+<h4>SEO</h4>
+<?php $elem = $form->get('meta_title');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('meta_descr');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <?php echo $this->formElement($form->get('saveItem')) ?>
+</div>
+<?php echo $this->form()->closeTag() ?>
+

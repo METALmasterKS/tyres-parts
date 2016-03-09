@@ -1,0 +1,23 @@
+<div id="catalog-root-block">
+    <div class="row">
+    <?php foreach ($this->container as $page) : ?>
+        <? if ($this->navigation()->accept($page)) { ?>
+            <div class="col-md-3">
+            <a href="<?=$page->getHref();?>" class="menu-item <?=$page->isActive(true) ? 'active':'';?>">
+                <img src="<?=$this->layout()->settings['img']['HOST'].$this->layout()->settings['img']['GROUPS_IMAGES']?>/<?=$page->get('groupImage');?>" width="60px"/>
+                <?=$page->getLabel(); ?> 
+            </a>
+            <? if ($page->hasPages()) { $i = 1; ?>
+                <? foreach ($page->getPages() as $subPage) { ?>
+                    <a href="<?=$subPage->getHref();?>" class="menu-sub-item <?=$subPage->isActive(true) ? 'active':'';?>"><?=$subPage->getLabel();?></a>
+                    <? if ($i == 6 && $page->count() > 6) { ?>
+                    <a href="<?=$page->getHref();?>" class="menu-more">Еще</a>
+                    <? break; } ?>
+                <? $i++; } ?>
+            <? } ?>
+            </div>
+        <? } ?>
+    <? echo $this->cycle(['','','','</div><div class="row">'])->next();?>
+    <?php endforeach; ?>
+    </div>
+</div>

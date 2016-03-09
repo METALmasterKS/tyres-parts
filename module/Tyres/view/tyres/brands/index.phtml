@@ -1,0 +1,35 @@
+<div class="cmsms_row cmsms_color_scheme_default" id="cmsms_row_56c81bb8b9a85">
+    <div class="cmsms_row_outer_parent">
+        <div class="cmsms_row_outer">
+            <div class="cmsms_row_inner">
+                <div class="cmsms_row_margin cmsms_14141414">
+                    <? foreach ($alphabetBrands as $A => $brands) { ?>
+                    <div class="cmsms_column one_fourth">
+                        <div class="cmsms_toggles toggles_mode_toggle">
+                            <div data-tags="all " class="cmsms_toggle_wrap">
+                                <div class="cmsms_toggle_title">
+                                    <span class="cmsms_toggle_plus">
+                                        <span class="cmsms_toggle_plus_hor"></span>
+                                        <span class="cmsms_toggle_plus_vert"></span>
+                                    </span>
+                                    <a href="#"><?=$A;?></a>
+                                </div>
+                                <div class="cmsms_toggle" style="display: none;">
+                                    <div class="cmsms_toggle_inner">
+                                        <? foreach ($brands as $A => $brand) { ?>
+                                            <p><a class="font-13px font-grey" href="<?=$this->url('home/tyres/brands/brand', array('name' => $brand->name));?>">
+                                                <?=$brand->name; ?>
+                                            </a>
+                                            <span class="font-11px font-grey">(<?=$brand->getTyresCount();?>)</span></p>
+                                        <? } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <? } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
