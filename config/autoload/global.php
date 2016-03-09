@@ -15,8 +15,8 @@ return array(
     'db' => array(
         'driver' => 'Pdo',
         'dsn' => 'mysql:dbname=db_glazov;host=localhost',
-        'username' => '',
-        'password' => '',
+        'username' => 'dbu_glazov',
+        'password' => '2hi1EGttkZPUCrye',
         'driver_options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
