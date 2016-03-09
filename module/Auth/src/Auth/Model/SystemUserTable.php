@@ -95,7 +95,7 @@ class SystemUserTable extends TableGateway
         
         //порядок
         if (isset($params['order']) && isset($converter[$params['order']]) && isset($params['way']))
-            $select->order('sys_users.'.$params['order'].' '.(isset($params['way']) ? (boolval($params['way']) ? 'ASC':'DESC'):'DESC'));
+            $select->order('sys_users.'.$params['order'].' '.(isset($params['way']) ? ( ((bool) $params['way']) ? 'ASC':'DESC'):'DESC'));
         //getUsersByIds
         if (isset($params['ids']))
             $select->where->in('sys_users.id', $params['ids']);

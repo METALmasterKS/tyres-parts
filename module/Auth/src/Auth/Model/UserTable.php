@@ -63,7 +63,7 @@ class UserTable {
         
         //порядок
         if (isset($params['order']) && isset($converter[$params['order']]) && isset($params['way']))
-            $select->order('users.'.$params['order'].' '.(isset($params['way']) ? (boolval($params['way']) ? 'ASC':'DESC'):'DESC'));
+            $select->order('users.'.$params['order'].' '.(isset($params['way']) ? ( ((bool) $params['way']) ? 'ASC':'DESC'):'DESC'));
         //getUsersByIds
         if (isset($params['ids']))
             $select->where->in('users.id', $params['ids']);

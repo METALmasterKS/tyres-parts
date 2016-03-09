@@ -45,7 +45,7 @@ class PriceTable extends TableGateway
         
         //порядок
         if (isset($params['order']))
-            $select->order($params['order'].' '.(isset($params['way']) ? (boolval($params['way']) ? 'ASC':'DESC'):'ASC'));
+            $select->order($params['order'].' '.(isset($params['way']) ? ( ((bool) $params['way']) ? 'ASC':'DESC'):'ASC'));
 
         $resultSet = $this->tableGateway->selectWith($select);
         $resultSet->buffer();
