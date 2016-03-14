@@ -11,7 +11,7 @@ Tags: white, light, dark, one-column, two-columns, three-columns, four-columns, 
 */
 
 
-/*-------------------------------------------------------------------------
+/*---------------------------------------------------------------#navigation > li > a----------
 
 	1.	Browser Reset
 	2.	Globally Applied Styles
@@ -2277,7 +2277,7 @@ nav div:hover + div {
 }
 #navigation > li > a {
   display: table-cell;
-  padding: 18px 25px;
+  padding: 14px 16px;
   vertical-align: middle;
   border-right-width: 1px;
   border-right-style: solid;
