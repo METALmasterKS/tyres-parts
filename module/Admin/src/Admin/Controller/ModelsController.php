@@ -22,8 +22,8 @@ class ModelsController extends AbstractActionController {
         $brandId = $this->params()->fromRoute('id');
         $brand = $brandsTable->getBrand($brandId);
         
-        $navigationTree = $this->NavigationTree($brand, null, null, true);
-        $navigationTree->adminModels();
+        $navigationTree = $this->AdminNavigationTree($brand, null, null);
+        $navigationTree->models();
         
         $data = ['brandId' => $brand->id, 'pagination' => true, 'tyresCountLoad' => true, 'order' => 'name'];
         $form = new \Admin\Form\SearchModels();
@@ -56,14 +56,16 @@ class ModelsController extends AbstractActionController {
     }
     
     public function addAction() {
+        $brandsTable = $this->getServiceLocator()->get('TyresModelBrandTable');
+        $brandId = $this->params()->fromRoute('id');
+        $brand = $brandsTable->getBrand($brandId);
+        
+        $navigationTree = $this->AdminNavigationTree($brand, null, null);
+        $navigationTree->models()->addModel();
+        
         $form = new \Tyres\Form\Model();
         
         if ($this->params()->fromPost('addModel') != null) {
-            
-            $brandsTable = $this->getServiceLocator()->get('TyresModelBrandTable');
-            $brandId = $this->params()->fromRoute('id');
-            $brand = $brandsTable->getBrand($brandId);
-            
             $model = new \Tyres\Model\Model($this->getServiceLocator());
             $form->setInputFilter($model->getInputFilter());
             $form->setData($this->getRequest()->getPost());
@@ -98,6 +100,12 @@ class ModelsController extends AbstractActionController {
         $modelId = $this->params()->fromRoute('id');
         $model = $modelTable->getModel($modelId);
         $form->setData($model->getArrayCopy());
+        
+        $brandsTable = $this->getServiceLocator()->get('TyresModelBrandTable');
+        $brand = $brandsTable->getBrand($model->brandId);
+        
+        $navigationTree = $this->AdminNavigationTree($brand, $model, null);
+        $navigationTree->models()->editModel();
         
         if ($this->params()->fromPost('saveModel') != null) {
             $form->setInputFilter($model->getInputFilter('edit'));

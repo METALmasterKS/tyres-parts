@@ -11,10 +11,13 @@ class NavigationTree extends AbstractPlugin
     private $size;
     
     private $navigation;
+    private $isAdmin;
 
 
-    public function __invoke($brand = null, $model = null, $size = null, $isAdmin = false) {
+    public function __invoke($brand = null, $model = null, $size = null) {
         $this->navigation = $this->getController()->getServiceLocator()->get('navigation');
+        
+        $this->isAdmin = false;
         
         $this->brand = $brand;
         $this->model = $model;
@@ -33,16 +36,33 @@ class NavigationTree extends AbstractPlugin
     }
     
     private function loadBrandNavigation() {
-        $page = $this->navigation->findOneBy('id', 'home-tyres');
+        $page = $this->navigation->findOneBy('id', $this->isAdmin ? 'admin-tyres-brands' : 'home-tyres');
         if ($page instanceof \Zend\Navigation\Page\Mvc){
-            $page->addPage([
-                'label' => $this->brand->name,
-                'id' => 'tyre-brand-'.$this->brand->id,
-                'route' => 'home/tyres/brands/brand',
-                'params' => [
-                    'name' => $this->brand->name,
-                ]]);
-            $page = $this->navigation->findOneBy('id', 'tyre-brand-'.$this->brand->id);
+            if ($this->isAdmin) {
+                $page->addPage([
+                    'label' => $this->brand->name,
+                    'id' => 'admin-tyre-brand-'.$this->brand->id,
+                    'route' => 'admin/default',
+                    'params' => [
+                        'controller' => 'brands',
+                        'action' => 'index',
+                        'sub' => 'search',
+                    ],
+                    'query' => [
+                        'search'=>'Поиск',
+                        'name' => $this->brand->name,
+                    ], ]);
+                $page = $this->navigation->findOneBy('id', 'admin-tyre-brand-'.$this->brand->id);
+            } else {
+                $page->addPage([
+                    'label' => $this->brand->name,
+                    'id' => 'tyre-brand-'.$this->brand->id,
+                    'route' => 'home/tyres/brands/brand',
+                    'params' => [
+                        'name' => $this->brand->name,
+                    ]]);
+                $page = $this->navigation->findOneBy('id', 'tyre-brand-'.$this->brand->id);
+            }
             $page->setActive(true);
         }
     }
@@ -87,7 +107,7 @@ class NavigationTree extends AbstractPlugin
         $page = $this->navigation->findOneBy('id', 'admin-tyre-brand-' . $this->brand->id);
         if ($page instanceof \Zend\Navigation\Page\Mvc) {
             $page->addPage([
-                'label' => 'Товары группы "' . $this->brand->name . '"',
+                'label' => 'Модели бренда "' . $this->brand->name . '"',
                 'id' => 'admin-tyre-brand-models-' . $this->brand->id,
                 'route' => 'admin/default',
                 'params' => [

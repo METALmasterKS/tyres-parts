@@ -1,40 +1,48 @@
-<div class="row">
-	<div class="col-md-4">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Login</h3>
-			</div>
-			<div class="panel-body">
-			    <?php
-    $form = $this->loginForm;
-    $form->prepare();
-    echo $this->form()->openTag($form);
-    ?>
-                	<table>
-					<tr>
-						<td><?php echo $this->formlabel($form->get('email'));?></td>
-						<td><?php echo $this->formElement($form->get('email')); ?>
-                            <span class="common-error-msg"><?php echo $this->formElementErrors($form->get('email'));?></span></td>
-					</tr>
-					<tr>
-						<td><?php echo $this->formlabel($form->get('password'));?></td>
-						<td><?php echo $this->formElement($form->get('password')); ?>
-                            <span class="common-error-msg"><?php echo $this->formElementErrors($form->get('password'));?></span></td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>
-                            <?php
-                            echo $this->formRow($form->get('loginCsrf'));
-                            echo $this->formElement($form->get('submit'));
-                            ?>
-                            </td>
-					</tr>
-				</table>
-                <?php
-                echo $this->form()->closeTag($form);
-                ?>
+<?$this->layout()->title = 'Вход администратора';?>
+<div class="cmsms_row cmsms_color_scheme_default" id="cmsms_row_56c81bb8b9a85">
+    <div class="cmsms_row_outer_parent">
+        <div class="cmsms_row_outer">
+            <div class="cmsms_row_inner">
+                <div class="cmsms_row_margin cmsms_14141414">
+                    
+<? 
+$form = $this->loginForm;
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+<div class="form_info cmsms_select row">
+    <? $element = $form->get('email'); ?>
+    <div class="field-name one_sixth">
+        <?php echo $this->formlabel($form->get('email'));?>:&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_select row">
+    <? $element = $form->get('password'); ?>
+    <div class="field-name one_sixth">
+        <?=$element->getLabel()?>:&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_radio row">
+    <? $element = $form->get('submit'); ?>
+    <div class="form_info submit_wrap">
+        <a href="" class="cmsms_button" onclick="jQuery(this).parents('form').submit();return false;"><span><?php echo $element->getValue(); ?></span></a>
+    </div>
+    <? echo $this->formRow($form->get('loginCsrf')); ?>
+</div>
+<? echo $this->form()->closeTag($form); ?>
+                    
+
+
+                </div>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>

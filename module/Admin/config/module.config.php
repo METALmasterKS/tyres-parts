@@ -53,7 +53,7 @@ return array(
     ),
     'controller_plugins' => array(
         'invokables' => array(
-            
+            'AdminNavigationTree' => 'Admin\Controller\Plugin\AdminNavigationTree',
         )
     ),
     'view_manager' => array(

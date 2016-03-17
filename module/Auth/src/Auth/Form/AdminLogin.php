@@ -12,6 +12,7 @@ class AdminLogin extends Form
     {
         parent::__construct($name);
         $this->setAttribute('method', 'post');
+         $this->setAttribute('class', 'type1-form');
         
         $this->add(array(
             'name' => 'email',
@@ -53,7 +54,7 @@ class AdminLogin extends Form
             'name' => 'submit',
             'attributes' => array(
                 'type' => 'submit',
-                'value' => 'Submit',
+                'value' => 'Вход',
                 'class' => 'btn btn-primary'
             )
         ));
