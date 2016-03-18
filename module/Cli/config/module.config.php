@@ -40,6 +40,16 @@ return array(
                     )
                 ),
                 
+                'getMail' => array(
+                    'options' => array(
+                        'route'    => 'getMail',
+                        'defaults' => array(
+                            'controller' => 'Cli\Controller\Imap',
+                            'action'     => 'Index'
+                        )
+                    )
+                ),
+                
             )
         )
     ),
@@ -48,6 +58,7 @@ return array(
         'invokables' => array(
             'Cli\Controller\Index'     => 'Cli\Controller\IndexController',
             'Cli\Controller\Import'     => 'Cli\Controller\ImportController',
+            'Cli\Controller\Imap'     => 'Cli\Controller\ImapController',
         ),
     ),
     'controller_plugins' => array(
