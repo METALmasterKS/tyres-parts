@@ -1,0 +1,22 @@
+
+    <div class="tabs">
+    <?php foreach ($this->container as $page) : ?>
+        <? if ($this->navigation()->accept($page)) { ?>
+        <a href="<?=$page->getHref();?>" class="lk-menu-item tab <?=$page->isActive(true) ? 'active':'';?>">
+            <?=$page->getLabel();?>
+        </a>
+        <? } ?>
+    <?php endforeach; ?>
+    </div>
+
+<div>
+    <?php foreach ($this->container as $page) : ?>
+        <? if ($this->navigation()->accept($page) && $page->isActive(true) && $page->hasPages()) { ?>
+            <? foreach ($page->getPages() as $page) { ?>
+                <a href="<?=$page->getHref();?>" class="lk-menu-item <?=$page->isActive(true) ? 'active':'';?>">
+                    <?=$page->getLabel();?>
+                </a>
+            <? } ?>
+        <? } ?>
+    <?php endforeach; ?>
+</div>

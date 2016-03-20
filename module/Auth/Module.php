@@ -85,7 +85,7 @@ class Module
                 'UserAuthService' => function ($sm) {
                     return new AuthenticationService(
                         new Session('UserData'), 
-                        new DbAuthAdapter($sm->get('Zend\Db\Adapter\Adapter'), 'users', 'username', 'password')
+                        new DbAuthAdapter($sm->get('Zend\Db\Adapter\Adapter'), 'users', 'email', 'password')
                         );
                 },
                 

@@ -1,0 +1,52 @@
+<? $form->prepare();
+echo $this->form()->openTag($form);
+?>
+<div class="form_info cmsms_input row">
+    <? $element = $form->get('email'); ?>
+    <div class="field-name one_third">
+        <?=$element->getLabel()?>:&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+    </div>
+    <div class="errors">
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_input row">
+    <? $element = $form->get('phone'); ?>
+    <div class="field-name one_third">
+        <?=$element->getLabel()?>:&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_input row">
+    <? $element = $form->get('password'); ?>
+    <div class="field-name one_third">
+        <?=$element->getLabel()?>:&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_input row">
+    <? $element = $form->get('password-confirm'); ?>
+    <div class="field-name one_third">
+        <?=$element->getLabel()?>:&nbsp;
+    </div>
+    <div class="field check_parent">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_radio row">
+    <? $element = $form->get('submit'); ?>
+    <div class="form_info submit_wrap">
+        <a href="" class="cmsms_button" onclick="jQuery(this).parents('form').submit();return false;"><span><?php echo $element->getValue(); ?></span></a>
+    </div>
+</div>
+<? echo $this->form()->closeTag($form); ?>

@@ -20,6 +20,15 @@ return array(
                 //'sahr_gl@mail.ru', 'raceta812@mail.ru',
             ],
         ],
+        'prices' => [
+            'markup' => 20,
+        ],
+        'images' => [
+            'dir' => 'public/img/',
+            'host' => '/img/',
+            'tyres' => 'tyres/',
+            'models' => 'models/',
+        ],
     ),
     
     'router' => array(
@@ -34,6 +43,9 @@ return array(
         ),
         'factories' => array(
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+        ),
+        'aliases' => array(
+            'translator' => 'MvcTranslator',
         ),
     ),
     'translator' => array(
@@ -66,6 +78,36 @@ return array(
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+    ),
+    'mail' => array(
+        'MailSMTP' => array( 
+            'default_sender' => 'partspostavka@bk.ru',
+            'alias_sender' => 'Поставка Запчастей',
+            'transport' => array(
+                'type' => 'smtp',
+                'options' => array(
+                    'host' => 'smtp.mail.ru',
+                    'port' => 465,
+                    'connection_class'  => 'login',
+                    'connection_config' => array(
+                        'username' => 'partspostavka@bk.ru',
+                        'password' => 'postavka2016',
+                        'ssl' => 'ssl'
+                    ),
+                ),  
+            ),
+        ),
+    ),
+    'translator' => array(
+        'locale' => 'ru_RU',
+        'translation_files' => array(
+			array(
+				'type' => 'phpArray',
+				'filename' =>  'vendor/zendframework/zendframework/resources/languages/ru/Zend_Validate.php',
+				'locale'  => 'ru_RU',
+				'text_domain' => 'default',
+			),
         ),
     ),
   

@@ -14,6 +14,7 @@ class Model implements InputFilterAwareInterface
     public $aliases;
     public $brandId;
     public $season;
+    public $images;
     
     private $brand;
     private $tyres;
@@ -34,10 +35,38 @@ class Model implements InputFilterAwareInterface
         $this->aliases  = (isset($data['aliases']))  ? $data['aliases'] : null;
         $this->brandId  = (isset($data['brandId']))  ? $data['brandId'] : null;
         $this->season  = (isset($data['season']))  ? $data['season'] : null;
+        $this->images  = (isset($data['images']))  ? $data['images'] : null;
     }
     
     public function getArrayCopy() {
         return get_object_vars($this);
+    }
+    
+    public function getImages() {
+        if (empty($this->images))
+            return array();
+
+        return explode(";", $this->images);
+    }
+
+    public function addImage($file) {
+        $images = $this->getImages();
+        $images[] = $file;
+
+        $this->images = implode(";", $images);
+        return $this;
+    }
+
+    public function removeImageByFile($file) {
+        $images = $this->getImages();
+
+        foreach ($images as $key => $addImage)
+            if ($addImage === $file) {
+                unset($images[$key]);
+                break;
+            }
+
+        $this->images = implode(";", $images);
     }
     
     public function setBrand(\Tyres\Model\Brand $brand) {
@@ -104,10 +133,23 @@ class Model implements InputFilterAwareInterface
                     ),
                 ),
             ));
+            
+            $inputFilter->add(array('name' => 'imagesfile', 'required' => false,
+                'filters' => array(),
+                'validators' => array(
+                    array( 'name' => 'File\Size', 'options' => array( 'max' => 128*1024, ), ),
+                    array( 'name' => 'File\ImageSize', 'options' => array('minWidth' => 500, 'minHeight' => 500, 'maxWidth' => 800, 'maxHeight' => 800,), ),
+                    array( 'name' => 'File\MimeType', 'options' => array( 'image/jpg', 'image/jpeg', 'magicFile' => false), ),
+                    array( 'name' => 'File\Extension', 'options' => array('jpg', 'jpeg'), ),
+                )
+            ));
+            if ($action == 'edit') {
+                $inputFilter->get('imagesfile')->setRequired(false);
+            }
 
             if (isset($this->serviceLocator)) {
                 $inputFilter->get('name')->getValidatorChain()->addByName('Db\NoRecordExists', array(
-                    'table'   => 'tyres_brands',
+                    'table'   => 'tyres_models',
                     'field'   => 'name',
                     'exclude' => $this->id != null ? array('field' => 'id', 'value' => $this->id) : null,
                     'adapter' => $this->serviceLocator->get('Zend\Db\Adapter\Adapter')

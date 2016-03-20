@@ -11,11 +11,6 @@ echo $this->form()->openTag($form);
 ?>
 <div class="row">
     <div class='col-xs-2'>
-        <?php $name = $form->get('username');
-        echo $this->formInput($name);
-        echo $this->formElementErrors($name); ?>
-    </div>
-    <div class='col-xs-2'>
         <?php
             $email = $form->get('email');
             echo $this->formInput($email);
@@ -28,15 +23,7 @@ echo $this->form()->openTag($form);
             echo $this->formElementErrors($elem); ?>
     </div>
 </div>
-<div class="row">
-    <div class='col-xs-2'>
-        <?php
-            $code_1c = $form->get('code_1c');
-            echo $this->formInput($code_1c);
-            echo $this->formElementErrors($code_1c);
-        ?>
-    </div>
-</div>
+
 <div class="row js-datetimepicker-start-end">
     <div class='col-xs-2'>
         <div class="input-group date datetimepicker-start" >
@@ -95,11 +82,8 @@ echo $this->form()->openTag($form);
     <thead>
         <tr>
             <th>id</th>
-            <th>Логин</th>
             <th>Email</th>
             <th>Телефон</th>
-            <th>Код 1С</th>
-            <th>Баллы<br/>Акт./Возм.</th>
             <th>Регистрация</th>
             <th>IP Регистрации</th>
             <th>Последний вход</th>
@@ -111,26 +95,16 @@ echo $this->form()->openTag($form);
         <?  foreach ($users as $user) { ?>
         <tr>
             <td><?=$user->id;?></td>
-            <td><?=$user->username;?></td>
             <td><?=$user->email;?></td>
             <td><?=$user->phone;?></td>
-            <td><?=$user->code_1c;?></td>
-            <td><?=$user->points;?> / <?=$user->chance_points;?></td>
             <td><?=$this->dateFormat($user->date_register, IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM, "ru_RU");?></td>
             <td><?=$user->ip_register;?></td>
             <td><?=$this->dateFormat($user->date_last_login, IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM, "ru_RU");?></td>
             <td><?=$user->ip_last_login;?></td>
             <td>
-                <a href="#" class="btn btn-default btn-xs" role="button" title="Контакты">
-                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 
+                <a href="#" class="btn btn-default btn-xs" role="button" title="Заказы">
+                  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
                 </a>
-                <a href="#" class="btn btn-default btn-xs" role="button" title="Адреса">
-                  <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> 
-                </a>
-                <a href="#" class="btn btn-default btn-xs" role="button" title="Организации">
-                  <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> 
-                </a>
-                <?=$user->id;?>
             </td>
         </tr>
         <? } ?>

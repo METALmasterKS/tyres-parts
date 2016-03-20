@@ -5,7 +5,7 @@ namespace Auth\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-use Auth\Form\UserLoginForm;
+use Auth\Form\UserLogin;
 use Auth\Utility\UserPassword;
 
 use Zend\Authentication\AuthenticationService;
@@ -25,29 +25,23 @@ class UserController extends AbstractActionController
         if ($authService->hasIdentity())
             return $this->redirect()->toRoute('account');
         
-        $form = new UserLoginForm('loginForm');
+        $form = new UserLogin('loginForm');
 
         if ($this->getRequest()->isPost()) {
-            $form->getInputFilter()->add([ 'name' => 'username', 'required' => true, 'filters' => array( array('name' => 'StripTags'), array('name' => 'StringTrim')), ]);
+            $form->getInputFilter()->add([ 'name' => 'email', 'required' => true, 'filters' => array( array('name' => 'StripTags'), array('name' => 'StringTrim')), ]);
             $form->getInputFilter()->add([ 'name' => 'password', 'required' => true, 'filters' => array( array('name' => 'StripTags'), array('name' => 'StringTrim')), ]);
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
-                $userPassword = new UserPassword();
-                $encyptPass = $userPassword->create($form->get('password')->getValue());
-
                 $authService = $this->getServiceLocator()->get('UserAuthService');
-                /*$authService->getAdapter()
-                    ->setIdentity($loginForm->get('email')->getValue())
-                    ->setCredential($encyptPass);*/
                 
                 $authService->getAdapter()
-                    ->setIdentity($form->get('username')->getValue())
+                    ->setIdentity($form->get('email')->getValue())
                     ->setCredential(sha1($form->get('password')->getValue()));
                 $result = $authService->authenticate();
                 if ($result->isValid()) {
-                    $user = $this->getServiceLocator()->get('AuthModelUserTable')->getUserByName($authService->getIdentity());
+                    $user = $this->getServiceLocator()->get('AuthModelUserTable')->getUserByEmail($authService->getIdentity());
                     $user->date_last_login = time();
-                    $user->ip_last_login = $this->getRequest()->getServer('HTTP_X_REAL_IP');
+                    $user->ip_last_login = $this->getRequest()->getServer('REMOTE_ADDR');
                     
                     $this->getServiceLocator()->get('AuthModelUserTable')->saveUser($user);
                     unset($user->password);
@@ -83,24 +77,24 @@ class UserController extends AbstractActionController
                 $user->exchangeArray($form->getData());
                 $user->password = sha1($form->get('password')->getValue());
                 $user->date_register = time();
-                $user->ip_register = $this->getRequest()->getServer('HTTP_X_REAL_IP');
+                $user->ip_register = $this->getRequest()->getServer('REMOTE_ADDR');
                 
                 if ($this->getServiceLocator()->get('AuthModelUserTable')->saveUser($user))
                 {
-                    $smtp = $this->getServiceLocator()->get('YandexSMTP');
+                    $smtp = $this->getServiceLocator()->get('MailSMTP');
                     //адреса менеджеров
                     $config = $this->getServiceLocator()->get('config');
                     $MAILcfg = $config['settings']['mail'];
                     //письмо для менеджеров
                     $mail = new \Mail\Message();
-                    $mail->setBody("Зарегистрирован новый пользователь ".implode("\n", [$form->get('email')->getValue(), $form->get('username')->getValue(), $form->get('password')->getValue()]));
+                    $mail->setBody("Зарегистрирован новый пользователь ".implode("\n", [$form->get('email')->getValue(), $form->get('password')->getValue()]));
                     $mail->addTo($MAILcfg['managers']);
                     $mail->setSubject('Регистрация нового пользователя на сайте');
                     $smtp->send($mail);
-                    
+                    sleep(3);
                     //письмо для пользователей
                     $mail = new \Mail\Message();
-                    $mail->setBody(implode("\n", [$form->get('email')->getValue(), $form->get('username')->getValue(), $form->get('password')->getValue()]));
+                    $mail->setBody(implode("\n", [$form->get('email')->getValue(), $form->get('password')->getValue()]));
                     $mail->addTo($form->get('email')->getValue());
                     $mail->setSubject('Регистрация на сайте '.$this->getRequest()->getServer('HOST'));
                     $smtp->send($mail);
@@ -126,14 +120,6 @@ class UserController extends AbstractActionController
         
         $form = new \Auth\Form\UserResetPassword();
         if ($this->getRequest()->isPost()) {
-            $form->getInputFilter()->get('username')->getValidatorChain()->addByName('Db\RecordExists', array(
-                'table'   => 'users',
-                'field'   => 'username',
-                'adapter' => $this->getServiceLocator()->get('DBMaster'),
-                'messages' => array( 
-                    \Zend\Validator\Db\AbstractDb::ERROR_NO_RECORD_FOUND => 'Не существует пользователя с данным логином.', 
-                ),
-            ));
             $form->getInputFilter()->get('email')->getValidatorChain()->addByName('Db\RecordExists', array(
                 'table'   => 'users',
                 'field'   => 'email',
@@ -145,7 +131,6 @@ class UserController extends AbstractActionController
             
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
-                $login = $form->get('username')->getValue();
                 $email = $form->get('email')->getValue();
                 if ($login == null && $email == null) {
                     $this->FlashMessenger()->addErrorMessage('Одно из полей должно быть заполнено.'); 
@@ -165,7 +150,7 @@ class UserController extends AbstractActionController
                     //письмо 
                     $smtp = $this->getServiceLocator()->get('YandexSMTP');
                     $mail = new \Mail\Message();
-                    $mail->setBody(implode("\n", [$user->username, $user->email, $newPassword]));
+                    $mail->setBody(implode("\n", [$user->email, $newPassword]));
                     $mail->addTo($user->email);
                     $mail->setSubject('Восстановление доступа к личному кабинету сайта '.$this->getRequest()->getServer('HOST'));
                     $smtp->send($mail);

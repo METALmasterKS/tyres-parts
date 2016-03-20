@@ -90,9 +90,9 @@ class UserTable {
 		return $row;
 	}
 	
-	public function getUserByName($username) {
+	public function getUserByEmail($mail) {
 	    $rowset = $this->tableGateway->select(array(
-	    		'username' => $username
+	    		'email' => $mail
 	    ));
 	    $row = $rowset->current();
 	    
