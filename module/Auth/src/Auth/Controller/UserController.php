@@ -148,7 +148,7 @@ class UserController extends AbstractActionController
                     $this->getServiceLocator()->get('AuthModelUserTable')->saveUser($user);
                     
                     //письмо 
-                    $smtp = $this->getServiceLocator()->get('YandexSMTP');
+                    $smtp = $this->getServiceLocator()->get('MailSMTP');
                     $mail = new \Mail\Message();
                     $mail->setBody(implode("\n", [$user->email, $newPassword]));
                     $mail->addTo($user->email);
