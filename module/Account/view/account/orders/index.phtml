@@ -1,0 +1,16 @@
+<? 
+$title = 'Личный кабинет. Заказы.';
+$this->headtitle($title);
+?>
+
+<div class="tabs-block">
+    <?php echo $this->navigation('Navigation')->menu()
+            ->setContainer($this->navigation('Navigation')->findOneBy('id','home-lk'))
+            ->setMaxDepth(0)
+            ->setPartial(array('partial/lkMenu.phtml', 'Account'))
+            ;
+    ?>
+</div>
+
+<div><?=$title;?></div>
+

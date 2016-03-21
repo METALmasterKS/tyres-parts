@@ -21,11 +21,24 @@ class Module
         $moduleRouteListener->attach($eventManager);
         
         \Zend\Navigation\Page\Mvc::setDefaultRouter ($e->getRouter());
+        
+        \Zend\Validator\AbstractValidator::setDefaultTranslator($e->getApplication()->getServiceManager()->get('Translator'));
+        
+        \Locale::setDefault('ru_RU');
+        
+        $this->getSettings($e->getApplication());
     }
 
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+    
+    public function getSettings($application){
+        $config = $application->getServiceManager()->get('config');
+        $settings = $config['settings'];
+        $viewModel = $application->getMvcEvent()->getViewModel();
+        $viewModel->settings = $settings;
     }
 
     public function getAutoloaderConfig()

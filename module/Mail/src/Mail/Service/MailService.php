@@ -1,0 +1,95 @@
+<?php
+/**
+ * ZF2 Mail Manager
+ *
+ * @link        https://github.com/ripaclub/zf2-mailman
+ * @copyright   Copyright (c) 2014, RipaClub
+ * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
+ */
+namespace Mail\Service;
+
+use Mail\Message;
+use Zend\Mail\Transport\TransportInterface;
+use Zend\Mime;
+
+/**
+ * Class MailService
+ *
+ * @package MailMan\Service
+ */
+class MailService implements MailInterface
+{
+    /**
+     * @var TransportInterface
+     */
+    protected $transport;
+
+    /**
+     * @var string
+     */
+    protected $defaultSender = null;
+
+    /**
+     * @var string
+     */
+    protected $aliasSender = null;
+
+
+    /**
+     * @var array
+     */
+    protected $additionalInfo = [];
+
+    /**
+     * @param TransportInterface $transport
+     * @param null $defaultSender
+     * @param null $aliasSender
+     */
+    public function __construct(TransportInterface $transport, $defaultSender = null, $aliasSender = null)
+    {
+        $this->transport = $transport;
+        $this->defaultSender = $defaultSender;
+        $this->aliasSender = $aliasSender;
+    }
+
+    /**
+     * @param Message $message
+     */
+    public function send(Message $message)
+    {
+        $this->checkFrom($message);
+        return $this->transport->send($message);
+    }
+
+    /**
+     * @param Message $message
+     * @return $this
+     */
+    protected function checkFrom(Message $message)
+    {
+        if ($this->defaultSender) {
+            if ($message->getFrom()->count() == 0) {
+                $message->setFrom($this->defaultSender, $this->aliasSender);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAdditionalInfo()
+    {
+        return $this->additionalInfo;
+    }
+
+    /**
+     * @param array $additionalInfo
+     * @return self
+     */
+    public function setAdditionalInfo(array $additionalInfo)
+    {
+        $this->additionalInfo = $additionalInfo;
+        return $this;
+    }
+}

@@ -32,7 +32,18 @@ echo $this->form()->openTag($form);
         echo $this->formElementErrors($name); ?>
     </div>
 </div>
-
-<?php echo $this->formElement($form->get('addModel')) ?>
+<?php echo $this->formElement($form->get('images')) ?>
+<div class="form-group">
+    <? $elem = $form->get('imagesfile'); ?>
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <?php
+        echo $this->formElement($elem);
+        echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<div class="form-group">
+    <?php echo $this->formElement($form->get('addModel')) ?>
+</div>
 
 <?php echo $this->form()->closeTag() ?>

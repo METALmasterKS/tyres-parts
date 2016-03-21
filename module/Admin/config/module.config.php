@@ -54,6 +54,7 @@ return array(
     'controller_plugins' => array(
         'invokables' => array(
             'AdminNavigationTree' => 'Admin\Controller\Plugin\AdminNavigationTree',
+            'ModelImageCreator' => 'Admin\Controller\Plugin\ModelImageCreator',
         )
     ),
     'view_manager' => array(

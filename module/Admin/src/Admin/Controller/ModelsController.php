@@ -111,6 +111,7 @@ class ModelsController extends AbstractActionController {
             $form->setInputFilter($model->getInputFilter('edit'));
             $post = array_merge_recursive(
                 $this->getRequest()->getPost()->toArray(),
+                $this->getRequest()->getFiles()->toArray(),
                 ['id' => $modelId]    
             );
             $form->setData($post);
@@ -119,6 +120,14 @@ class ModelsController extends AbstractActionController {
                 $clonemodel = clone $model;
                 $model->exchangeArray($form->getData());
                 $model->brandId = $clonemodel->brandId;
+                
+                $imageCreator = $this->ModelImageCreator($clonemodel);
+                foreach ($form->getData()['imagesfile'] as $imgfile){
+                    if ($imageCreator->updateImageFile($imgfile)){
+                        $model->addImage($imageCreator->getImageFileName());
+                    }
+                }
+                
                 $modelTable->saveModel($model);
                 
                 $this->FlashMessenger()->addSuccessMessage('Модель сохранена.');
@@ -133,6 +142,7 @@ class ModelsController extends AbstractActionController {
         
         return new ViewModel(array(
             'form' => $form,
+            'modelId' => $modelId,
             )
         );
     }
@@ -145,6 +155,27 @@ class ModelsController extends AbstractActionController {
         
         $modelTable = $this->getServiceLocator()->get('TyresModelModelTable');
         $modelTable->deleteModel($modelId);
+        
+        $jsonModel = new \Zend\View\Model\JsonModel();
+        $jsonModel->setVariables(array(
+            'success' => true,
+        ));
+        return $jsonModel;
+    }
+    
+    public function imageremoveAction(){
+        if (!$this->getRequest()->isXmlHttpRequest()) 
+            return false;
+        
+        $modelId = $this->params()->fromPost('modelid');
+        $modelTable = $this->getServiceLocator()->get('TyresModelModelTable');
+        $model = $modelTable->getModel($modelId);
+        
+        $imageName = $this->getRequest()->getPost('imagename');
+        
+        $this->ModelImageCreator($model)->removeImages($imageName);
+        $model->removeImageByFile($imageName);
+        $modelTable->saveModel($model);
         
         $jsonModel = new \Zend\View\Model\JsonModel();
         $jsonModel->setVariables(array(

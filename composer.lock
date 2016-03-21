@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "66b91eef8dd38dc4546b6018a71184a9",
-    "content-hash": "d10da5f95cd699f11fc4664797d01569",
+    "hash": "5fbb0c11d145927a2f7d10f0a19992e7",
+    "content-hash": "084d61ed3e80af894a091f4f78bc0721",
     "packages": [
         {
             "name": "bjyoungblood/bjy-profiler",
@@ -111,6 +111,47 @@
                 "zf2"
             ],
             "time": "2016-02-14 10:58:28"
+        },
+        {
+            "name": "verot/class.upload.php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/verot/class.upload.php.git",
+                "reference": "f1c6e3c3d54b42171c4fdb67c8087c553a9e8d07"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/verot/class.upload.php/zipball/f1c6e3c3d54b42171c4fdb67c8087c553a9e8d07",
+                "reference": "f1c6e3c3d54b42171c4fdb67c8087c553a9e8d07",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/class.upload.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPLv2"
+            ],
+            "authors": [
+                {
+                    "name": "Colin Verot",
+                    "email": "colin@verot.net"
+                }
+            ],
+            "description": "This PHP class uploads files and manipulates images very easily.",
+            "homepage": "http://www.verot.net/php_class_upload.htm",
+            "keywords": [
+                "gd",
+                "upload"
+            ],
+            "time": "2016-02-14 22:52:12"
         },
         {
             "name": "zendframework/zend-developer-tools",
@@ -347,6 +388,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "verot/class.upload.php": 20,
         "zendframework/zend-developer-tools": 20,
         "bjyoungblood/bjy-profiler": 20
     },

@@ -1,27 +1,32 @@
+<? $IMG = $this->layout()->settings['images']; ?>
 <div class="middle_inner">
     <section class="content_wrap fullwidth cmsms_woo">
         <!--_________________________ Start Content _________________________ -->
         <div class="middle_content entry" role="main">
             <div itemscope itemtype="http://schema.org/Product" id="product-1955" class="cmsms_single_product post-1955 product type-product status-publish has-post-thumbnail featured shipping-taxable purchasable product-type-simple instock">
                 <div class="cmsms_product_left_column">
-                        <div class="images cmsms_product_images">
-                            <a href="../../wp-content/uploads/2014/12/091.jpg" itemprop="image" class="woocommerce-main-image cmsms_product_image" title="09" rel="ilightbox[cmsms_product_gallery]">
-                                <img width="500" height="500" src="../../wp-content/uploads/2014/12/091-500x500.jpg" class="attachment-shop_single size-shop_single wp-post-image" alt="09" title="09" srcset="http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-200x200.jpg 200w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-300x300.jpg 300w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-55x55.jpg 55w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-250x250.jpg 250w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-580x580.jpg 580w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-90x90.jpg 90w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-500x500.jpg 500w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091.jpg 600w" sizes="(max-width: 500px) 100vw, 500px" />
+                    <div class="images cmsms_product_images">
+                        <? $images = $model->getImages(); $firstImage = current($images); ?>
+                        <? if ($firstImage != null) { ?>
+                        <a href="<?=implode('', [$IMG['host'],$IMG['tyres'],$IMG['models'],$firstImage])?>" itemprop="image" class="woocommerce-main-image cmsms_product_image" title="" rel="ilightbox[cmsms_product_gallery]">
+                            <img width="500" height="500" 
+                                 src="<?=implode('', [$IMG['host'],$IMG['tyres'],$IMG['models'],$firstImage])?>" 
+                                 class="attachment-shop_single size-shop_single wp-post-image" 
+                                 alt="<?=$firstImage;?>" title="" 
+                                 sizes="(max-width: 500px) 100vw, 500px" />
+                        </a>
+                        <? } else { ?>
+                        <img width="100%" src="holder.js/290x290/#aaa:#fff/text:Нет фото" />
+                        <? } ?>
+                        <? if (count($images) > 0) { ?>
+                        <div class="thumbnails cmsms_product_thumbs">
+                            <? foreach ($images as $image) { ?>
+                            <a href="<?=implode('', [$IMG['host'],$IMG['tyres'],$IMG['models'],$image])?>" class="cmsms_product_thumb" title="" rel="ilightbox[cmsms_product_gallery]">
+                                <img width="90" height="90" src="<?=implode('', [$IMG['host'],$IMG['tyres'],$IMG['models'],$image])?>" class="attachment-shop_thumbnail size-shop_thumbnail" alt="<?=$image;?>" sizes="(max-width: 90px) 100vw, 90px" />
                             </a>
-                            <div class="thumbnails cmsms_product_thumbs">
-                                <a href="../../wp-content/uploads/2014/12/09-1.jpg" class="cmsms_product_thumb" title="09-1" rel="ilightbox[cmsms_product_gallery]">
-                                    <img width="90" height="90" src="../../wp-content/uploads/2014/12/09-1-90x90.jpg" class="attachment-shop_thumbnail size-shop_thumbnail" alt="09-1" srcset="http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-1-200x200.jpg 200w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-1-300x300.jpg 300w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-1-55x55.jpg 55w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-1-250x250.jpg 250w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-1-580x580.jpg 580w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-1-90x90.jpg 90w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-1-500x500.jpg 500w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-1.jpg 600w" sizes="(max-width: 90px) 100vw, 90px" />
-                                </a>
-                                <a href="../../wp-content/uploads/2014/12/09-2.jpg" class="cmsms_product_thumb" title="09-2" rel="ilightbox[cmsms_product_gallery]">
-                                    <img width="90" height="90" src="../../wp-content/uploads/2014/12/09-2-90x90.jpg" class="attachment-shop_thumbnail size-shop_thumbnail" alt="09-2" srcset="http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-2-200x200.jpg 200w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-2-300x300.jpg 300w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-2-55x55.jpg 55w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-2-250x250.jpg 250w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-2-580x580.jpg 580w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-2-90x90.jpg 90w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-2-500x500.jpg 500w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-2.jpg 600w" sizes="(max-width: 90px) 100vw, 90px" />
-                                </a>
-                                <a href="../../wp-content/uploads/2014/12/09-3.jpg" class="cmsms_product_thumb" title="09-3" rel="ilightbox[cmsms_product_gallery]">
-                                    <img width="90" height="90" src="../../wp-content/uploads/2014/12/09-3-90x90.jpg" class="attachment-shop_thumbnail size-shop_thumbnail" alt="09-3" srcset="http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-3-200x200.jpg 200w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-3-300x300.jpg 300w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-3-55x55.jpg 55w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-3-250x250.jpg 250w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-3-580x580.jpg 580w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-3-90x90.jpg 90w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-3-500x500.jpg 500w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/09-3.jpg 600w" sizes="(max-width: 90px) 100vw, 90px" />
-                                </a>
-                                <a href="../../wp-content/uploads/2014/12/091.jpg" class="cmsms_product_thumb" title="09" rel="ilightbox[cmsms_product_gallery]">
-                                    <img width="90" height="90" src="../../wp-content/uploads/2014/12/091-90x90.jpg" class="attachment-shop_thumbnail size-shop_thumbnail" alt="09" srcset="http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-200x200.jpg 200w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-300x300.jpg 300w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-55x55.jpg 55w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-250x250.jpg 250w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-580x580.jpg 580w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-90x90.jpg 90w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091-500x500.jpg 500w, http://garage.cmsmasters.net/wp-content/uploads/2014/12/091.jpg 600w" sizes="(max-width: 90px) 100vw, 90px" />
-                                </a>
-                            </div>
+                            <? } ?>
+                        </div>
+                        <? } ?>
                     </div>
                 </div>
                 <div class="summary entry-summary cmsms_product_right_column">

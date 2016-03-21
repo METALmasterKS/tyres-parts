@@ -173,9 +173,21 @@
                     <div class="header_top" data-height="35">
                         <div class="header_top_outer">
                             <div class="header_top_inner">
-                                <div class="header_top_left"><div class="header_top_aligner"></div><div class="meta_wrap"><div class="meta_wrap_left"><span class="adress cmsms-icon-location-3">Brooklyn, NY 10036, United States</span> <span class="phone cmsms-icon-phone-4">1-800-123-1234</span> <a href="index.html#" class="mail cmsms-icon-mail-3">example@garage.com</a></div>
-
-                                        <div class="meta_wrap_right"><span>Hours:</span><span>Mon-Fri:</span>  8:30am-5:30pm <span>Sat:</span>  9:00am-12:00pm <span>Sun:</span>Closed</div></div></div>					<div class="cl"></div>
+                                <div class="header_top_left"><div class="header_top_aligner"></div><div class="meta_wrap">
+                                        <div class="meta_wrap_left">
+                                            <span class="adress cmsms-icon-location-3">Brooklyn, NY 10036, United States</span> <span class="phone cmsms-icon-phone-4">1-800-123-1234</span> <a class="mail cmsms-icon-mail-3" href="#">example@garage.com</a></div>
+                                        <div class="meta_wrap_right">
+                                            <? if ($this->layout()->user instanceof \Auth\Model\User) { ?>
+                                                <a href="<?=$this->url('account');?>">Личный кабинет</a>
+                                                 / <?=$this->layout()->user->email; ?> / 
+                                                <a href="<?=$this->url('auth/user/logout');?>">Выход</a>
+                                            <? } else { ?>
+                                            <a href="<?=$this->url('auth/user/login');?>">Вход</a> / 
+                                            <a href="<?=$this->url('auth/default', ['controller' => 'user', 'action' => 'registration']);?>">Регистрация</a>
+                                            <? } ?>
+                                        </div>
+                                    </div>
+                                </div><div class="cl"></div>
                             </div>
                         </div>
                         <div class="header_top_but closed">

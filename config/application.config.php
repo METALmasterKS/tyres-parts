@@ -11,8 +11,10 @@ return array(
         'Cli',
         'Application',
         'Tyres',
+        'Account',
         'Auth',
         'Admin',
+        'Mail',
         
         'ZendDeveloperTools',
         'BjyProfiler',

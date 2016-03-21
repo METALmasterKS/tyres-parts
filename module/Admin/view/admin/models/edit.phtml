@@ -1,3 +1,4 @@
+<? $IMG = $this->layout()->settings['images']; ?>
 <? 
 $title = 'Редактирование модели шин.';
 $this->headtitle('Администрирование. '.$title);
@@ -11,28 +12,57 @@ $formLabel = $this->plugin('formLabel');
 // Render the opening tag
 echo $this->form()->openTag($form);
 ?>
-<div class="row">
+<?php $elem = $form->get('name');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
     <div class='col-xs-4'>
-        <?php $name = $form->get('name');
-        echo $this->formInput($name);
-        echo $this->formElementErrors($name); ?>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
     </div>
 </div>
-<div class="row">
+<?php $elem = $form->get('aliases');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
     <div class='col-xs-4'>
-        <?php $name = $form->get('aliases');
-        echo $this->formInput($name);
-        echo $this->formElementErrors($name); ?>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
     </div>
 </div>
-<div class="row">
+<?php $elem = $form->get('season');?>
+<div class="form-group">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
     <div class='col-xs-4'>
-        <?php $name = $form->get('season');
-        echo $this->formInput($name);
-        echo $this->formElementErrors($name); ?>
+        <? echo $this->formElement($elem); echo $this->formElementErrors($elem); ?>
     </div>
 </div>
-
-<?php echo $this->formElement($form->get('saveModel')) ?>
+<?php echo $this->formElement($form->get('images')) ?>
+<div class="form-group">
+    <? $elem = $form->get('imagesfile'); ?>
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <? if ($form->get('images')->getValue() != null) { ?>
+            <? foreach (explode(';', $form->get('images')->getValue()) as $key => $image) { ?>
+            <div class="inline image-block-<?=$key?>" >
+                <img width="120px" src="<?=implode('', [$IMG['host'],$IMG['tyres'],$IMG['models'],$image]);?>"/>
+                <div class="checkbox">
+                    <button title="Удалить" role="button" class="js-ajax-remove btn btn-default btn-xs" 
+                        postparamname="modelid,imagename" 
+                        modelid="<?=$modelId;?>"
+                        imagename="<?=$image;?>"
+                        url="<?=$this->url('admin/default', ['controller'=>'models', 'action'=>'imageremove']);?>" 
+                        confirm='Удалить изображение "<?=$image;?>"?' 
+                        removeselector=".image-block-<?=$key;?>">
+                        <span aria-hidden="true" class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <? } ?>
+        <? } ?>
+        <?php
+        echo $this->formElement($elem);
+        echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<div class="form-group">
+    <?php echo $this->formElement($form->get('saveModel')) ?>
+</div>
 
 <?php echo $this->form()->closeTag() ?>
