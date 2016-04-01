@@ -19,7 +19,7 @@ class BrandsController extends AbstractActionController {
         $view = new ViewModel();
         
         $brandTable = $this->getServiceLocator()->get('TyresModelBrandTable');
-        $brands = $brandTable->getBrands(['tyresCountLoad' => true, 'order' => 'name']);
+        $brands = $brandTable->getBrands(['tyresCountLoad' => true, 'order' => 'name', 'tyresCountGreaterThan' => 0, ]);
         
         $alphabetBrands = array();
         $trash = array();

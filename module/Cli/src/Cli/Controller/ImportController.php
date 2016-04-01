@@ -532,7 +532,7 @@ class ImportController extends AbstractActionController {
         return $this->brandIdPatternMap;
     }
     
-    private $runFlatStrs = ['Run Flat','RunFlat','RFT','RSC','SSR','ZP','r-f','rf',];
+    private $runFlatStrs = ['Run Flat','RunFlat','run on flat','ROF','RFT','RSC','SSR','ZP','r-f','rf',];
     private function getRunFlatPattern($type = null) {
         $runflat = $this->runFlatStrs;
         

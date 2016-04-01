@@ -5,6 +5,22 @@
             <div class="cmsms_row_inner">
                 <div class="cmsms_row_margin cmsms_14141414">
                     <? foreach ($alphabetBrands as $A => $brands) { ?>
+                        <? foreach ($brands as $A => $brand) { ?>
+                            <div class="cmsms_column one_fourth">
+                                <p><a class="font-13px font-grey" href="<?=$this->url('home/tyres/brands/brand', array('name' => $brand->name));?>">
+                                    <?=$brand->name; ?>
+                                </a>
+                                <span class="font-11px font-grey">(<?=$brand->getTyresCount();?>)</span></p>
+                            </div>
+                        <? } ?>
+                    <? } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <?/* foreach ($alphabetBrands as $A => $brands) { ?>
                     <div class="cmsms_column one_fourth">
                         <div class="cmsms_toggles toggles_mode_toggle">
                             <div data-tags="all " class="cmsms_toggle_wrap">
@@ -28,9 +44,4 @@
                             </div>
                         </div>
                     </div>
-                    <? } ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                    <? } */?>

@@ -52,6 +52,10 @@ class BrandTable extends TableGateway
                 ->group('tm.brandId');
             
             $select->join(array('tc' => $selectIdCount), 'tc.id = tyres_brands.id', array('tyresCount'), 'LEFT');
+            
+            if (isset($params['tyresCountGreaterThan'])) {
+                $select->where->greaterThan('tc.tyresCount', $params['tyresCountGreaterThan']);
+            }
         }
         
         //порядок
