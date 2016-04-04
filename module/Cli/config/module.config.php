@@ -50,6 +50,16 @@ return array(
                     )
                 ),
                 
+                'loadYaMarketTyreModelsImages' => array(
+                    'options' => array(
+                        'route'    => 'loadYaMarketTyreModelsImages',
+                        'defaults' => array(
+                            'controller' => 'Cli\Controller\Images',
+                            'action'     => 'loadYaMarketTyreModelsImages'
+                        )
+                    )
+                ),
+                
             )
         )
     ),
@@ -59,6 +69,7 @@ return array(
             'Cli\Controller\Index'     => 'Cli\Controller\IndexController',
             'Cli\Controller\Import'     => 'Cli\Controller\ImportController',
             'Cli\Controller\Imap'     => 'Cli\Controller\ImapController',
+            'Cli\Controller\Images'     => 'Cli\Controller\ImagesController',
         ),
     ),
     'controller_plugins' => array(

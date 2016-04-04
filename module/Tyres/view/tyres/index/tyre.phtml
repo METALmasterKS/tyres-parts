@@ -6,7 +6,7 @@
             <div itemscope itemtype="http://schema.org/Product" id="product-1955" class="cmsms_single_product post-1955 product type-product status-publish has-post-thumbnail featured shipping-taxable purchasable product-type-simple instock">
                 <div class="cmsms_product_left_column">
                     <div class="images cmsms_product_images">
-                        <? $images = $model->getImages(); $firstImage = current($images); ?>
+                        <? $images = $model->getImages(); $firstImage = array_shift($images); ?>
                         <? if ($firstImage != null) { ?>
                         <a href="<?=implode('', [$IMG['host'],$IMG['tyres'],$IMG['models'],$firstImage])?>" itemprop="image" class="woocommerce-main-image cmsms_product_image" title="" rel="ilightbox[cmsms_product_gallery]">
                             <img width="500" height="500" 

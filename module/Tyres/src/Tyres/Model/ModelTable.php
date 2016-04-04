@@ -47,6 +47,9 @@ class ModelTable extends TableGateway
         if (isset($params['brandId']))
             $select->where->equalTo('brandId', $params['brandId']);
         
+        if (isset($params['images']))
+            $select->where->like('images', $params['images']);
+        
         //getByIds
         if (isset($params['ids']))
             $select->where->in('id', $params['ids']);

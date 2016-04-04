@@ -30,7 +30,7 @@ class ModelImageCreator extends ImageCreatorAbstract
             $success &= $upload->processed;
             $this->modelImageFileName = $upload->file_dst_name;
             $this->savedFilePaths[] = $upload->file_dst_pathname;
-            
+            $upload->clean();
         }
         
         return $success;

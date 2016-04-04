@@ -49,6 +49,7 @@ class Module implements
             // Describe available commands
             'taskManagerDaemon'     => 'Запуск обработчика заданий, запускается по incron или cron',
             'importTyres'     => 'Запуск импорта каталога шин',
+            'loadYaMarketTyreModelsImages' => 'Загрузка фотографий моделей шин с ЯМаркет',
             //'autoImportProcessCatalog' => 'Запуск обработки таблицы tmp_import',
             
 
