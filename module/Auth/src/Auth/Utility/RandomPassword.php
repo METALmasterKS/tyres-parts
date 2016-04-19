@@ -7,18 +7,21 @@ class RandomPassword
 
     private $minLength;
     private $maxLength;
+    public $onlyDigits;
 
     public function __construct()
     {
         $this->minLength = 6;
         $this->maxLength = 8;
+        $this->onlyDigits = false;
     }
 
     public function getRandomPassword()
     {
         $minLength = 6;
         $maxLength = 8;
-        $rgLetters = array('a', 'b', 'c', 'd', 'e', 'f',
+        $rgLetters = array(
+            'a', 'b', 'c', 'd', 'e', 'f',
             'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'r', 's',
             't', 'u', 'v', 'x', 'y', 'z',
@@ -28,6 +31,10 @@ class RandomPassword
             'T', 'U', 'V', 'X', 'Y', 'Z',
             '1', '2', '3', '4', '5', '6',
             '7', '8', '9', '0');
+        if ($this->onlyDigits) {
+            $rgLetters = array('1', '2', '3', '4', '5', '6',
+            '7', '8', '9', '0');
+        }
         shuffle($rgLetters);
 
         $password = join('', array_slice($rgLetters, 0, mt_rand($minLength, $maxLength)));
