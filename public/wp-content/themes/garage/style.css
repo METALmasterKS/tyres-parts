@@ -7273,12 +7273,14 @@ blockquote:before {
   min-width: 100px;
   width: 100%;
 }
-.wpcf7-form .wpcf7-form-control-wrap input {
-  margin-top: 5px;
+.wpcf7-form .wpcf7-form-control-wrap input, .wpcf7-form .wpcf7-form-control-wrap select {
+  margin-top: 3px;
+  margin-bottom: 7px;
 }
 .wpcf7-form .wpcf7-form-control-wrap textarea {
   height: 140px;
-  margin-top: 5px;
+  margin-top: 3px;
+  margin-bottom: 7px;
   resize: vertical;
 }
 .wpcf7-form .wpcf7-form-control.wpcf7-submit {

@@ -1,0 +1,117 @@
+<? $this->layout()->title = $section->name; ?>
+<section class="content_wrap l_sidebar">
+    <div class="sidebar_layout_11 sidebar" style="float:left; padding: 30px 20px 30px 0;">
+        <aside class="widget tribe_mini_calendar_widget" id="tribe-mini-calendar-2">
+            <!--h3 class="widgettitle">Разделы</h3-->
+            <!-- Removing this wrapper class will break the claendar javascript, please avoid and extend as needed -->
+            <div class="tribe-mini-calendar-wrapper">
+                <!-- List -->
+                <div class="tribe-mini-calendar-list-wrapper">
+                    <div class="tribe-events-loop">
+                        <? $menuItems = $section->getSections(); 
+                            if (count($menuItems) == 0 && isset($neighbors) && count($neighbors) > 0) {
+                                $menuItems = $neighbors;
+                            }
+                        ?>
+                        <? foreach ($menuItems as $i => $sect) { ?>
+                        <!-- Event  -->
+                        <div class="type-tribe_events post-2979 tribe-clearfix tribe-events-category-car tribe-events-category-practic tribe-events-venue-1889 tribe-events-organizer-1633 tribe-events-first">
+                            <div class="list-date">
+                                <!--span class="list-dayname">Apr</span-->
+                                <span class="list-daynumber"><?=$i+1;?></span>
+                            </div>
+                            <div class="list-info">
+                                <h3 class="entry-title summary">
+                                    <a rel="bookmark" href="<?= $this->url('home/content/section', ['alias' => $sect->alias]); ?>"><?= $sect->name; ?></a>
+                                </h3>
+                                <div class="vcard adr location cmsms_widget_event_venue_info_loc">
+                                </div>
+                            </div>
+                        </div>
+                        <? } ?>
+                    </div><!-- .tribe-events-loop -->
+                </div> <!-- .tribe-mini-calendar-list-wrapper -->
+            </div>
+        </aside>
+    </div>
+    <!--_________________________ Start Content _________________________ -->
+    <div role="main" class="content entry" style="float: right; padding: 0 0 30px 20px;">
+        <style type="text/css">
+            #cmsms_row_570fd19487f76 .cmsms_row_outer_parent {
+                padding-top: 20px;
+            }
+
+            #cmsms_row_570fd19487f76 .cmsms_row_outer_parent {
+                padding-bottom: 50px;
+            }
+
+        </style>
+        <div class="cmsms_row cmsms_color_scheme_default" id="cmsms_row_570fd19487f76">
+            <div class="cmsms_row_outer_parent">
+                <div class="cmsms_row_outer">
+                    <div class="cmsms_row_inner">
+                        <div class="cmsms_row_margin cmsms_11">
+                            <div class="cmsms_column one_first">
+                                <? if (count($section->getTexts()) == 1 ) { ?>
+                                    <? foreach ($section->getTexts() as $text) 
+                                        echo $text->text; ?>
+                                <? } else { ?>
+                                <div id="blog_570fd194881e5" class="cmsms_wrap_blog entry-summary"><div class="blog standard">
+                                        <? foreach ($section->getTexts() as $text) { ?>
+                                        <!--_________________________ Start Link Article _________________________ -->
+                                        <article class="cmsms_default_type post-1494 post type-post status-publish format-link hentry category-uncategorized post_format-post-format-link" id="post-1494" style="padding-top:30px;">
+                                            <? if ($text->image != null) { ?>
+                                            <figure>
+                                                <a class="cmsms_img_link preloader" style="overflow:hidden;" title="<?= $text->name; ?>" href="<?=$this->url('home/content/page', ['alias' => $text->alias]); ?>">
+                                                    <img style="height:auto;" title="<?= $text->name; ?>" class="full-width wp-post-image" src="<?=$text->image;?>">
+                                                </a>
+                                            </figure>
+                                            <? } ?>
+                                            <div class="cmsms_post_cont" style="padding: 20px 60px 0 30px;">
+                                                <header class="cmsms_post_header entry-header" style='margin-bottom: 20px;'>
+                                                    <h1 class="cmsms_post_title entry-title">
+                                                        <a href="<?=$this->url('home/content/page', ['alias' => $text->alias]); ?>"><?= $text->name; ?></a>
+                                                    </h1>
+                                                </header>
+                                                <div class="cmsms_post_content entry-content">
+                                                    <? 
+                                                        echo $this->cut($text->text)->getCut();
+                                                     ?>
+                                                </div>
+                                                <footer class="cmsms_post_footer entry-meta" style="margin-top:0;border:none;">
+                                                    <!--div class="cmsms_post_meta_info">
+                                                        <a class="cmsmsLike cmsms_theme_icon_heart" id="cmsmsLike-1494" onclick="cmsmsLike(1494);return false;" href="#"><span>2</span></a>
+                                                        <a title="Comment on Premium WordPress Theme" href="http://garage.cmsmasters.net/premium-wordpress-theme/#respond" class="cmsms_post_comments cmsms_theme_icon_comment">0</a>
+                                                    </div-->
+                                                    <a href="<?=$this->url('home/content/page', ['alias' => $text->alias]); ?>" class="button cmsms_post_read_more">Читать далее<span></span></a></footer>
+                                                <div class="post_divider"></div>
+                                            </div>
+                                        </article>
+                                        <!--_________________________ Finish Link Article _________________________ -->
+                                        <? } ?>
+                                    </div><div class="cmsms_wrap_more_posts"></div>
+                                        
+                                </div>
+                                <? } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cl"></div>
+            
+    </div>
+    <!-- _________________________ Finish Content _________________________ -->
+
+
+
+
+
+</section>
+
+
+
+
+

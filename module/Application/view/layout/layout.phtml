@@ -47,6 +47,7 @@
         <link rel='stylesheet' id='theme-fonts-schemes-css'  href='wp-content/uploads/cmsms_styles/garage.css?ver=1.0.0' type='text/css' media='screen' />
         <link rel='stylesheet' id='theme-icons-css'  href='wp-content/themes/garage/css/fontello.css%3Fver=1.0.0.css' type='text/css' media='screen' />
         <link rel='stylesheet' id='animate-css'  href='wp-content/themes/garage/css/animate.css%3Fver=1.0.0.css' type='text/css' media='screen' />
+        <link rel='stylesheet' href='css/style.css' type='text/css' media='screen' />
         <!--[if lt IE 9]>
         <link rel='stylesheet' id='theme-ie-css'  href='<?=$this->basePath('wp-content/themes/garage/css/ie.css?ver=1.0.0');?>' type='text/css' media='screen' />
         <![endif]-->
@@ -266,6 +267,9 @@
                 </section>
                 <!-- _________________________ Finish Middle _________________________ -->
 
+                
+                <? echo $this->partial('partial/feedback.phtml', ['form' => $feedbackForm]);?>
+                <? echo $this->partial('partial/delimeter.phtml');?>
 
                 <!-- _________________________ Start Bottom _________________________ -->
                 <section id="bottom" class="cmsms_color_scheme_default">
@@ -583,7 +587,7 @@
         <?php echo $this->inlineScript() 
             ->appendFile('http://cdnjs.cloudflare.com/ajax/libs/less.js/2.3.1/less.min.js', 'text/javascript')
             ->appendFile('http://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js', 'text/javascript')
-//            ->appendFile('http://zf.3259404.local/js/common.js','text/javascript')
+//            ->appendFile('/js/common.js','text/javascript')
             ->appendFile('/js/client.js','text/javascript')
         ?>
     </body>
@@ -598,10 +602,10 @@
             /*->appendFile('https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js', 'text/javascript')
             ->appendFile('http://cdnjs.cloudflare.com/ajax/libs/less.js/2.3.1/less.min.js', 'text/javascript')
             ->appendFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js', 'text/javascript')
-            ->appendFile('http://zf.3259404.local/js/jquery.bootstrap-touchspin.min.js','text/javascript')
+            ->appendFile('/js/jquery.bootstrap-touchspin.min.js','text/javascript')
             ->appendFile('http://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js', 'text/javascript')
-            ->appendFile('http://zf.3259404.local/js/common.js','text/javascript')
-            ->appendFile('http://zf.3259404.local/js/client.js','text/javascript')*/
+            ->appendFile('/js/common.js','text/javascript')
+            ->appendFile('/js/client.js','text/javascript')*/
         ?>
 
     <?/*</body>*/?>

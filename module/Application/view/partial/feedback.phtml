@@ -1,0 +1,111 @@
+<div id="cmsms_row_56c81bb8bd76f" class="cmsms_row cmsms_color_scheme_default">
+    <div class="cmsms_row_outer_parent">
+        <div class="cmsms_row_outer">
+            <div class="cmsms_row_inner">
+                <div class="cmsms_row_margin">
+                    <div class="cmsms_column three_fourth">
+                        <a name="feedback"></a>
+                        <div id="cmsms_heading_56c81bb8d058f" class="cmsms_heading_wrap cmsms_heading_align_left">
+                            <h3 class="cmsms_heading">Задать вопрос менеджеру</h3>
+                            <p>Если у вас остались вопросы, связанные с предоставляемыми нами товарами и услугами, то обращайтесь к менеджерам. </p>
+                        </div>
+                        <div class="cmsms_contact_form">
+                            <div role="form" class="cmsms-form-builder" id="wpcf7-f4-p10-o1" lang="en-US" dir="ltr">
+                                <? $form->prepare(); echo $this->form()->openTag($form); ?>
+                                    <div class="one_half">
+                                    <? $theme = $form->get('theme')?>
+                                        <?=$theme->getLabel();?><br />
+                                        <span class="wpcf7-form-control-wrap your-name">
+                                            <?=$this->formElement($theme)?>
+                                            <?=$this->formElementErrors($theme) ?>
+                                        </span> 
+                                    </div>
+                                    <div class="one_half">
+                                        <? $elem = $form->get('name')?>
+                                        <?=$elem->getLabel();?><br />
+                                        <span class="wpcf7-form-control-wrap your-name">
+                                            <?=$this->formElement($elem)?>
+                                            <?=$this->formElementErrors($elem) ?>
+                                        </span> 
+                                    </div>
+                                    <div class="feedback-car-info" style="<?=$theme->getValue() == 'Запчасти' ? '' : 'display:none;';?>" >
+                                        <div class="one_half">
+                                            <? $elem = $form->get('car-brand')?>
+                                            <div><?=$elem->getLabel();?><br />
+                                                <span class="wpcf7-form-control-wrap your-name">
+                                                    <?=$this->formElement($elem)?>
+                                                    <?=$this->formElementErrors($elem) ?>
+                                                </span> 
+                                            </div>
+                                            <? $elem = $form->get('car-model')?>
+                                            <div><?=$elem->getLabel();?><br />
+                                                <span class="wpcf7-form-control-wrap your-name">
+                                                    <?=$this->formElement($elem)?>
+                                                    <?=$this->formElementErrors($elem) ?>
+                                                </span> 
+                                            </div>
+                                        </div>
+                                        <div class="one_half">
+                                            <? $elem = $form->get('car-year')?>
+                                            <div><?=$elem->getLabel();?><br />
+                                                <span class="wpcf7-form-control-wrap your-name">
+                                                    <?=$this->formElement($elem)?>
+                                                    <?=$this->formElementErrors($elem) ?>
+                                                </span> 
+                                            </div>
+                                            <? $elem = $form->get('car-vin')?>
+                                            <div><?=$elem->getLabel();?><br />
+                                                <span class="wpcf7-form-control-wrap your-name">
+                                                    <?=$this->formElement($elem)?>
+                                                    <?=$this->formElementErrors($elem) ?>
+                                                </span> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <? $elem = $form->get('message')?>
+                                    <div class="one_first"><?=$elem->getLabel();?><br />
+                                        <span class="wpcf7-form-control-wrap your-message">
+                                            <?=$this->formElement($elem)?>
+                                            <?=$this->formElementErrors($elem) ?>
+                                        </span> 
+                                    </div>
+                                    
+                                    <div class="one_half">
+                                    <? $elem = $form->get('email')?>
+                                    <p><?=$elem->getLabel();?><br />
+                                        <span class="wpcf7-form-control-wrap your-name">
+                                            <?=$this->formElement($elem)?>
+                                            <?=$this->formElementErrors($elem) ?>
+                                        </span> 
+                                    </p>
+                                    </div>
+                                    <div class="one_half">
+                                    <? $elem = $form->get('phone')?>
+                                    <p><?=$elem->getLabel();?><br />
+                                        <span class="wpcf7-form-control-wrap your-name">
+                                            <?=$this->formElement($elem)?>
+                                            <?=$this->formElementErrors($elem) ?>
+                                        </span> 
+                                    </p>
+                                    </div>
+                                    <? $elem = $form->get('feedback')?>
+                                    <div class="one_first">
+                                        <?=$this->formElement($elem)?>
+                                    </div>
+                                <? echo $this->form()->closeTag($form); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cmsms_column one_fourth">
+                        <div id="cmsms_heading_56c81bb8e4422" class="cmsms_heading_wrap cmsms_heading_align_left">
+                            <h3 class="cmsms_heading">Заголовок</h3>
+                        </div>
+                        <div class="cmsms_quotes_slider_wrap">
+                            Какая то информация
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

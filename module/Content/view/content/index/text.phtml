@@ -1,0 +1,48 @@
+<?$this->layout()->title = $text->name;?>
+<style>
+#cmsms_row_56db2fe61faed .cmsms_row_outer_parent { 
+	padding-top: 50px; 
+} 
+
+#cmsms_row_56db2fe61faed .cmsms_row_outer_parent { 
+	padding-bottom: 40px; 
+} 
+
+</style>
+<div id="cmsms_row_56db2fe61faed" class="cmsms_row cmsms_color_scheme_default">
+    <div class="cmsms_row_outer_parent">
+        <div class="cmsms_row_outer">
+            <div class="cmsms_row_inner">
+                <div class="cmsms_row_margin cmsms_11">
+                    <div class="cmsms_column one_first">
+                        <div class="entry" role="main">
+                            <div class="blog opened-article">
+
+                                <!--_________________________ Start Standard Article _________________________ -->
+
+                                <article id="post-1486" class="post-1486 post type-post status-publish format-standard has-post-thumbnail hentry category-mechanic">
+                                    
+                                    <div class="cmsms_post_content entry-content">
+                                        <? if ($text->image != null) { ?>
+                                        <p>
+                                            <img class="alignnone size-full" src="<?=$text->image;?>" >
+                                        </p>
+                                        <? } ?>
+                                        <?=$this->cut($text->text)->getText();?>
+                                        
+                                        <div class="cl"></div>
+                                            
+                                    </div>
+                                </article>
+                                <!--_________________________ Finish Standard Article _________________________ -->
+
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

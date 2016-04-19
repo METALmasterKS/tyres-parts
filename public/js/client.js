@@ -1,6 +1,15 @@
 
 jQuery(document).ready(function () {
     
+    //обратная связь тема, показ скрытие данных о машине
+    jQuery(this).on('change', '.js-feedback-theme', function(){
+        if (jQuery(this).val() == 'Запчасти') {
+            jQuery('.feedback-car-info').slideDown('fast');
+        } else {
+            jQuery('.feedback-car-info').slideUp('fast');
+        }
+    });
+    
     //ajax загрузка виджета корзины
     jQuery(".js-ajax-load-cart-content").load(loadCartContent());
     //показ виджета корзины

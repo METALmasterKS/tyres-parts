@@ -28,6 +28,8 @@ return array(
             'host' => '/img/',
             'tyres' => 'tyres/',
             'models' => 'models/',
+            'upload-images' => 'upload/images/',
+            'upload-files' => 'upload/files/',
         ],
     ),
     
@@ -39,10 +41,11 @@ return array(
     
     'service_manager' => array(
         'abstract_factories' => array(
-            
+            'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
         ),
         'factories' => array(
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+            //'fileCache' => 'Zend\Cache\Service\StorageCacheFactory',
         ),
         'aliases' => array(
             'translator' => 'MvcTranslator',
@@ -54,6 +57,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\CKEditor' => 'Application\Controller\CKEditorController',
         ),
     ),
     'controller_plugins' => array(
@@ -78,6 +82,39 @@ return array(
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+    ),
+    'view_helpers' => array(
+        'invokables' => array(
+            'cut' => 'Application\View\Helper\Cut',
+        ),
+    ),
+    'caches' => array(
+        'fileCache' => array(
+            'adapter' => array(
+                'name' => 'filesystem'
+            ),
+            'options' => array(
+              //  'cache_dir' =>  __DIR__ . '/../../data/cache/',
+                'ttl' => 24*60*60,
+            ),
+            'plugins' => array(
+                'serializer',
+                'exception_handler' => array(
+                    'throw_exceptions' => false
+                ),
+            ),
+        ),
+        'memcachedService' => array(
+            'adapter' => array(
+                'name' => 'memcached'
+            ),
+            'options' => array(
+                'servers' => array(
+                    array('host' => '127.0.0.1'),
+                    //array('host' => '192.168.0.60')
+                ),
+            ),
         ),
     ),
     'mail' => array(

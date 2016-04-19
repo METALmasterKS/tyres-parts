@@ -5,9 +5,15 @@
                 <? if ($this->navigation()->accept($page)) { ?>
                 <li id="menu-item-1557" class="menu-item menu-item-type-post_type menu-item-object-page <?=$page->isActive(true) ? 'current-menu-item':'';?> page_item page-item-10 current_page_item menu-item-depth-0">
                     <a href="<?=$page->getHref();?>"><span class="nav_bg_clr"></span><span><?=$page->getLabel();?></span></a>
-                    <? if ($page->hasPages()) { ?>
+                    <?
+                    $hasPages = false;
+                    foreach ($page->getPages() as $subPage) 
+                        if ($subPage->isVisible())
+                            $hasPages = true;
+                    if ($hasPages) { ?>
                     <ul class="sub-menu">
                         <? foreach ($page->getPages() as $subPage) { ?>
+                        <? if (!$subPage->isVisible()) continue; ?>
                         <li id="menu-item-1547" class="menu-item menu-item-type-post_type menu-item-object-page <?=$subPage->isActive(true) ? 'current-menu-item':'';?> menu-item-depth-1">
                             <a href="<?=$subPage->getHref();?>"><span><?=$subPage->getLabel();?></span></a>	
                         </li>

@@ -25,35 +25,14 @@ return array(
                     ]
                 ],
                 
-                'parts' => [
-                    'id' => 'home-parts', 
-                    'label' => 'Запчасти',
-                    'route' => 'home'
-                ],
-                
-                'service' => [
-                    'id' => 'home-service', 
-                    'label' => 'Сервис',
-                    'route' => 'home'
-                ],
-                
-                'optionalequipment' => [
-                    'id' => 'home-optionalequipment', 
-                    'label' => 'Доп. оборудование',
-                    'route' => 'home'
-                ],
-                
-                'paymentdelivery' => [
-                    'id' => 'home-paymentdelivery', 
-                    'label' => 'Оплата и доставка',
-                    'route' => 'home'
-                ],
-                
+                /*
                 'contacts' => [
                     'id' => 'home-contacts', 
                     'label' => 'Контакты',
-                    'route' => 'home'
+                    'route' => 'home/content/section',
+                    'params' => [ 'alias' => 'contacts', ],
                 ],
+                */
             ],
         ),
         'admin' => [

@@ -137,6 +137,49 @@ return array(
                     ),
                 ),
             ),
+            'content' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => 'page',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Content\Controller',
+                        'controller'    => 'Index',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => false,
+                'child_routes' => array(
+                    'section' => [
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => 's/:alias',
+                            'constraints' => array(
+                                'alias'     => '[a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Content\Controller',
+                                'controller' => 'Index',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ],
+                    'page' => [
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/:alias',
+                            'constraints' => array(
+                                'alias'     => '[a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Content\Controller',
+                                'controller' => 'Index',
+                                'action' => 'text',
+                            ),
+                        ),
+                    ],
+                ),
+            ),
+            
             
         ),
     ),
