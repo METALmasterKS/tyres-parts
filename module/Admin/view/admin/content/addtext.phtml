@@ -1,0 +1,47 @@
+<div class="page-header">
+  <h1>Добавление Раздела</h1>
+</div>
+
+<?php
+$form->prepare();
+$formLabel = $this->plugin('formLabel');
+// Render the opening tag
+echo $this->form()->openTag($form);
+?>
+<div class="row">
+    <div class='col-xs-6'>
+        <?php $name = $form->get('name');
+        echo $this->formInput($name);
+        echo $this->formElementErrors($name); ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class='col-xs-6'>
+        <?php $name = $form->get('alias');
+        echo $this->formInput($name);
+        echo $this->formElementErrors($name); ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class='col-xs-12'>
+        <?php $name = $form->get('text');
+        echo $this->formElement($name);
+        echo $this->formElementErrors($name); ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class='col-xs-6'>
+        <?php $name = $form->get('image');
+        echo $this->formInput($name);
+        echo $this->formElementErrors($name); ?>
+    </div>
+</div>
+
+
+
+<?php echo $this->formElement($form->get('addText')) ?>
+
+<?php echo $this->form()->closeTag() ?>

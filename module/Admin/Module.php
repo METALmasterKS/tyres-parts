@@ -40,10 +40,12 @@ class Module
         if (strpos($e->getRouteMatch()->getParam('controller'), __NAMESPACE__, 0) === 0) {
             $config = $e->getApplication()->getServiceManager()->get('config');
             $actionName = strtolower($e->getRouteMatch()->getParam('action', 'not-found'));
-            if (isset($config['module_layouts'][__NAMESPACE__][$actionName])) 
+            if (isset($config['module_layouts'][__NAMESPACE__][$actionName])) {
                 $e->getViewModel()->setTemplate($config['module_layouts'][__NAMESPACE__][$actionName]);
-            elseif (isset($config['module_layouts'][__NAMESPACE__]['default']))
-                $e->getViewModel()->setTemplate($config['module_layouts'][__NAMESPACE__]['default']);
+            } elseif (isset($config['module_layouts'][__NAMESPACE__]['default'])) {
+                if (!$e->getViewModel()->terminate()) 
+                    $e->getViewModel()->setTemplate($config['module_layouts'][__NAMESPACE__]['default']);
+            }
         }
     }
 

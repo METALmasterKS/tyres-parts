@@ -46,6 +46,7 @@ return array(
             'Admin\Controller\Tyres'   => 'Admin\Controller\TyresController',
             'Admin\Controller\Brands'  => 'Admin\Controller\BrandsController',
             'Admin\Controller\Models'  => 'Admin\Controller\ModelsController',
+            'Admin\Controller\Content'  => 'Admin\Controller\ContentController',
             
             'Admin\Controller\Users'   => 'Admin\Controller\UsersController',
             

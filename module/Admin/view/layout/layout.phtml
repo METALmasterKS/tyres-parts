@@ -60,11 +60,11 @@
                     <?php echo $this->navigation('Navigation')->menu()->setContainer($this->navigation('Navigation')->findOneBy('id','admin'))->setMaxDepth(1)->setPartial(array('partial/sideMenu.phtml', 'Admin'));?>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <? if ($this->flashMessenger()->hasMessages()) { ?>
                     <div class="flash-message-block">
+                    <? if ($this->flashMessenger()->hasMessages()) { ?>
                         <? echo $this->flashMessenger()->render(\Zend\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_SUCCESS, ['alert', 'alert-success', 'alert-dismissible']); ?>
-                    </div>
                     <? } ?>
+                    </div>
                     <?php echo $this->navigation('Navigation')->breadcrumbs()->setContainer($this->navigation('Navigation')->findOneBy('id','admin'))->setMinDepth(0); ?>
                     <?php echo $this->content; ?>
                 </div>
@@ -82,12 +82,15 @@
             ->appendFile('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/ru.js', 'text/javascript')
             ->appendFile('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.15.35/js/bootstrap-datetimepicker.min.js', 'text/javascript')
                 
-            //->appendFile('http://zf.3259404.local/js/html.sortable.min.js','text/javascript')    
+            //->appendFile('http://zf.glazov.local/js/html.sortable.min.js','text/javascript')    
             ->appendFile('https://code.jquery.com/ui/1.11.4/jquery-ui.js', 'text/javascript')
+            ->appendFile('/ckfinder/ckfinder.js', 'text/javascript')
+            ->appendFile('/ckeditor/ckeditor.js', 'text/javascript')
+            ->appendFile('/ckeditor/adapters/jquery.js', 'text/javascript')
 
-            ->appendFile('http://zf.3259404.local/js/common.js','text/javascript')
-            ->appendFile('http://zf.3259404.local/js/admin.js','text/javascript')
-            //->appendFile('http://zf.3259404.local/js/client.js','text/javascript')
+            ->appendFile('http://zf.glazov.local/js/common.js','text/javascript')
+            ->appendFile('http://zf.glazov.local/js/admin.js','text/javascript')
+            //->appendFile('http://zf.glazov.local/js/client.js','text/javascript')
         ?>
     </body>
 </html>

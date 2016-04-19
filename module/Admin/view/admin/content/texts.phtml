@@ -1,0 +1,79 @@
+<? 
+$title = 'Информационные страницы. Статьи.';
+$this->headtitle('Администрирование. '.$title);
+?>
+<div class="page-header">
+  <h1><?=$title;?></h1>
+</div>
+
+<a href="<?=$this->url('admin/default', array('controller'=>'content', 'action'=>'addtext', 'id' => $sectionId));?>" class="btn btn-primary btn-lg mrg-b-lg">
+  Добавить Статью
+</a>
+<? $texts = $section->getTexts(); ?>
+<? if (isset($texts) && count($texts)) { ?>
+<table class="table table-striped table-sortable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Ссылка</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?  foreach ($texts as $text) { ?>
+        <tr id="<?=$text->id;?>" class="table-row-text-id-<?=$text->id;?>">
+            <td><span class="glyphicon glyphicon-resize-vertical"></span></td>
+            <td><input type="checkbox" name="ids[]" value="<?=$text->id;?>" class="js-text-checkbox"/></td>
+            <td><?=$text->id;?></td>
+            <td><?=$text->name;?></td>
+            <td>/page/<?=$text->alias;?></td>
+            <td>
+                <a href="<?=$this->url('home/content/page', array('alias'=>$text->alias));?>" target="_blank" class="btn btn-default btn-xs" role="button" title="На сайте">
+                  <span class="glyphicon glyphicon-th" aria-hidden="true"></span> 
+                </a>
+                <a href="<?=$this->url('admin/default', array('controller'=>'content', 'action'=>'edittext', 'id'=>$text->id));?>" class="btn btn-default btn-xs" role="button" title="Редактировать">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+                </a>
+                <button title="Удалить" role="button" class="js-ajax-remove btn btn-default btn-xs" 
+                        postparamname="textid" 
+                        textid="<?=$text->id;?>" 
+                        url="<?=$this->url('admin/default', ['controller'=>'content', 'action'=>'removeSection']);?>" 
+                        confirm='Удалить раздел "<?=$text->name;?>"?' 
+                        removeselector="#table-row-text-id-<?=$text->id;?>">
+                  <span aria-hidden="true" class="glyphicon glyphicon-remove"></span> 
+                </button>
+            </td>
+        </tr>
+        <? } ?>
+    </tbody>
+</table>
+
+<button title="Сохранить порядок" class="js-ajax-save-sort btn btn-default btn-md" role="button"
+        url="<?=$this->url('admin/default', ['controller'=>'content', 'action'=>'savesort', 'sub' => 'texts']);?>" 
+        parentid="<?=$sectionId;?>"
+        >
+  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 
+  <span class="glyphicon glyphicon-sort" aria-hidden="true"></span> 
+</button>
+
+<button title="Удалить отмеченные" class="js-ajax-bulk-remove btn btn-default btn-md" role="button"
+        checkboxselector=".js-text-checkbox" 
+        postparamname="textid" 
+        url="<?=$this->url('admin/default', ['controller'=>'texts', 'action'=>'remove']);?>" 
+        confirm='Удалить отмеченные разделы?' 
+        removeselector="#table-row-text-id-">
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+</button>
+
+<?php if ($texts instanceof Zend\Paginator\Paginator)  
+        echo $this->paginationControl($texts, 'sliding', array('partial/paginatorAdmin.phtml', 'admin'),
+            array(
+                'route' => 'admin/default', 
+                'params' => ['controller' => 'content', 'action' => 'texts', 'sub' => $sub],
+                'options' => ['query' => $query],
+            ));
+    ?>
+
+<? } ?>
