@@ -43,6 +43,10 @@
                                     <tr class="cmsms_table_row_header">
                                         <th class="cmsms_table_cell_alignleft">Размер</th>
                                         <th class="cmsms_table_cell_alignleft">Индексы</th>
+                                        <? if ($model->season == 'winter') { ?>
+                                        <th class="cmsms_table_cell_alignleft">Шипы</th>
+                                        <? } ?>
+                                        <th class="cmsms_table_cell_alignleft">Опции</th>
                                         <th class="cmsms_table_cell_alignleft">Кол-во</th>
                                         <th class="cmsms_table_cell_alignleft">Цена</th>
                                         <th class="cmsms_table_cell_alignleft">Поставщик</th>
@@ -59,6 +63,21 @@
                                             </a>
                                         </td>
                                         <td class="cmsms_table_cell_alignleft"><?=sprintf("%s %s", $tyre->load, $tyre->speed)?></td>
+                                        <? if ($model->season == 'winter') { ?>
+                                        <td class="cmsms_table_cell_alignleft">
+                                            <?=$tyre->spikes == 1 ? 'Есть':'Нет';?>
+                                        </td>
+                                        <? } ?>
+                                        <td class="cmsms_table_cell_alignleft">
+                                            <?
+                                            $options = [];
+                                            if ($tyre->RFT == 1)
+                                                $options[] = 'Run Flat';
+                                            if ($tyre->XL == 1)
+                                                $options[] = 'Extra Load';
+                                            echo implode(', ', $options);
+                                            ?>
+                                        </td>
                                         <td class="cmsms_table_cell_alignleft"><?=$price->quantity?></td>
                                         <td class="cmsms_table_cell_alignleft">
                                             <p class="price"><span class="amount"><?=$price->price?> RUB</span></p>
