@@ -105,6 +105,7 @@ return array(
                     'action' => 'index',
                 ),
                 'content' => array(
+                    'id' => 'admin-content',
                     'label' => 'Инфо страницы',
                     'route' => 'admin/default',
                     'controller' => 'content',

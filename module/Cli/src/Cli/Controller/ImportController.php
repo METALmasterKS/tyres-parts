@@ -81,6 +81,7 @@ class ImportController extends AbstractActionController {
         
         $this->updateTmpTyreModelIds();
 
+        // @TODO может быть очищать таблицы перед инсертом.
         $this->processTmpTyres();
         
         $this->CliTaskManager()

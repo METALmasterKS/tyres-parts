@@ -8,26 +8,33 @@
                 <!-- List -->
                 <div class="tribe-mini-calendar-list-wrapper">
                     <div class="tribe-events-loop">
-                        <? $menuItems = $section->getSections(); 
-                            if (count($menuItems) == 0 && isset($neighbors) && count($neighbors) > 0) {
-                                $menuItems = $neighbors;
-                            }
-                        ?>
-                        <? foreach ($menuItems as $i => $sect) { ?>
-                        <!-- Event  -->
-                        <div class="type-tribe_events post-2979 tribe-clearfix tribe-events-category-car tribe-events-category-practic tribe-events-venue-1889 tribe-events-organizer-1633 tribe-events-first">
-                            <div class="list-date">
-                                <!--span class="list-dayname">Apr</span-->
-                                <span class="list-daynumber"><?=$i+1;?></span>
-                            </div>
-                            <div class="list-info">
-                                <h3 class="entry-title summary">
-                                    <a rel="bookmark" href="<?= $this->url('home/content/section', ['alias' => $sect->alias]); ?>"><?= $sect->name; ?></a>
-                                </h3>
-                                <div class="vcard adr location cmsms_widget_event_venue_info_loc">
+                        <? $activePage = $this->navigation('Navigation')->findOneBy('id', 'home-content-section-'.$sectionId); ?> 
+                        <? if ($activePage instanceof \Zend\Navigation\Page\AbstractPage) { ?>
+                        <?  $pages = array();
+                            foreach ($activePage->getPages() as $page) 
+                                if ($page->isVisible())
+                                    $pages[] = $page;
+                            if ($activePage->getParent()->getId() != 'home' && count($pages) == 0) { 
+                                foreach ($activePage->getParent()->getPages() as $page) 
+                                if ($page->isVisible())
+                                    $pages[] = $page;
+                            } ?>
+                            <? $i=1; foreach ($pages as $page): ?>
+                                <!-- Event  -->
+                                <div class="<?=$page->isActive(true) ? 'active':'';?> type-tribe_events post-2979 tribe-clearfix tribe-events-category-car tribe-events-category-practic tribe-events-venue-1889 tribe-events-organizer-1633 tribe-events-first">
+                                    <div class="list-date">
+                                        <!--span class="list-dayname">Apr</span-->
+                                        <span class="list-daynumber"><?=$i;?></span>
+                                    </div>
+                                    <div class="list-info">
+                                        <h3 class="entry-title summary">
+                                            <a rel="bookmark" href="<?=$page->getHref();?>"><?=$page->getLabel();?></a>
+                                        </h3>
+                                        <div class="vcard adr location cmsms_widget_event_venue_info_loc">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            <? $i++; endforeach; ?>
                         <? } ?>
                     </div><!-- .tribe-events-loop -->
                 </div> <!-- .tribe-mini-calendar-list-wrapper -->

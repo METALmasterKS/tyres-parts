@@ -13,6 +13,7 @@ return array(
         'Tyres',
         'Account',
         'Auth',
+        'Cart',
         'Content',
         'Admin',
         'Mail',

@@ -25,7 +25,13 @@ class ContentController extends AbstractActionController {
         
         $sectionTable = $this->getServiceLocator()->get('ContentModelSectionTable');
         $sections = $sectionTable->getSections(['parentId' => $sectionId, 'order' => 'sort asc']);
-
+        
+        if ($sectionId) {
+            $section = $sectionTable->getSection($sectionId);
+            
+            $this->ContentNavigationTree($section);
+        }
+        
         $view->setVariables(array(
             'sectionId' => $sectionId,
             'sections' => $sections,
@@ -38,6 +44,12 @@ class ContentController extends AbstractActionController {
         $sectionId = $this->params()->fromRoute('id', 0);
         $sectionTable = $this->getServiceLocator()->get('ContentModelSectionTable');
 
+        if ($sectionId) {
+            $section = $sectionTable->getSection($sectionId);
+            $this->ContentNavigationTree($section)->addSection();
+        } else 
+            $this->ContentNavigationTree()->addSection();
+        
         $form = new \Content\Form\Section();
         
         if ($this->params()->fromPost('addSection') != null) {
@@ -70,11 +82,13 @@ class ContentController extends AbstractActionController {
     
     public function editSectionAction() {
         $sectionTable = $this->getServiceLocator()->get('ContentModelSectionTable');
-
+        
         $form = new \Content\Form\Section();
         
         $sectionId = $this->params()->fromRoute('id', '');
         $section = $sectionTable->getSection($sectionId);
+        $this->ContentNavigationTree($section)->editSection();
+        
         $form->setData($section->getArrayCopy());
         
         if ($this->params()->fromPost('saveSection') != null) {
@@ -126,6 +140,7 @@ class ContentController extends AbstractActionController {
         
         $sectionTable = $this->getServiceLocator()->get('ContentModelSectionTable');
         $section = $sectionTable->getSection($sectionId);
+        $this->ContentNavigationTree($section)->texts();
         
         $textTable = $this->getServiceLocator()->get('ContentModelTextTable');
         $texts = $textTable->getTexts(['sectionId'=>$sectionId, 'order'=>'sort asc']);
@@ -151,6 +166,11 @@ class ContentController extends AbstractActionController {
         $sectionId = $this->params()->fromRoute('id', 0);
         $textTable = $this->getServiceLocator()->get('ContentModelTextTable');
 
+        if ($sectionId) {
+            $section = $this->getServiceLocator()->get('ContentModelSectionTable')->getSection($sectionId);
+            $this->ContentNavigationTree($section)->texts()->addText();
+        }
+        
         $form = new \Content\Form\Text();
         
         if ($this->params()->fromPost('addText') != null) {
@@ -184,6 +204,10 @@ class ContentController extends AbstractActionController {
         
         $textId = $this->params()->fromRoute('id', '');
         $text = $textTable->getText($textId);
+        
+        $section = $this->getServiceLocator()->get('ContentModelSectionTable')->getSection($text->sectionId);
+        $this->ContentNavigationTree($section, $text)->texts()->editText();
+        
         $form->setData($text->getArrayCopy());
         
         if ($this->params()->fromPost('saveText') != null) {

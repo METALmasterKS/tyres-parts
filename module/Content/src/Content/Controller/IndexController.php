@@ -37,15 +37,11 @@ class IndexController extends AbstractActionController {
                 return $this->forward()->dispatch('Content\Controller\Index', array('action' => 'text', 'alias' => $text->alias));
         }
         
-        if ($sections->count() == 0) {
-            $neighbors = $sectionTable->getSections(['parentId' => $section->parentId, 'order' => 'sort asc']);
-            $view->setVariable('neighbors', $neighbors);
-        }
-
         foreach ($sections as $sect) {
             $sect->setParentSection($section);
             $section->addSection($sect);
         }
+        
         foreach ($texts as $text) {
             $section->addText($text);
         }

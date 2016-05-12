@@ -26,13 +26,15 @@ jQuery(document).ready(function () {
     jQuery(this).on('click', ".js-ajax-addtocart", function () {
         var XY = jQuery(this).offset();
         var clicked = jQuery(this);
-        var varId = jQuery(this).attr('variantid');
+        var objId = jQuery(this).attr('objectid');
+        var type = jQuery(this).attr('objecttype');
         var count = jQuery(this).attr('count');
         jQuery.ajax({
             type: "POST",
             url: "/cart/index/addtocart",
             data: {
-                variantId: varId,
+                objectId: objId,
+                type: type,
                 count: count
             },
             dataType: "json",

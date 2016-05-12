@@ -41,6 +41,7 @@ return array(
     
     'service_manager' => array(
         'abstract_factories' => array(
+            'Zend\Session\Service\ContainerAbstractServiceFactory',
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
         ),
         'factories' => array(
@@ -147,5 +148,7 @@ return array(
 			),
         ),
     ),
-  
+    'session_containers' => array(
+        'commonData',
+    ),
 );

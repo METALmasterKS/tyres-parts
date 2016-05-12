@@ -55,7 +55,7 @@ class Module
     }
     
     public function setFeedbackForm($e){
-        if ($e->getRequest()->isXmlHttpRequest()) 
+        if (!($e->getRequest() instanceof \Zend\Http\Request) || $e->getRequest()->isXmlHttpRequest()) 
             return;
         
         $form = new \Application\Form\Feedback();

@@ -1,0 +1,60 @@
+Корзина
+<? if (count($cart->getItems())) { ?>
+<table>
+    <thead>
+        <tr>
+            <th>Артикул</th><th></th><th>Наименование</th><th>Наличие</th><th>Цена</th><th width="120px">Кол-во</th><th>Сумма</th><th></th>
+        </tr>
+    </thead>    
+    <tbody>
+        <?php foreach ($cart->getItems() as $item) { 
+            $variant = $item->getVariant(); 
+            $href = $this->url('home/catalog/group/variant', [
+                'groupId' => $variant->getParentGroup()->id, 
+                'groupName' => $this->translit($variant->getParentGroup()->name),
+                'variantId' => $variant->id, 
+                'variantName' => $this->translit($variant->name)
+                ]);
+            ?> 
+        <tr id="cart-item-variant-id-<?=$item->variant_id;?>">
+            <td><?=$item->getVariant()->article;?></td>
+            <td>
+                <a href="<?=$href;?>">
+                    <img src="<?=$this->layout()->settings['img']['HOST'].$this->layout()->settings['img']['VARIANTS_SMALLIMAGES']?>/<?=$item->getVariant()->getProp('image');?>" width="60px"/>
+                </a>
+            </td>
+            <td>
+                <a href="<?=$href;?>">
+                    <?=$item->getVariant()->name;?>
+                </a>
+            </td>
+            <td><?=$item->getVariant()->statusId;?></td>
+            <td><?=$item->getVariant()->sourcePrice;?></td>
+            <td><input class="js-input-spin js-ajax-update-cartitem-count" type="text" value="<?=$item->count;?>" step="<?=$item->getVariant()->division;?>" variantid="<?=$item->variant_id;?>" cartitemid="<?=$item->id;?>" name="count[<?=$item->id;?>]"></td>
+            <td><?=$this->numberFormat($item->getSumm(), \NumberFormatter::DECIMAL);?></td>
+            <td>
+                <button title="Удалить" role="button" class="js-ajax-removefromcart btn btn-default btn-xs" variantid="<?=$item->variant_id;?>">
+                  <span aria-hidden="true" class="glyphicon glyphicon-remove"></span> Удалить
+                </button>
+                <button title="В закладки" role="button" class="js-ajax-addtowishlist btn btn-default btn-xs" variantid="<?=$item->variant_id;?>" count="<?=$item->count;?>">
+                  <span aria-hidden="true" class="glyphicon glyphicon-bookmark"></span> В закладки
+                </button>
+            </td>
+        </tr>
+        <? } ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5" align="right">Итого</td>
+            <td align="center"><?=$cart->getTotalCount();?></td>
+            <td><span class="js-cart-total-summ-block"><?=$cart->getTotalSumm();?></span></td>
+        </tr>
+    </tfoot>
+</table>
+<div class="">
+    <a href="<?=$this->url('home/order/default', ['controller' => 'index', 'action'=>'compliment']);?>">Оформить заказ</a>
+</div>
+
+<? } else { ?>
+Пока в Вашей корзине пусто
+<? } ?>

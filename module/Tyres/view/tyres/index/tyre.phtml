@@ -87,11 +87,13 @@
                                         </td>
                                         <td class="cmsms_table_cell_alignleft"><?=$price->getProvider()->name;?></td>
                                         <td>
-                                            <form class="cart" method="post">
+                                            <button count="1" objecttype="tyres" objectid="<?=$price->id;?>" class="btn btn-default js-ajax-addtocart">В корзину</button>
+                                            
+                                            <!--form class="cart" method="post">
                                                 <div class="quantity"><input type="number" step="1" min="1"  name="quantity" value="1" title="Qty" class="input-text qty text" size="4" /></div>
                                                 <input type="hidden" name="add-to-cart" value="<?=$price->id;?>" />
                                                 <button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
-                                            </form>
+                                            </form-->
                                         </td>
                                     </tr>
                                     <? } ?>

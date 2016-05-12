@@ -25,7 +25,7 @@ class Content
         return $this;
     }
     
-    private function loadContentNavigation(){
+    private function loadContentNavigation() {
         
         $sections = $this->sectionTable->getSections(['parentId' => \Content\Model\Section::SECTION_ROOT, 'order' => 'sort asc']);
         $home = $this->navigation->findOneBy('id', 'home');
