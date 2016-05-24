@@ -104,7 +104,7 @@ return array(
             'auth/index/index' => __DIR__ . '/../view/auth/index/index.phtml'
         ),
         'template_path_stack' => array(
-            'auth' =>  __DIR__.'/../view',
+            'auth' =>  __DIR__ . '/../view',
         )
     ),
 );

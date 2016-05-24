@@ -64,6 +64,10 @@ class ContentController extends AbstractActionController {
                 ));
                 $sectionTable->saveSection($section);
                 
+                $cache = $this->getServiceLocator()->get('fileCache');
+                $cache->removeItem('ContentNavigatonPages');
+                $cache->removeItem('AdminContentNavigatonPages');
+                
                 $this->FlashMessenger()->addSuccessMessage('Раздел добавлен.');
                 
                 $referer = $this->referer();
@@ -104,6 +108,10 @@ class ContentController extends AbstractActionController {
                 
                 $sectionTable->saveSection($section);
                 
+                $cache = $this->getServiceLocator()->get('fileCache');
+                $cache->removeItem('ContentNavigatonPages');
+                $cache->removeItem('AdminContentNavigatonPages');
+                
                 $this->FlashMessenger()->addSuccessMessage('Раздел сохранен.');
                 
                 
@@ -121,10 +129,14 @@ class ContentController extends AbstractActionController {
         if (!$this->getRequest()->isXmlHttpRequest()) 
             return array();
         
-        $brandId = $this->getRequest()->getPost('brandid');
+        $sectionId = $this->getRequest()->getPost('sectionid');
         
-        $brandsTable = $this->getServiceLocator()->get('TyresModelBrandTable');
-        $brandsTable->deleteBrand($brandId);
+        $sectionTable = $this->getServiceLocator()->get('ContentModelSectionTable');
+        $sectionTable->deleteSection($sectionId);
+        
+        $cache = $this->getServiceLocator()->get('fileCache');
+        $cache->removeItem('ContentNavigatonPages');
+        $cache->removeItem('AdminContentNavigatonPages');
         
         $jsonModel = new \Zend\View\Model\JsonModel();
         $jsonModel->setVariables(array(
@@ -236,6 +248,26 @@ class ContentController extends AbstractActionController {
         );
     }
     
+    public function removeTextAction(){
+        if (!$this->getRequest()->isXmlHttpRequest()) 
+            return array();
+        
+        $textId = $this->getRequest()->getPost('textid');
+        
+        $textTable = $this->getServiceLocator()->get('ContentModelTextTable');
+        $textTable->deleteText($textId);
+        
+        $cache = $this->getServiceLocator()->get('fileCache');
+        $cache->removeItem('ContentNavigatonPages');
+        $cache->removeItem('AdminContentNavigatonPages');
+        
+        $jsonModel = new \Zend\View\Model\JsonModel();
+        $jsonModel->setVariables(array(
+            'success' => true,
+        ));
+        return $jsonModel;
+    }
+    
     public function savesortAction() {
         if (!$this->getRequest()->isXmlHttpRequest()) 
             return array();
@@ -253,6 +285,10 @@ class ContentController extends AbstractActionController {
         
         $table = $this->getServiceLocator()->get($tableService);
         $table->saveSorting($parentGroupId, $sort);
+        
+        $cache = $this->getServiceLocator()->get('fileCache');
+        $cache->removeItem('ContentNavigatonPages');
+        $cache->removeItem('AdminContentNavigatonPages');
         
         $jsonModel = new JsonModel();
         $jsonModel->setVariables(array(

@@ -71,7 +71,7 @@ class TextTable extends TableGateway
     }
     
     public function deleteText($id) {
-        $this->tableGateway->delete(array('id' => (int) $id));
+        $this->tableGateway->delete(array('id' => $id));
     }
     
     public function saveSorting($sectionId, $sort) {

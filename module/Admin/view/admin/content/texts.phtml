@@ -15,6 +15,7 @@ $this->headtitle('Администрирование. '.$title);
     <thead>
         <tr>
             <th></th>
+            <th></th>
             <th>ID</th>
             <th>Название</th>
             <th>Ссылка</th>
@@ -39,9 +40,9 @@ $this->headtitle('Администрирование. '.$title);
                 <button title="Удалить" role="button" class="js-ajax-remove btn btn-default btn-xs" 
                         postparamname="textid" 
                         textid="<?=$text->id;?>" 
-                        url="<?=$this->url('admin/default', ['controller'=>'content', 'action'=>'removeSection']);?>" 
-                        confirm='Удалить раздел "<?=$text->name;?>"?' 
-                        removeselector="#table-row-text-id-<?=$text->id;?>">
+                        url="<?=$this->url('admin/default', ['controller'=>'content', 'action'=>'removeText']);?>" 
+                        confirm='Удалить статью "<?=$text->name;?>"?' 
+                        removeselector=".table-row-text-id-<?=$text->id;?>">
                   <span aria-hidden="true" class="glyphicon glyphicon-remove"></span> 
                 </button>
             </td>
@@ -61,9 +62,9 @@ $this->headtitle('Администрирование. '.$title);
 <button title="Удалить отмеченные" class="js-ajax-bulk-remove btn btn-default btn-md" role="button"
         checkboxselector=".js-text-checkbox" 
         postparamname="textid" 
-        url="<?=$this->url('admin/default', ['controller'=>'texts', 'action'=>'remove']);?>" 
-        confirm='Удалить отмеченные разделы?' 
-        removeselector="#table-row-text-id-">
+        url="<?=$this->url('admin/default', ['controller'=>'content', 'action'=>'removeText']);?>" 
+        confirm='Удалить отмеченные статьи?' 
+        removeselector=".table-row-text-id-">
   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
 </button>
 

@@ -9,11 +9,16 @@ $this->headtitle('Администрирование. '.$title);
 <a href="<?=$this->url('admin/default', array('controller'=>'content', 'action'=>'addsection', 'id' => ($sectionId > 0 ? $sectionId : '')));?>" class="btn btn-primary btn-lg mrg-b-lg">
   Добавить раздел
 </a>
-
+<? if ($sectionId > 0) { ?>
+<a href="<?=$this->url('admin/default', array('controller'=>'content', 'action'=>'texts', 'id' => $sectionId));?>" class="btn btn-primary btn-lg mrg-b-lg">
+  Статьи
+</a>
+<? } ?>
 <? if (isset($sections) && count($sections)) { ?>
 <table class="table table-striped table-sortable">
     <thead>
         <tr>
+            <th></th>
             <th></th>
             <th>ID</th>
             <th>Название</th>
@@ -67,7 +72,7 @@ $this->headtitle('Администрирование. '.$title);
 <button title="Удалить отмеченные" class="js-ajax-bulk-remove btn btn-default btn-md" role="button"
         checkboxselector=".js-section-checkbox" 
         postparamname="sectionid" 
-        url="<?=$this->url('admin/default', ['controller'=>'sections', 'action'=>'remove']);?>" 
+        url="<?=$this->url('admin/default', ['controller'=>'content', 'action'=>'removeSection']);?>" 
         confirm='Удалить отмеченные разделы?' 
         removeselector=".table-row-section-id-">
   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 

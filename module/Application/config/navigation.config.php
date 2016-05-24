@@ -6,11 +6,13 @@ return array(
             'label' => 'Главная',
             'route' => 'home',
             'pages' => [
+                /*
                 'about' => [
                     'id' => 'home-about', 
                     'label' => 'О нас',
                     'route' => 'home'
                 ],
+                */
                 
                 'tyres' => [
                     'id' => 'home-tyres',

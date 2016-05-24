@@ -22,6 +22,7 @@ class ImportController extends AbstractActionController {
     private $brandIdPatternMap = null;
     private $tyresModels = null;
     private $brandIdModelIdPatterns = null;
+    private $cities = null;
 
     private $tmp_table = 'tyres_import_tmp';
     
@@ -44,7 +45,7 @@ class ImportController extends AbstractActionController {
 
     public function TyresAction(){
         set_time_limit(60);
-        ini_set('memory_limit', '512M');
+        ini_set('memory_limit', '768M');
         
         $this->CliTaskManager()->saveTaskStatus('Import/Tyres', \Cli\Controller\Plugin\CliTaskManager::PROCESS);
 
@@ -74,6 +75,9 @@ class ImportController extends AbstractActionController {
                     case 'Север Авто':
                         $this->SeverAuto($files, $provider);
                         break;
+                    case '4точки':
+                        $this->Tochki($files, $provider);
+                        break;
                 }
             }
         }
@@ -95,11 +99,11 @@ class ImportController extends AbstractActionController {
         
         $tyresData = array();
         foreach ($files as $file) {
-            $csv = new \SplFileObject($file->getRealPath());
-            $csv->setFlags(\SplFileObject::READ_CSV);
-            $csv->setCsvControl(";");
             echo $file->getFilename()."\n";
-            foreach ($csv as $i => $row) {
+            $objPHPExcel = \PHPExcel_IOFactory::load($file->getRealPath());
+            $objPHPExcel->setActiveSheetIndex(0);
+            $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,false,false,false);
+            foreach ($sheetData as $i => $row) {
                 if (trim($row[0]) == null || trim($row[1]) == null || trim($row[2]) == null || trim($row[3]) == null) 
                     continue;
                 
@@ -115,6 +119,7 @@ class ImportController extends AbstractActionController {
                 $data['price']        = trim($row[5]);
                 $data['spikes'] = 0;
                 $data['providerId'] = $provider->id;
+                $data['cityId'] = 1; //Cанкт Петербург
                 $data['brandId'] = '';
                 
                 //поэтапно вырезаем из наименования части, чтоб получить модель 
@@ -184,11 +189,11 @@ class ImportController extends AbstractActionController {
                 ['summer', 'winter'],
                 $file->getFilename()
             );
-            $csv = new \SplFileObject($file->getRealPath());
-            $csv->setFlags(\SplFileObject::READ_CSV);
-            $csv->setCsvControl(";");
+            $objPHPExcel = \PHPExcel_IOFactory::load($file->getRealPath());
+            $objPHPExcel->setActiveSheetIndex(0);
+            $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,false,false,false);
             echo $file->getFilename()."\n";
-            foreach ($csv as $i => $row) {
+            foreach ($sheetData as $i => $row) {
                 $pattern = "/^R[0-9]{2}C? [0-9]{3}\/[0-9]{2} (.*){1} (([0-9]{2,3})(\/[0-9]{2,3})?)([PQRSTUHVWYZ]{1}) (.*){1}$/i";
                 if (!isset($row[2]) || !preg_match($pattern, trim($row[2]), $matches)) 
                     continue;
@@ -205,6 +210,7 @@ class ImportController extends AbstractActionController {
                 $data['spikes']       = trim($row[11]) == 'Есть' ? 1 : 0;
                 $data['season']       = $season;
                 $data['providerId']   = $provider->id;
+                $data['cityId'] = 1; //Cанкт Петербург
                 $data['load']       = $matches[2];
                 $data['speed']       = $matches[5];
                 
@@ -253,6 +259,14 @@ class ImportController extends AbstractActionController {
     private function Laserta($filenames, $provider){
         $files = $this->GetImportFiles('tyres', $filenames);
         
+        $Cities = $this->getCities();
+        $CityIdColId = [
+            1 => 9, //Питер
+            2 => 8, //москва
+            3 => 6, //Екатеринбург
+            4 => 7, //Краснодар
+        ];
+        
         $brands = [];
         foreach ($this->getTyresBrands() as $brand){
             $brands[$brand->id] = $brand->name;
@@ -269,25 +283,26 @@ class ImportController extends AbstractActionController {
         // узнаем размер нагрузку и скорость
         $pattern = "/^(.*) ([A-Z]{1-2})?([0-9]{3})\/([0-9]{2})(R[0-9]{2}C?) (([0-9]{2,3})(\/[0-9]{2,3})?)([PQRSTUHVWYZ]{1}) (.*){1}$/";
         
+        $seasonPtrns = ['/(^.*летн.*$)/i', '/(^.*зим.*$)/i', '/(^.*всесезон.*$)/i'];
+        $seasonEnum = ['summer', 'winter', 'allseason'];
+        
         $tyresData = array();
         foreach ($files as $file) {
-            $csv = new \SplFileObject($file->getRealPath());
-            $csv->setFlags(\SplFileObject::READ_CSV);
-            $csv->setCsvControl(";");
             echo $file->getFilename()."\n";
+            $objPHPExcel = \PHPExcel_IOFactory::load($file->getRealPath());
+            $objPHPExcel->setActiveSheetIndex(0);
+            $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,false,false,false);
             
             $lastBrandId = '';
             $lastSeason = '';
             $lastModel = '';
-            foreach ($csv as $i => $row) {
+            foreach ($sheetData as $i => $row) {
                 if ($i<3 || implode('', $row) == null) //пропускаем первые 3 строки
                     continue;
-                
-                if (implode('', array_slice($row, 3, 7)) == null ){
+
+                if (implode('', array_slice($row, 4, 7)) == null ){
                     $smthg = trim($row[2]); // узнаем что это и записываем last
                     
-                    $seasonPtrns = ['/(^.*летн.*$)/i', '/(^.*зим.*$)/i', '/(^.*всесезон.*$)/i'];
-                    $seasonEnum = ['summer', 'winter', 'allseason'];
                     if (in_array(preg_replace($seasonPtrns, $seasonEnum, $smthg), $seasonEnum)) {
                         $lastSeason = preg_replace($seasonPtrns, $seasonEnum, $smthg);
                     } elseif (isset($brandNameIdMap[$smthg])) {
@@ -300,7 +315,7 @@ class ImportController extends AbstractActionController {
                     $name = $matches[10];
                     $data['name'] = trim($row[2]);
                     $data['price']        = trim($row[5]);
-                    $data['quantity']     = ltrim(trim($row[9]), '>');
+                    $data['quantity']     = ltrim(trim($row[9]), '>'); // по дефолту питер
                     $data['providerId']   = $provider->id;
                     $data['brandId']      = $lastBrandId;
                     $data['model']      = $lastModel;
@@ -312,12 +327,12 @@ class ImportController extends AbstractActionController {
                     $data['diameter']       = str_replace('R','', $matches[5]);
                     $data['load']       = $matches[6];
                     $data['speed']       = $matches[9];
-                    
+
                     $season = preg_replace($seasonPtrns, $seasonEnum, trim($row[3]));
                     if (in_array($season, $seasonEnum) && $lastSeason != $season) //зезон по строке в приоритете
                         $data['season'] = $season;
-                    
-                    
+
+
                     $data['sale'] = 0;
                     $salePattern = "/распр\.?/i"; //проверяем на распродажу и стираем в наименовании
                     if (preg_match($salePattern, $name)) {
@@ -331,11 +346,11 @@ class ImportController extends AbstractActionController {
                         $data['spikes'] = 1;
                         $name = trim(preg_replace($spikePattern, '', $name));
                     }
-                    
+
                     if ($lastModel != null){
                         $name = trim(preg_replace("/".preg_quote($lastModel, '/')."/iu", '', $name));
                     }
-                    
+
                     //находи ранфлет
                     if (preg_match($this->getRunFlatPattern(), $name)) {
                         $data['RFT'] = 1;
@@ -347,11 +362,17 @@ class ImportController extends AbstractActionController {
                         $data['XL'] = 1;
                         $name = trim(preg_replace($xlPtrn, '', $name));
                     }
-                    
+
                     //убираем двойные пробелы
                     $name = preg_replace("/ {2,}/u", ' ', $name);
 
-                    $tyresData[] = $data;
+                    foreach ($CityIdColId as $cityId => $colId){
+                        $data['cityId'] = $cityId;
+                        $data['quantity'] = ltrim(trim($row[$colId]), '>');
+
+                        $tyresData[] = $data;
+                    }
+                    
                 }
             }
         }
@@ -367,11 +388,11 @@ class ImportController extends AbstractActionController {
         
         $tyresData = array();
         foreach ($files as $file) {
-            $csv = new \SplFileObject($file->getRealPath());
-            $csv->setFlags(\SplFileObject::READ_CSV);
-            $csv->setCsvControl(";");
+            $objPHPExcel = \PHPExcel_IOFactory::load($file->getRealPath());
+            $objPHPExcel->setActiveSheetIndex(0);
+            $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,false,false,false);
             echo $file->getFilename()."\n";
-            foreach ($csv as $i => $row) {
+            foreach ($sheetData as $i => $row) {
                 $name = trim($row[0]);
                 if (preg_match($pattern, $name, $matches)) {
                     $data = [];
@@ -380,6 +401,7 @@ class ImportController extends AbstractActionController {
                     $data['price'] = trim($row[2]);
                     $data['quantity'] = trim($row[1]);
                     $data['providerId'] = $provider->id;
+                    $data['cityId'] = 1; //Cанкт Петербург
                     $data['XL'] = 0;
                     $data['RFT'] = 0;
                     $data['width'] = $matches[2];
@@ -427,11 +449,11 @@ class ImportController extends AbstractActionController {
         
         $tyresData = array();
         foreach ($files as $file) {
-            $csv = new \SplFileObject($file->getRealPath());
-            $csv->setFlags(\SplFileObject::READ_CSV);
-            $csv->setCsvControl(";");
+            $objPHPExcel = \PHPExcel_IOFactory::load($file->getRealPath());
+            $objPHPExcel->setActiveSheetIndex(0);
+            $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,false,false,false);
             echo $file->getFilename()."\n";
-            foreach ($csv as $i => $row) {
+            foreach ($sheetData as $i => $row) {
                 $data = [];
                 if ($i == 0 || implode('', $row) == null)
                     continue;
@@ -439,6 +461,7 @@ class ImportController extends AbstractActionController {
                 $data['quantity'] = trim($row[2]);
                 $data['price'] = trim($row[5]);
                 $data['providerId'] = $provider->id;
+                $data['cityId'] = 1; //Cанкт Петербург
                 $data['width'] = trim($row[12]);
                 $data['height'] = trim($row[13]);
                 $data['diameter'] = str_replace('R','', trim($row[11]));
@@ -507,7 +530,82 @@ class ImportController extends AbstractActionController {
         $this->saveToTmpImport($tyresData);
     }
     
-    private function getTyresBrands(){
+    private function Tochki($filenames, $provider){
+        $files = $this->GetImportFiles('tyres', $filenames);
+
+        $Cities = $this->getCities();
+        $CityIdSheetId = [
+            1 => 0, //Питер
+            2 => 1, //москва
+        ]; 
+        
+        foreach ($files as $file) {
+            $tyresData = array();
+            echo $file->getFilename()."\n";
+            $objPHPExcel = \PHPExcel_IOFactory::load($file->getRealPath());
+            $sheetNames = $objPHPExcel->getSheetNames();
+            foreach ($CityIdSheetId as $CityId => $sheetId) {
+                echo $sheetNames[$sheetId].' - '.$Cities[$CityId]->name."\n";
+                $objPHPExcel->setActiveSheetIndex($sheetId);
+                $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,false,false,false);
+                foreach ($sheetData as $i => $row) {
+                    $data = [];
+                    if ($i == 0 || implode('', $row) == null)
+                        continue;
+                    $data['name'] = sprintf("%s %s %s/%s %s %s", trim($row[1]), trim($row[2]), trim($row[3]), trim($row[4]), trim($row[5]), trim($row[6]) );
+                    $data['model'] = trim($row[2]);
+                    $data['quantity'] = trim($row[19]);
+                    $data['price'] = trim($row[21]);
+                    $data['providerId'] = $provider->id;
+                    $data['cityId'] = $CityId;
+                    $data['width'] = trim($row[3]);
+                    $data['height'] = trim($row[4]);
+                    $data['diameter'] = preg_replace("/Z?R([0-9]{1,2})(,0)?(C)?/iu","$1$3", trim($row[5]));
+                    $data['XL'] = (preg_match("/да/iu", trim($row[16])) ? 1 : 0);
+                    $data['RFT'] = (preg_match("/да/iu", trim($row[13])) ? 1 : 0);
+                    $data['spikes'] = (preg_match("/да/iu", trim($row[10])) ? 1 : 0);
+                    $data['sale'] = 0;
+                    
+                    $brand = trim($row[1]);
+                    $data['brandId'] = '';
+                    foreach ($this->getBrandsPatterns() as $brandId => $ptrn){
+                        if (preg_match($ptrn, $brand)) {
+                            $data['brandId'] = $brandId;
+                            break;
+                        }
+                    }
+
+                    $speed = trim($row[6]);
+                    $data['speed'] = '';
+                    if (preg_match("/([PQRSTUHVWYZ]{1})/u", $speed, $matches)) {
+                        $data['speed'] = $matches[1];
+                    }
+                    $speedPtrn = ($data['speed'] == null ? "[PQRSTUHVWYZ]{1,2}" : preg_quote($data['speed'], '/'));
+                    $loadSpeedPtrn = "/(".$speedPtrn.") +([шШ]\.?)? ?(([0-9]{2,3})(\/[0-9]{2,3})?)/u";
+                    $data['load'] = '';
+                    if (preg_match($loadSpeedPtrn, $speed, $matches)) {
+                        $data['load'] = $matches[3];
+                        if ($data['speed'] == null) 
+                            $data['speed'] = $matches[1];
+                    }
+
+                    $data['season'] = '';
+                    $season = trim($row[7]);
+                    $seasonPtrns = ['/(^.*летн.*$)/iu', '/(^.*зим.*$)/iu', '/(^.*всесезон.*$)/iu'];
+                    $seasonEnum = ['summer', 'winter', 'allseason'];
+                    if (in_array(preg_replace($seasonPtrns, $seasonEnum, $season), $seasonEnum)) 
+                        $data['season'] = preg_replace($seasonPtrns, $seasonEnum, $season);
+
+                    $tyresData[] = $data;
+                }
+            }
+            unset($objPHPExcel, $sheetData, $sheetNames);
+            $this->saveToTmpImport($tyresData);
+        }
+        
+    }
+
+        private function getTyresBrands(){
         if (!isset($this->tyresBrands)){
             $this->tyresBrands = $this->getServiceLocator()->get('TyresModelBrandTable')->getBrands();
         }
@@ -564,6 +662,25 @@ class ImportController extends AbstractActionController {
             $results = $statement->execute($tyreData);
         }
         $dbAdapter->getDriver()->getConnection()->commit();
+    }
+    
+    private function getCities($where = null, $map = false){
+        $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        $sql = new \Zend\Db\Sql\Sql($dbAdapter);
+        $select = $sql->select('geo_city');
+        if ($where != null)
+            $select->where($where);
+        $rows = $dbAdapter->query($sql->getSqlStringForSqlObject($select), $dbAdapter::QUERY_MODE_EXECUTE);
+        $rows->buffer();
+        
+        $arr = [];
+        foreach ($rows as $row)
+            if ($map) 
+                $arr[$row->id] = $row->name;
+            else 
+                $arr[$row->id] = $row;
+        return $arr;
+        
     }
     
     private function updateTmpTyreModelIds() {

@@ -29,7 +29,7 @@ class ContentNavigationTree extends AbstractPlugin
         $sections = $this->sectionTable->getSections(['parentId' => \Content\Model\Section::SECTION_ROOT, 'order' => 'sort asc']);
         $contentRoot = $this->navigation->findOneBy('id', 'admin-content');
         
-        //$cache->removeItem('AdminContentNavigatonPages'); //раскоментить для постоянного обновления
+        //$this->cache->removeItem('AdminContentNavigatonPages'); //раскоментить для постоянного обновления
         if ($this->cache->hasItem('AdminContentNavigatonPages')) {
             $pages = $this->cache->getItem('AdminContentNavigatonPages');
         } else {

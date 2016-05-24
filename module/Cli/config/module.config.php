@@ -5,7 +5,7 @@ return array(
         'import' => [
             'tyres' => [
                 'path' => 'data/import/tyres/',
-                'mask' => '*.csv',
+                'mask' => "*.xl*",
             ],
         ],
     ),
