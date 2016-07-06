@@ -35,6 +35,14 @@ return array(
                     'params' => [ 'alias' => 'contacts', ],
                 ],
                 */
+                'cart' => [
+                    'id' => 'home-cart',
+                    'label' => 'Корзина',
+                    'route' => 'home/cart',
+                    'order' => 999,
+                    'visible' => false,
+                    
+                ],
             ],
         ),
         'admin' => [

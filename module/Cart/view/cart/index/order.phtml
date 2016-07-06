@@ -1,0 +1,50 @@
+<?$this->layout()->title = 'Оформление заказа';?>
+
+
+<div id="cmsms_row_56db2fe61faed" class="cmsms_row cmsms_color_scheme_default">
+    <div class="cmsms_row_outer_parent">
+        <div class="cmsms_row_outer">
+            <div class="cmsms_row_inner">
+                <div class="cmsms_row_margin cmsms_11">
+                    <div class="cmsms_column one_half">
+
+<? $form->prepare();
+echo $this->form()->openTag($form);
+?>
+<div class="form_info cmsms_input row">
+    <? $element = $form->get('email'); ?>
+    <div class="field-name one_third">
+        <?=$element->getLabel()?>:&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+    </div>
+    <div class="errors">
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_input row">
+    <? $element = $form->get('phone'); ?>
+    <div class="field-name one_third">
+        <?=$element->getLabel()?>:&nbsp;
+    </div>
+    <div class="field">
+        <?=$this->formElement($element)?>
+        <?=$this->formElementErrors($element) ?>
+    </div>
+</div>
+<div class="form_info cmsms_radio row">
+    <? $element = $form->get('submit'); $element->setValue('Отправить заказ');?>
+    <div class="form_info submit_wrap">
+        <a href="" class="cmsms_button" onclick="jQuery(this).parents('form').submit();return false;"><span><?php echo $element->getValue(); ?></span></a>
+    </div>
+</div>
+<? echo $this->form()->closeTag($form); ?>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

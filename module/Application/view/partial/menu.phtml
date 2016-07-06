@@ -73,9 +73,9 @@
             */?>
         </ul>
     </div>
-    <div class="cmsms_dynamic_cart">
-        <a href="javascript:void(0);" class="cmsms_dynamic_cart_button cmsms_theme_icon_basket"></a>
-        <div class="widget_shopping_cart_content"></div>
+    <div class="cmsms_dynamic_cart js-ajax-load-cart-content" style="opacity: 1; visibility: visible; display: inline-block;">
+        <a href="<?=$this->navigation('navigation')->findOneBy('id','home-cart')->getHref();?>" class="cmsms_dynamic_cart_button cmsms_theme_icon_basket"></a>
+        <div class="widget_shopping_cart_content cart-content-block"></div>
     </div>
     <div class="cl"></div>
 </nav>

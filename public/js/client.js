@@ -28,7 +28,7 @@ jQuery(document).ready(function () {
         var clicked = jQuery(this);
         var objId = jQuery(this).attr('objectid');
         var type = jQuery(this).attr('objecttype');
-        var count = jQuery(this).attr('count');
+        var count = jQuery(this).parent('td').find('input[type=number]').val();
         jQuery.ajax({
             type: "POST",
             url: "/cart/index/addtocart",

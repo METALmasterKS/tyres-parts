@@ -16,7 +16,7 @@ class CartSession extends AbstractCart
         return ['id', 'date_created', 'date_modify', 'items'];
     }
 
-    public function setSesion($session)
+    public function setSession($session)
     {
         $this->session = $session;
     }
@@ -55,14 +55,24 @@ class CartSession extends AbstractCart
         $this->session->__set(self::SESSION_KEY, $this);
     }
     
-    public function createItem($type, $objectId, $count)
+    public function clear()
+    {
+        unset($this->session->{self::SESSION_KEY});
+    }
+    
+    public function createItem($type, $objectId, $count, $price, $name, $url, $image)
     {
         $itemSession = new ItemSession();
         $itemSession->id = uniqid();
         $itemSession->cart_id = $this->id;
-        $itemSession->object_type = $type;
+        $itemSession->date_added = time();
+        $itemSession->object_type = $itemSession->type = $type;
         $itemSession->object_id = $objectId;
         $itemSession->count = $count;
+        $itemSession->price = $price;
+        $itemSession->name = $name;
+        $itemSession->url = $url;
+        $itemSession->image = $image;
         
         return $itemSession;
     }

@@ -85,8 +85,11 @@
                                             <meta itemprop="priceCurrency" content="RUB" />
                                             <link itemprop="availability" href="http://schema.org/InStock" />
                                         </td>
-                                        <td class="cmsms_table_cell_alignleft"><?=$price->getProvider()->name;?></td>
+                                        <td class="cmsms_table_cell_alignleft"><?=$price->getProvider()->name;?> - <?=$price->getCityName();?></td>
                                         <td>
+                                            <div class="quantity">
+                                                <input type="number" step="1" min="1" max="<?=$price->quantity?>" name="count" value="1" title="Количество" class="input-text qty text" size="4">
+                                            </div>
                                             <button count="1" objecttype="tyres" objectid="<?=$price->id;?>" class="btn btn-default js-ajax-addtocart">В корзину</button>
                                             
                                             <!--form class="cart" method="post">

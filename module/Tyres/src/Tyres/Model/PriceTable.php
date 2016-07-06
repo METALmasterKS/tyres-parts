@@ -11,6 +11,7 @@ class PriceTable extends TableGateway
     public function __construct(TableGateway $tableGateway)
     {
         $this->tableGateway = $tableGateway;
+        $this->table = $this->tableGateway->getTable();
     }
  
     public function fetchAll()
@@ -31,7 +32,8 @@ class PriceTable extends TableGateway
     {
         //основной запрос
         $select = $this->tableGateway->getSql()->select();
-        $select ->columns(array('*'));
+        $select->columns(array('*'))
+            ->join(['c' => 'geo_city'], "c.id = {$this->table}.cityId", ['cityName' => 'name'], "LEFT");
         
         if (isset($params['providerId']))
             $select->where->equalTo('providerId', $params['providerId']);

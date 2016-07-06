@@ -1,44 +1,27 @@
-<? if (count($cart->getItems())) { ?>
-<table>
-    <thead>
-        <tr>
-            <th colspan="3">Товары в вашей корзине</th><th>Кол-во</th><th>Сумма</th>
-        </tr>
-    </thead>    
-    <tbody>
-        <?php foreach ($cart->getItems() as $item) { 
-            $variant = $item->getVariant(); 
-            $href = $this->url('home/catalog/group/variant', [
-                'groupId' => $variant->getParentGroup()->id, 
-                'groupName' => $this->translit($variant->getParentGroup()->name),
-                'variantId' => $variant->id, 
-                'variantName' => $this->translit($variant->name)
-                ]);
-            ?> 
-        <tr id="cart-item-variant-id-<?=$item->variant_id;?>">
-            <td>
-                <a href="<?=$href;?>">
-                    <img src="<?=$this->layout()->settings['img']['HOST'].$this->layout()->settings['img']['VARIANTS_SMALLIMAGES']?>/<?=$item->getVariant()->getProp('image');?>" width="60px"/>
-                </a>
-            </td>
-            <td colspan="2">
-                <a href="<?=$href;?>">
-                    <?=$item->getVariant()->name;?>
-                </a>
-            </td>
-            <td><?=$item->count;?></td>
-            <td><?=$this->numberFormat($item->getSumm(), \NumberFormatter::DECIMAL);?></td>
-        </tr>
-        <? } ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="2">Всего товаров в корзине: <?=$cart->getTotalCount();?></td>
-            <td colspan="2" align="right">Сумма заказа:</td>
-            <td><?=$cart->getTotalSumm();?></td>
-        </tr>
-    </tfoot>
-</table>
+<? if (count($cart->getItems('tyres'))) { ?>
+
+
+    <ul class="cart_list product_list_widget ">
+        <? foreach ($cart->getItems('tyres') as $item) { ?>
+        <li class="mini_cart_item">
+            <a data-product_sku="" data-product_id="1960" title="Remove this item" class="remove" href="<?=$this->url('home/cart/default', ['controller' => 'index', 'action' => 'removefromcart', 'id' => $item->id]);?>">×</a>													
+            <a href="<?=$item->url;?>">
+                <img width="90" height="90" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" src="<?=$item->image;?>">
+                <?=$item->name;?>&nbsp;							
+            </a>
+            <span class="quantity"><?=$item->count;?> × <span class="amount"><?=$item->price;?> RUB</span></span>					
+        </li>
+    <? } ?>
+    </ul><!-- end product list -->
+
+
+    <p class="total"><strong>Итого:</strong> <span class="amount"><?=$cart->getTotalSumm();?> RUB</span></p>
+
+
+    <p class="buttons">
+        <a class="button wc-forward" style="font-size:12px;" href="<?=$this->url('home/cart')?>">Корзина</a>
+        <a class="button checkout wc-forward" style="font-size:12px;" href="<?=$this->url('home/cart/default', ['controller' => 'index', 'action' => 'order']);?>">Оформить</a>
+    </p>
 
 <? } else { ?>
 Пока в Вашей корзине пусто

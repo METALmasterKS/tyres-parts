@@ -31,7 +31,7 @@ class StorageCartFactory implements FactoryInterface
         $session = $this->serviceLocator->get('commonData');
         if ($session->__isset(CartSession::SESSION_KEY)) {
             $cart = $session->__get(CartSession::SESSION_KEY);
-            $cart->setSesion($session);
+            $cart->setSession($session);
             return $cart;
         }
         return false;
@@ -42,7 +42,7 @@ class StorageCartFactory implements FactoryInterface
         $cart = new CartSession();
         $cart->id = uniqid();
         $cart->date_created = $cart->date_modify = time();
-        $cart->setSesion($session);
+        $cart->setSession($session);
         $cart->save();
         return $cart;
     }

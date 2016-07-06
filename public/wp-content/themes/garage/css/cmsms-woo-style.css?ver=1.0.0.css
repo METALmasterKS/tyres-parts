@@ -1589,8 +1589,8 @@ ul.order_details.bacs_details > li strong {
 }
 .cmsms_dynamic_cart {
   margin-left: -3px;
-  width: 58px;
-  height: 58px;
+  width: 54px;
+  height: 50px;
   position: relative;
   z-index: 204;
   opacity: 0;
@@ -1718,7 +1718,7 @@ ul.order_details.bacs_details > li strong {
   width: 1em;
   height: 1em;
   display: inline-block;
-  padding-left: 15px;
+  padding-left: 10px;
   position: relative;
   vertical-align: top;
 }

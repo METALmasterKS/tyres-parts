@@ -1,59 +1,92 @@
-Корзина
-<? if (count($cart->getItems())) { ?>
-<table>
-    <thead>
-        <tr>
-            <th>Артикул</th><th></th><th>Наименование</th><th>Наличие</th><th>Цена</th><th width="120px">Кол-во</th><th>Сумма</th><th></th>
-        </tr>
-    </thead>    
-    <tbody>
-        <?php foreach ($cart->getItems() as $item) { 
-            $variant = $item->getVariant(); 
-            $href = $this->url('home/catalog/group/variant', [
-                'groupId' => $variant->getParentGroup()->id, 
-                'groupName' => $this->translit($variant->getParentGroup()->name),
-                'variantId' => $variant->id, 
-                'variantName' => $this->translit($variant->name)
-                ]);
-            ?> 
-        <tr id="cart-item-variant-id-<?=$item->variant_id;?>">
-            <td><?=$item->getVariant()->article;?></td>
-            <td>
-                <a href="<?=$href;?>">
-                    <img src="<?=$this->layout()->settings['img']['HOST'].$this->layout()->settings['img']['VARIANTS_SMALLIMAGES']?>/<?=$item->getVariant()->getProp('image');?>" width="60px"/>
-                </a>
-            </td>
-            <td>
-                <a href="<?=$href;?>">
-                    <?=$item->getVariant()->name;?>
-                </a>
-            </td>
-            <td><?=$item->getVariant()->statusId;?></td>
-            <td><?=$item->getVariant()->sourcePrice;?></td>
-            <td><input class="js-input-spin js-ajax-update-cartitem-count" type="text" value="<?=$item->count;?>" step="<?=$item->getVariant()->division;?>" variantid="<?=$item->variant_id;?>" cartitemid="<?=$item->id;?>" name="count[<?=$item->id;?>]"></td>
-            <td><?=$this->numberFormat($item->getSumm(), \NumberFormatter::DECIMAL);?></td>
-            <td>
-                <button title="Удалить" role="button" class="js-ajax-removefromcart btn btn-default btn-xs" variantid="<?=$item->variant_id;?>">
-                  <span aria-hidden="true" class="glyphicon glyphicon-remove"></span> Удалить
-                </button>
-                <button title="В закладки" role="button" class="js-ajax-addtowishlist btn btn-default btn-xs" variantid="<?=$item->variant_id;?>" count="<?=$item->count;?>">
-                  <span aria-hidden="true" class="glyphicon glyphicon-bookmark"></span> В закладки
-                </button>
-            </td>
-        </tr>
-        <? } ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="5" align="right">Итого</td>
-            <td align="center"><?=$cart->getTotalCount();?></td>
-            <td><span class="js-cart-total-summ-block"><?=$cart->getTotalSumm();?></span></td>
-        </tr>
-    </tfoot>
-</table>
-<div class="">
-    <a href="<?=$this->url('home/order/default', ['controller' => 'index', 'action'=>'compliment']);?>">Оформить заказ</a>
-</div>
+<? if (count($cart->getItems('tyres'))) { ?>
+<section class="content_wrap fullwidth cmsms_woo">
+    <!--_________________________ Start Content _________________________ -->
+    <div role="main" class="middle_content entry">
+        <style type="text/css"></style>
+        <div class="woocommerce">
+            <!--div class="woocommerce-message">message</div-->
+
+            <div style="margin-bottom: 20px;">
+                Корзина действительна до <?=date("d-m-Y h:i:s", $cart->date_created+24*60*60);?>
+            </div>
+            
+            <form method="post" action="<?=$this->url('home/cart/default', ['controller' => 'index', 'action' => 'updateitemcount']);?>">
+                <table cellspacing="0" class="shop_table shop_table_responsive cart">
+                    <thead>
+                        <tr>
+                            <th class="product-remove">&nbsp;</th>
+                            <th class="product-thumbnail">&nbsp;</th>
+                            <th class="product-name">Наименование</th>
+                            <th class="product-price">Цена</th>
+                            <th class="product-quantity">Кол-во</th>
+                            <th class="product-subtotal">Сумма</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <? foreach ($cart->getItems('tyres') as $item) { ?>
+                        <tr class="cart_item">
+                            <td class="product-remove">
+                                <a  title="Удалить" class="remove" href="<?=$this->url('home/cart/default', ['controller' => 'index', 'action' => 'removefromcart', 'id' => $item->id]);?>">×</a>					
+                            </td>
+                            <td class="product-thumbnail">
+                                <a href="<?=$item->url;?>">
+                                    <img width="90" height="90" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" src="<?=$item->image;?>">
+                                </a>
+                            </td>
+                            <td data-title="Product" class="product-name">
+                                <a href="<?=$item->url;?>"><?=$item->name;?></a>					
+                            </td>
+                            <? if ($item->isRelevant()) { ?>
+                            <td data-title="Price" class="product-price">
+                                <span class="amount"><?=$item->price;?></span>					
+                            </td>
+                            <td data-title="Quantity" class="product-quantity">
+                                <div class="quantity">
+                                    <input type="number" size="4" class="input-text qty text" title="Количество" value="<?=$item->count;?>" name="count[<?=$item->id;?>]" max="" min="1" step="1">
+                                </div>
+                            </td>
+                            <td data-title="Total" class="product-subtotal">
+                                <span class="amount"><?=$item->getSumm();?></span>					
+                            </td>
+                            <? } else { ?>
+                            <td colspan="3">
+                                Цена на товар могла измениться, обновите выбраную позицию,<br/>для этого перейдите к товару <a href="<?=$item->url;?>">по ссылке</a>
+                            </td>
+                            <? } ?>
+                        </tr>
+                        <? } ?>
+                        <tr>
+                            <td class="actions" colspan="6">
+                                <input type="submit" value="Пересчитать корзину" name="update_cart" class="button">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+
+            <div class="cart-collaterals">
+                <div class="cart_totals ">
+                    <table cellspacing="0" class="shop_table shop_table_responsive">
+                        <tbody>
+                            <tr class="order-total">
+                                <th>Итого</th>
+                                <td data-title="Total"><strong><span class="amount"><?=$cart->getTotalSumm();?></span></strong> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="wc-proceed-to-checkout">
+                        <a class="checkout-button button alt wc-forward" href="<?=$this->url('home/cart/default', ['controller' => 'index', 'action' => 'order']);?>">
+                            Оформить заказ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cl"></div>
+    </div>
+<!-- _________________________ Finish Content _________________________ -->
+
+</section>
 
 <? } else { ?>
 Пока в Вашей корзине пусто

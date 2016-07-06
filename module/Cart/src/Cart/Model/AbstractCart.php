@@ -10,6 +10,10 @@ abstract class AbstractCart implements CartInterface
     public $date_modify;
     public $items = array();
 
+    public function getItemById($id){
+        return (isset($this->items[$id]) ? $this->items[$id] : null);
+    }
+
     public function getItemByObjectId($type, $objectId)
     {
         foreach ($this->getItems($type) as $id => $item)
@@ -22,11 +26,19 @@ abstract class AbstractCart implements CartInterface
         $item = $this->getItemByObjectId($addingItem->object_type, $addingItem->object_id);
         if ($item != null) {
             $item->count = ($item->count + $addingItem->count);
+            $item->price = $addingItem->price;
+            $item->date_added = time();
         } else {
-            $this->items[] = $addingItem;
+            $this->items[$addingItem->id] = $addingItem;
         }
     }
     
+    public function deleteItemById($id){
+        if (isset($this->items[$id])) 
+            unset($this->items[$id]);
+            
+        return $this;
+    }
         
     public function deleteItem($type, $objectId)
     {

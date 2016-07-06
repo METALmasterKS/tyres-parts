@@ -178,6 +178,10 @@ class User implements InputFilterAwareInterface
                 $inputFilter->get('password-old')->setRequired(true);
                 $inputFilter->get('email')->setRequired(false);
                 $inputFilter->get('phone')->setRequired(false);
+            } elseif ($action == 'send-order') {
+                $inputFilter->get('password')->setRequired(false);
+                $inputFilter->get('password-confirm')->setRequired(false);
+                $inputFilter->get('password-old')->setRequired(false);
             }
             
                         
