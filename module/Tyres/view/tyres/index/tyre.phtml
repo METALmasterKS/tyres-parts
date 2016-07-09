@@ -80,7 +80,12 @@
                                         </td>
                                         <td class="cmsms_table_cell_alignleft"><?=$price->quantity?></td>
                                         <td class="cmsms_table_cell_alignleft">
-                                            <p class="price"><span class="amount"><?=$price->price?> RUB</span></p>
+                                            <p class="price">
+                                                <? if ($price->sale) { ?>
+                                                <span class="onsale" style="display: block;position: relative; right: auto; top:auto;">Sale!</span>
+                                                <? } ?>
+                                                <span class="amount"><?=$price->price?> RUB</span>
+                                            </p>
                                             <meta itemprop="price" content="<?=$price->price?>" />
                                             <meta itemprop="priceCurrency" content="RUB" />
                                             <link itemprop="availability" href="http://schema.org/InStock" />

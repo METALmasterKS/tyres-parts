@@ -16,6 +16,9 @@ class Model implements InputFilterAwareInterface
     public $season;
     public $images;
     
+    private $minPrice;
+    private $sale;
+
     private $brand;
     private $tyres;
     
@@ -36,12 +39,24 @@ class Model implements InputFilterAwareInterface
         $this->brandId  = (isset($data['brandId']))  ? $data['brandId'] : null;
         $this->season  = (isset($data['season']))  ? $data['season'] : null;
         $this->images  = (isset($data['images']))  ? $data['images'] : null;
+        
+        $this->minPrice = (isset($data['minPrice']))  ? $data['minPrice'] : null;
+        $this->sale = (isset($data['sale']))  ? $data['sale'] : null;
+        
     }
     
     public function getArrayCopy() {
         return get_object_vars($this);
     }
     
+    public function getMinPrice() {
+        return $this->minPrice;
+    }
+    
+    public function isSale() {
+        return ($this->sale == 1);
+    }
+
     public function getImages() {
         if (empty($this->images))
             return array();

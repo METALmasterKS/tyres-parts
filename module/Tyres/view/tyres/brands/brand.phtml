@@ -1,28 +1,57 @@
 <? $this->layout()->title = 'Модели шин '.$brand->name; ?>
 <? $IMG = $this->layout()->settings['images']; ?>
-<div class="cmsms_row cmsms_color_scheme_default" id="cmsms_row_56c81bb8b9a85">
-    <div class="cmsms_row_outer_parent">
-        <div class="cmsms_row_outer">
-            <div class="cmsms_row_inner">
-                <? foreach ($tyreModels as $tyreModel) { ?>
-                    <div style="width: 10%; float:left;">
-                        <a href="<?= $this->url('home/tyres/tyre', ['brandName' => $brand->name, 'modelName' => $tyreModel->name]); ?>">
-                            <? $images = $tyreModel->getImages(); $firstImage = array_shift($images); ?>
-                        <? if ($firstImage != null) { ?>
-                            <img width="120" height="120" 
-                                 src="<?=implode('', [$IMG['host'],$IMG['tyres'],$IMG['models'],$firstImage])?>" 
-                                 class="attachment-shop_single size-shop_single wp-post-image" 
-                                 alt="<?=$firstImage;?>" title="" 
-                                 sizes="(max-width: 500px) 100vw, 500px" />
-                        <? } else { ?>
-                            нет фото
-                        <? } ?>
-                        <?= $tyreModel->name; ?>
-                        </a>
-                    </div>
+
+<section class="content_wrap fullwidth cmsms_woo">
+
+<!--_________________________ Start Content _________________________ -->
+<div role="main" class="middle_content entry">
+	<ul class="products cmsms_products">
+        <? foreach ($tyreModels as $tyreModel) { 
+            $url = $this->url('home/tyres/tyre', ['brandName' => $brand->name, 'modelName' => $tyreModel->name]);?>
+        <li class="post-1919 product type-product status-publish has-post-thumbnail product_cat-brake-parts sale shipping-taxable purchasable product-type-simple product-cat-brake-parts instock">
+            <div class="product_outer">
+                <? if ($tyreModel->isSale()) { ?>
+                <span class="onsale">Sale!</span>
                 <? } ?>
-                <div style="clear: both;"></div>
-            </div>
-        </div>
-    </div>
+                <article class="product_inner">
+                    <? $images = $tyreModel->getImages(); $firstImage = array_shift($images); ?>
+                    <figure class="cmsms_product_img preloader">
+                        <a href="<?= $url ?>">
+                            <img width="250" height="250" sizes="(max-width: 250px) 100vw, 250px" 
+                                class="attachment-shop_catalog size-shop_catalog wp-post-image" 
+                                src="<?=($firstImage != null) ? implode('', [$IMG['host'],$IMG['tyres'],$IMG['models'],$firstImage]) : 'holder.js/300x300/#fff:#aaa/text:Нет фото';?>">				
+                        </a>
+                    </figure>
+                    <div class="cmsms_product_cont">
+                        <footer class="cmsms_product_footer entry-meta">
+                            <div class="cmsms_product_footer_inner">
+                            <a href="<?= $url ?>" class="cmsms_details_button cmsms_theme_icon_details">
+                                <span style="width: 130px;">Выбрать размер</span>
+                            </a>					
+                            </div>
+                        </footer>
+                        <div class="cmsms_product_info">
+                            
+                        </div>
+                        <div class="cl"></div>
+                        <header class="cmsms_product_header entry-header">
+                            <h6 class="cmsms_product_title entry-title">
+                                <a href="<?= $url ?>">
+                                    <?= $tyreModel->name; ?>
+                                </a>
+                            </h6>
+                        </header>
+
+                        <span class="price">
+                            <ins><span class="amount">от <?=$tyreModel->getMinPrice();?> RUB</span></ins>
+                        </span>
+                        			
+                    </div>
+                </article>
+			</div>
+        </li>
+        <? } ?>
+    </ul>
 </div>
+<!-- _________________________ Finish Content _________________________ -->
+</section>

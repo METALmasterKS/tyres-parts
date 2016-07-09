@@ -13,6 +13,7 @@ class ModelTable extends TableGateway
     public function __construct(TableGateway $tableGateway)
     {
         $this->tableGateway = $tableGateway;
+        $this->table = $this->tableGateway->getTable();
     }
  
     public function fetchAll()
@@ -53,6 +54,21 @@ class ModelTable extends TableGateway
         //getByIds
         if (isset($params['ids']))
             $select->where->in('id', $params['ids']);
+        
+        if (isset($params['minPrices'])){
+            $selectPrices = new \Zend\Db\Sql\Select();
+            $selectPrices->from(['t' => 'tyres'])
+                ->columns(['modelId'])
+                ->join(array('p' => 'tyres_prices'), "p.tyreId = t.id", [
+                    'minPrice' => new \Zend\Db\Sql\Expression('MIN(p.price)'),
+                    'sale' => new \Zend\Db\Sql\Expression('MAX(p.sale)'),
+                ], 'LEFT')
+                ->where('p.price > 0')
+                ->group('t.modelId');
+                
+            $select->join(array('pr' => $selectPrices), "pr.modelId = {$this->table}.id", array('minPrice', 'sale'), 'LEFT');
+        }
+        
         
         //порядок
         if (isset($params['order']))

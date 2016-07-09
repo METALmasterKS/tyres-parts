@@ -54,7 +54,7 @@ class BrandsController extends AbstractActionController {
         $this->NavigationTree($brand);
         
         $modelTable = $this->getServiceLocator()->get('TyresModelModelTable');
-        $tyreModels = $modelTable->getModels(['brandId' => $brand->id]);
+        $tyreModels = $modelTable->getModels([ 'brandId' => $brand->id, 'minPrices' => true, ]);
         
         $view->setVariables(array(
                 'brand' => $brand,
