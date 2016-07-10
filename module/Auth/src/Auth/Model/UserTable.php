@@ -38,6 +38,9 @@ class UserTable {
         //phone
         if (isset($params['phone']))
             $select->where->like('users.phone', $params['phone']);
+        //discount
+        if (isset($params['discount']))
+            $select->where->equalTo('users.discount', $params['discount']);
         //code 1c
         if (isset($params['code_1c']))
             $select->where->like('users.code_1c', $params['code_1c']);

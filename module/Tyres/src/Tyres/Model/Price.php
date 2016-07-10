@@ -13,11 +13,14 @@ class Price
     public $price;
     public $sale;
     
+    private $discount;
     private $provider;
     private $cityName;
-    
-    public function __construct() {
-        
+
+    const MARKUP = 20;
+
+    public function __construct($discount) {
+        $this->discount = $discount;
     }
     
     public function exchangeArray($data)
@@ -37,8 +40,22 @@ class Price
         return get_object_vars($this);
     }
     
+    public function setDiscount($discount){
+        $this->discount = $discount;
+        return $this;
+    }
+    
+    public function getDiscount(){
+        return $this->discount;
+    }
+    
+    public function getPrice() {
+        return round(($this->price * (100 + self::MARKUP - $this->discount) / 100)) ;
+    }
+
     public function setProvider(\Tyres\Model\Provider $provider) {
         $this->provider = $provider;
+        return $this;
     }
 
     public function getProvider() {

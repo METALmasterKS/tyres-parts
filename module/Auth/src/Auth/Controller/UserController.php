@@ -173,7 +173,13 @@ class UserController extends AbstractActionController
     {
         $authService = $this->getServiceLocator()->get('UserAuthService');
         $authService->clearIdentity();
-        return $this->redirect()->toRoute('auth/user/login');
+        
+        $referer = $this->referer();
+        if ($referer->getRouteName() != null) 
+            return $this->redirect()->toRoute($referer->getRouteName(), $referer->getParams());
+        else
+            return $this->redirect()->toRoute('auth/user/login');
+        
     }
 
 }

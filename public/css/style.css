@@ -50,3 +50,35 @@
     margin-bottom:0px; 
     border-bottom-color:#bbbbbb; border-bottom-color:rgba(187, 187, 187, 0.3);
 }
+
+.input-group-addon {
+    background-color: #eeeeee;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    padding: 6px 12px;
+    text-align: center;
+    display: inline-block;
+    margin: 6px 2px;
+}
+.input-group-addon, .input-group-btn {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.red-button:hover{
+    background-color: rgba(219, 76, 89, 1);
+    color: rgba(255, 253, 251, 1);
+}
+
+.red-price {
+    font-family: "Montserrat Alternates",Arial,Helvetica,"Nimbus Sans L",sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 24px;
+    text-decoration: none;
+    text-transform: none;
+}

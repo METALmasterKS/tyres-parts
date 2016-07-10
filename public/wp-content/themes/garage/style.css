@@ -566,7 +566,8 @@ textarea:focus {
 }
 .cmsms_table tr td,
 .cmsms_table tr th {
-  padding: 15px 10px 15px 30px;
+  /*padding: 15px 10px 15px 30px;*/
+  padding: 4px 6px 4px 8px;
   border-top-width: 1px;
   border-top-style: solid;
   text-align: left;

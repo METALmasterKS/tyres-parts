@@ -171,6 +171,7 @@ class User implements InputFilterAwareInterface
             if ($action == 'registration') {
                 $inputFilter->get('phone')->setRequired(false);
             } elseif ($action == 'edit-user') {
+                $inputFilter->get('email')->setRequired(false);
                 $inputFilter->get('password')->setRequired(false);
                 $inputFilter->get('password-confirm')->setRequired(false);
                 $inputFilter->get('phone')->setRequired(false);

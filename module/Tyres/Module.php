@@ -99,13 +99,23 @@ class Module {
                     return new PriceTable($sm->get('PriceTableGateway'));
                 },
                 'PriceTableGateway' => function ($sm) {
+                    $discount = $this->getUserDiscount($sm->get('UserAuthService'));
                     return new TableGateway('tyres_prices', $sm->get('Zend\Db\Adapter\Adapter'), 
                         null,
-                        new ResultSet(null, new Price())
+                        new ResultSet(null, new Price($discount))
                     );
                 },
             ),
         );
+    }
+    
+    private function getUserDiscount($authService){
+        if ($authService->hasIdentity()) {
+            $user = $authService->getIdentity();
+            return $user->discount;
+        } else {
+            return 0;
+        } 
     }
 
 }

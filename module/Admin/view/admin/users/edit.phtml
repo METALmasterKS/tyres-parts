@@ -1,0 +1,40 @@
+<div class="page-header">
+  <h1>Редактирование Пользователя</h1>
+</div>
+<?php
+$form->prepare();
+$formLabel = $this->plugin('formLabel');
+// Render the opening tag
+echo $this->form()->openTag($form);
+?>
+<?php $elem = $form->get('email');?>
+<div class="row">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <?php 
+        echo $this->formInput($elem);
+        echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('phone');?>
+<div class="row">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <?php
+        echo $this->formInput($elem);
+        echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+<?php $elem = $form->get('discount');?>
+<div class="row">
+    <label class='col-xs-2 control-label'><?=$elem->getOption('label'); ?></label>
+    <div class='col-xs-4'>
+        <?php
+        echo $this->formInput($elem);
+        echo $this->formElementErrors($elem); ?>
+    </div>
+</div>
+
+<?php echo $this->formElement($form->get('saveUser')) ?>
+
+<?php echo $this->form()->closeTag() ?>

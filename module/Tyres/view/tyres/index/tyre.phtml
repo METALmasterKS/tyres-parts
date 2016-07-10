@@ -84,9 +84,9 @@
                                                 <? if ($price->sale) { ?>
                                                 <span class="onsale" style="display: block;position: relative; right: auto; top:auto;">Sale!</span>
                                                 <? } ?>
-                                                <span class="amount"><?=$price->price?> RUB</span>
+                                                <span class="amount"><?=$price->getPrice()?> RUB</span>
                                             </p>
-                                            <meta itemprop="price" content="<?=$price->price?>" />
+                                            <meta itemprop="price" content="<?=$price->getPrice()?>" />
                                             <meta itemprop="priceCurrency" content="RUB" />
                                             <link itemprop="availability" href="http://schema.org/InStock" />
                                         </td>
@@ -95,13 +95,7 @@
                                             <div class="quantity">
                                                 <input type="number" step="1" min="1" max="<?=$price->quantity?>" name="count" value="1" title="Количество" class="input-text qty text" size="4">
                                             </div>
-                                            <button count="1" objecttype="tyres" objectid="<?=$price->id;?>" class="btn btn-default js-ajax-addtocart">В корзину</button>
-                                            
-                                            <!--form class="cart" method="post">
-                                                <div class="quantity"><input type="number" step="1" min="1"  name="quantity" value="1" title="Qty" class="input-text qty text" size="4" /></div>
-                                                <input type="hidden" name="add-to-cart" value="<?=$price->id;?>" />
-                                                <button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
-                                            </form-->
+                                            <button count="1" objecttype="tyres" objectid="<?=$price->id;?>" class="btn btn-default js-ajax-addtocart cmsms_theme_icon_basket red-button"></button>
                                         </td>
                                     </tr>
                                     <? } ?>

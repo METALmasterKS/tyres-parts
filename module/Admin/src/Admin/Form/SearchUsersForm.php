@@ -16,6 +16,7 @@ class SearchUsersForm extends Form{
         $this->add(array('name' => 'username',          'type' => 'text',   'attributes' => array('placeholder' => 'Логин', 'class' => 'form-control'), ));
         $this->add(array('name' => 'email',             'type' => 'text',   'attributes' => array('placeholder' => 'Email', 'class' => 'form-control'), ));
         $this->add(array('name' => 'phone',             'type' => 'text',   'attributes' => array('placeholder' => 'Телефон', 'class' => 'form-control'), ));
+        $this->add(array('name' => 'discount',          'type' => 'text',   'attributes' => array('placeholder' => 'Скидка', 'class' => 'form-control'), ));
         $this->add(array('name' => 'code_1c',           'type' => 'text',   'attributes' => array('placeholder' => 'Код 1с', 'class' => 'form-control'), ));
         $this->add(array('name' => 'date_register_start',   'type' => 'text',   'attributes' => array('placeholder' => 'Дата регистрации', 'class' => 'form-control'), ));
         $this->add(array('name' => 'date_register_end',     'type' => 'text',   'attributes' => array('placeholder' => 'Дата регистрации', 'class' => 'form-control'), ));

@@ -72,7 +72,7 @@ class IndexController extends AbstractActionController
             $firstImage = current($images);
             $image = ($firstImage != null) ? implode('', [$IMG['host'], $IMG['tyres'], $IMG['models'], $firstImage]) : '';
             
-            $addItem = $cart->createItem('tyres', $tyrePrice->id, $count, $tyrePrice->price, $name, $url, $image);
+            $addItem = $cart->createItem('tyres', $tyrePrice->id, $count, $tyrePrice->getPrice(), $name, $url, $image);
             $cart->addItem($addItem);
         }
         

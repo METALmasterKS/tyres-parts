@@ -39,4 +39,43 @@ class UsersController extends AbstractActionController
             )
         );
     }
+    
+    public function editAction() {
+        $usersTable = $this->getServiceLocator()->get('AuthModelUserTable');
+
+        $form = new \Auth\Form\User();
+        
+        $userId = $this->params()->fromRoute('id');
+        $user = $usersTable->getUser($userId);
+        $form->setData($user->getArrayCopy());
+        
+        if ($this->params()->fromPost('saveUser') != null) {
+            $form->setInputFilter($user->getInputFilter('edit-user'));
+            $post = array_merge_recursive(
+                $this->getRequest()->getPost()->toArray(),
+                ['id' => $userId]    
+            );
+            $form->setData($post);
+            
+            if ($form->isValid()) {
+                //$user->exchangeArray($form->getData());
+                $user->discount = $form->get('discount')->getValue();
+                
+                $usersTable->saveUser($user);
+                
+                $this->FlashMessenger()->addSuccessMessage('Данные пользователя сохранены.');
+                
+                $referer = $this->referer();
+                if ($referer->getRouteName() != null) 
+                    return $this->redirect()->toRoute($referer->getRouteName(), $referer->getParams());
+                else
+                    return $this->redirect()->toRoute('admin/default', array('controller' => 'users', 'action' => 'index'));
+            }
+        }
+        
+        return new ViewModel(array(
+            'form' => $form,
+            )
+        );
+    }
 }

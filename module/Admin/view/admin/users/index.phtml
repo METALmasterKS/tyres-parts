@@ -22,6 +22,11 @@ echo $this->form()->openTag($form);
             echo $this->formInput($elem);
             echo $this->formElementErrors($elem); ?>
     </div>
+    <div class='col-xs-2'>
+        <?php $elem = $form->get('discount');
+            echo $this->formInput($elem);
+            echo $this->formElementErrors($elem); ?>
+    </div>
 </div>
 
 <div class="row js-datetimepicker-start-end">
@@ -84,6 +89,7 @@ echo $this->form()->openTag($form);
             <th>id</th>
             <th>Email</th>
             <th>Телефон</th>
+            <th>Скидка, %</th>
             <th>Регистрация</th>
             <th>IP Регистрации</th>
             <th>Последний вход</th>
@@ -97,11 +103,15 @@ echo $this->form()->openTag($form);
             <td><?=$user->id;?></td>
             <td><?=$user->email;?></td>
             <td><?=$user->phone;?></td>
+            <td><?=$user->discount;?></td>
             <td><?=$this->dateFormat($user->date_register, IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM, "ru_RU");?></td>
             <td><?=$user->ip_register;?></td>
             <td><?=$this->dateFormat($user->date_last_login, IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM, "ru_RU");?></td>
             <td><?=$user->ip_last_login;?></td>
             <td>
+                <a href="<?=$this->url('admin/default', array('controller'=>'users', 'action'=>'edit', 'id'=>$user->id));?>" class="btn btn-default btn-xs" role="button" title="Редактировать">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+                </a>
                 <a href="#" class="btn btn-default btn-xs" role="button" title="Заказы">
                   <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
                 </a>

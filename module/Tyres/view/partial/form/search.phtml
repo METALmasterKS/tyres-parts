@@ -25,24 +25,19 @@ echo $this->form()->openTag($form);
     <? $element = $form->get('width'); ?>
     <div class="field-name one_sixth">
         <?=$element->getLabel()?>:&nbsp;
-    </div>
-    <div class="field">
+    </div><div class="field">
         <?=$this->formElement($element)?>
         <?=$this->formElementErrors($element) ?>
-    </div>
-    <? $element = $form->get('height'); ?>
-    <div class="field-name">
-        <?=$element->getLabel()?>&nbsp;
-    </div>
-    <div class="field">
+    </div><div class="field-name">
+        <? $element = $form->get('height'); ?>
+        <?=$element->getLabel()?>
+    </div><div class="field">
         <?=$this->formElement($element)?>
         <?=$this->formElementErrors($element) ?>
-    </div>
-    <? $element = $form->get('diameter'); ?>
-    <div class="field-name">
-        <?=$element->getLabel()?>&nbsp;
-    </div>
-    <div class="field">
+    </div><div class="field-name">
+        <? $element = $form->get('diameter'); ?>
+        <?=$element->getLabel()?>
+    </div><div class="field">
         <?=$this->formElement($element)?>
         <?=$this->formElementErrors($element) ?>
     </div>

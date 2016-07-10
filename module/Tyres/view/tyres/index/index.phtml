@@ -115,9 +115,18 @@
                                         </td>
                                         <td class="cmsms_table_cell_alignleft"><?=sprintf("%s %s", $tyre->load, $tyre->speed)?></td>
                                         <td class="cmsms_table_cell_alignleft"><?=$price->quantity?></td>
-                                        <td class="cmsms_table_cell_alignleft"><?=$price->price?></td>
-                                        <td class="cmsms_table_cell_alignleft"><?=$price->getProvider()->name;?></td>
-                                        <td>В корзину</td>
+                                        <td class="cmsms_table_cell_alignleft">
+                                            <p class="price red-price">
+                                                <span class="amount"><?=$price->getPrice();?> RUB</span>
+                                            </p>
+                                        </td>
+                                        <td class="cmsms_table_cell_alignleft"><?=$price->getProvider()->name;?> - <?=$price->getCityName();?></td>
+                                        <td>
+                                            <div class="quantity">
+                                                <input type="number" step="1" min="1" max="<?=$price->quantity?>" name="count" value="1" title="Количество" class="input-text qty text" size="4">
+                                            </div>
+                                            <button count="1" objecttype="tyres" objectid="<?=$price->id;?>" class="btn btn-default js-ajax-addtocart cmsms_theme_icon_basket red-button"></button>
+                                        </td>
                                     </tr>
                                     <? $i++; } ?>
                                     <? } ?>
@@ -131,7 +140,7 @@
                             </table>
                             <? } ?>
                         <? } elseif (isset($isFoundTyres) && $isFoundTyres == false) { ?>
-                            Шин по заданным параметрам не найдено
+                        <p style="font-size: 18px;">Шин по заданным параметрам не найдено, измените запрос поиска</p>
                         <? } ?>
                     </div>
                 </div>

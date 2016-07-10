@@ -58,7 +58,7 @@ class Search extends Form
             'name' => 'height', 
             'type' => 'select', 
             'options' => [
-                'label' => '/',
+                'label' => '<span class="input-group-addon">/</span>',
                 'empty_option' => '',
                 ], 
             'attributes' => array(
@@ -71,7 +71,7 @@ class Search extends Form
             'name' => 'diameter', 
             'type' => 'select', 
             'options' => [
-                'label' => 'R',
+                'label' => '<span class="input-group-addon">R</span>',
                 'empty_option' => '',
                 ], 
             'attributes' => array(
