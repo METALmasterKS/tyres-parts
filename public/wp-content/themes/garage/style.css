@@ -2278,7 +2278,7 @@ nav div:hover + div {
 }
 #navigation > li > a {
   display: table-cell;
-  padding: 14px 16px;
+  padding: 14px 12px;
   vertical-align: middle;
   border-right-width: 1px;
   border-right-style: solid;
