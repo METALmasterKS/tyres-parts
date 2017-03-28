@@ -78,6 +78,9 @@ class ImportController extends AbstractActionController {
                     case '4точки':
                         $this->Tochki($files, $provider);
                         break;
+                    case 'ЕвроПрайс':
+                        $this->TyresPerfomance($files, $provider);
+                        break;
                 }
             }
         }
@@ -604,8 +607,73 @@ class ImportController extends AbstractActionController {
         }
         
     }
+    
+    private function TyresPerfomance($filenames, $provider){
+        $files = $this->GetImportFiles('tyres-csv', $filenames);
 
-        private function getTyresBrands(){
+        // узнаем размер
+        $pattern = "/^([0-9]{3})\/([0-9]{2})(R[0-9]{2}C?)\s+(([0-9]{2,3})(\/[0-9]{2,3})?)([PQRSTUHVWYZ]?)$/";
+        
+        $tyresData = array();
+        foreach ($files as $file) {
+            echo $file->getFilename()."\n";
+            $csv = new \SplFileObject($file->getRealPath());
+            $csv->setFlags(\SplFileObject::READ_CSV);
+            $csv->setCsvControl(";");
+            foreach ($csv as $i => $row) {
+                $size = trim($row[0]);
+                if (implode('', $row) == null)
+                    continue;
+                if (preg_match($pattern, $size, $matches)) {
+                    $data = [];
+                    $model = trim($row[1]);
+                    $data['name'] = trim(preg_replace("/ {2,}/u", ' ', sprintf("%s %s %s %s", trim($row[0]), trim($row[2]), trim($row[1]), trim($row[3]) )));
+                    $data['XL'] = 0;
+                    $data['RFT'] = 0;
+                    $data['width']        = $matches[1];
+                    $data['height']       = $matches[2];
+                    $data['diameter']     = $matches[3];
+                    $data['load']         = $matches[4];
+                    $data['speed']        = $matches[7];
+                    
+                    $data['quantity']     = trim($row[7]);
+                    $data['price']        = trim($row[9])*62; //курс евро
+                    $data['spikes'] = 0;
+                    $data['providerId'] = $provider->id;
+                    $data['cityId'] = 1; //Cанкт Петербург
+
+                    //находим екстра лоад 
+                    $xlPtrn = "/(XL)/iu";
+                    if (preg_match($xlPtrn, $model)) {
+                        $data['XL'] = 1;
+                        $model = trim(preg_replace($xlPtrn, '', $model));
+                    }
+                    //находим ранфлет
+                    if (preg_match($this->getRunFlatPattern(), $model)) {
+                        $data['RFT'] = 1;
+                        $model = trim(preg_replace($this->getRunFlatPattern('array'), '', $model));
+                    }
+                    
+                    $brandName = $row[2];
+                    $data['brandId'] = 0;
+                    foreach ($this->getBrandsPatterns() as $brandId => $ptrn){
+                        if (preg_match($ptrn, $brandName)) {
+                            $data['brandId'] = $brandId;
+                            break;
+                        }
+                    }
+
+                    $data['model'] = $model;
+                    
+                    $tyresData[] = $data;
+                }
+            }
+        }
+        
+        $this->saveToTmpImport($tyresData);
+    }
+
+    private function getTyresBrands(){
         if (!isset($this->tyresBrands)){
             $this->tyresBrands = $this->getServiceLocator()->get('TyresModelBrandTable')->getBrands();
         }

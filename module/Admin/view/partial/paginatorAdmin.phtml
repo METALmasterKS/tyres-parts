@@ -4,14 +4,14 @@ if ($this->pageCount): ?>
     <div>
         <div class="pagination">
                 <span>
-                    <a href="<?=$this->url($this->route, array_merge($params, array('page' => $this->first)), $this->options) ?>">
+                    <a href="<?=$this->url($this->route, array('page' => $this->first), $this->options, true) ?>">
                         first
                     </a>
                 </span>
             <!-- Previous page link -->
             <?php if (isset($this->previous)): ?>
                 <span>
-                    <a href="<?=$this->url($this->route, array_merge($params, array('page' => $this->previous)), $this->options) ?>">
+                    <a href="<?=$this->url($this->route, array('page' => $this->previous), $this->options, true) ?>">
                         <<
                     </a>
                 </span>
@@ -25,7 +25,7 @@ if ($this->pageCount): ?>
             <?php foreach ($this->pagesInRange as $page): ?>
                 <?php if ($page != $this->current): ?>
                     <span>
-                        <a href="<?=$this->url($this->route, array_merge($params, array('page' => $page)), $this->options) ?>
+                        <a href="<?=$this->url($this->route, array('page' => $page), $this->options, true) ?>
                            ">
                             <?php echo $page; ?>
                         </a>
@@ -40,7 +40,7 @@ if ($this->pageCount): ?>
             <!-- Next page link -->
             <?php if (isset($this->next)): ?>
                 <span>
-                    <a href="<?=$this->url($this->route, array_merge($params, array('page' => $this->next)), $this->options) ?>">
+                    <a href="<?=$this->url($this->route, array('page' => $this->next), $this->options, true) ?>">
                         >>
                     </a>
                 </span>
@@ -50,7 +50,7 @@ if ($this->pageCount): ?>
                 </span>
             <?php endif; ?>
                 <span>
-                    <a href="<?=$this->url($this->route, array_merge($params, array('page' => $this->last)), $this->options) ?>">
+                    <a href="<?=$this->url($this->route, array('page' => $this->last), $this->options, true) ?>">
                         last
                     </a>
                 </span>

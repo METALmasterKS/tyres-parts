@@ -7,6 +7,10 @@ return array(
                 'path' => 'data/import/tyres/',
                 'mask' => "*.xl*",
             ],
+            'tyres-csv' => [
+                'path' => 'data/import/tyres/',
+                'mask' => "*.csv",
+            ],
         ],
     ),
     'console' => array(
