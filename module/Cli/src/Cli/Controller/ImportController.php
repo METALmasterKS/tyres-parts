@@ -44,7 +44,7 @@ class ImportController extends AbstractActionController {
     }
 
     public function TyresAction(){
-        set_time_limit(60);
+        set_time_limit(2*60);
         ini_set('memory_limit', '768M');
         
         $this->CliTaskManager()->saveTaskStatus('Import/Tyres', \Cli\Controller\Plugin\CliTaskManager::PROCESS);
@@ -123,7 +123,7 @@ class ImportController extends AbstractActionController {
                 $data['spikes'] = 0;
                 $data['providerId'] = $provider->id;
                 $data['cityId'] = 1; //Cанкт Петербург
-                $data['brandId'] = '';
+                $data['brandId'] = 0;
                 
                 //поэтапно вырезаем из наименования части, чтоб получить модель 
                 //находим и вырезаем бренд
@@ -220,7 +220,7 @@ class ImportController extends AbstractActionController {
                 
                 $brand = trim($row[7]);
                 $model = $matches[1];
-                $data['brandId'] = '';
+                $data['brandId'] = 0;
                 foreach ($this->getBrandsPatterns() as $brandId => $ptrn){
                     if (preg_match($ptrn, $brand)) {
                         $data['brandId'] = $brandId;
@@ -413,7 +413,7 @@ class ImportController extends AbstractActionController {
                     $data['load'] = $matches[6];
                     $data['speed'] = $matches[9];
                     
-                    $data['brandId'] = '';
+                    $data['brandId'] = 0;
                     foreach ($this->getBrandsPatterns() as $brandId => $ptrn){
                         if (preg_match($ptrn, $name)) {
                             $data['brandId'] = $brandId;
@@ -477,7 +477,7 @@ class ImportController extends AbstractActionController {
 
                 $data['model'] = $model = trim($row[10]);
                 $brandName = trim($row[9]) == 'Срш' ? $model : trim($row[9]);
-                $data['brandId'] = '';
+                $data['brandId'] = 0;
                 foreach ($this->getBrandsPatterns() as $brandId => $ptrn){
                     if (preg_match($ptrn, $brandName)) {
                         $data['brandId'] = $brandId;
@@ -557,7 +557,7 @@ class ImportController extends AbstractActionController {
                         continue;
                     $data['name'] = sprintf("%s %s %s/%s %s %s", trim($row[1]), trim($row[2]), trim($row[3]), trim($row[4]), trim($row[5]), trim($row[6]) );
                     $data['model'] = trim($row[2]);
-                    $data['quantity'] = trim($row[19]);
+                    $data['quantity'] = intval(trim($row[19]));
                     $data['price'] = trim($row[21]);
                     $data['providerId'] = $provider->id;
                     $data['cityId'] = $CityId;
@@ -570,7 +570,7 @@ class ImportController extends AbstractActionController {
                     $data['sale'] = 0;
                     
                     $brand = trim($row[1]);
-                    $data['brandId'] = '';
+                    $data['brandId'] = 0;
                     foreach ($this->getBrandsPatterns() as $brandId => $ptrn){
                         if (preg_match($ptrn, $brand)) {
                             $data['brandId'] = $brandId;
@@ -632,7 +632,7 @@ class ImportController extends AbstractActionController {
                     $data['RFT'] = 0;
                     $data['width']        = $matches[1];
                     $data['height']       = $matches[2];
-                    $data['diameter']     = $matches[3];
+                    $data['diameter']     = ltrim($matches[3], 'Rr');
                     $data['load']         = $matches[4];
                     $data['speed']        = $matches[7];
                     
