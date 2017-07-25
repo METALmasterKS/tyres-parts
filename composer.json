@@ -13,8 +13,8 @@
         "verot/class.upload.php": "dev-master",
         "phpoffice/phpexcel" : "1.8",
         
-        "zendframework/zend-developer-tools": "dev-master",
-        "bjyoungblood/bjy-profiler": "dev-master",
-        "san/san-session-toolbar":"0.*"
+        "zendframework/zend-developer-tools": "1.0.0",
+        "bjyoungblood/bjy-profiler": "1.1.0",
+        "san/san-session-toolbar":"1.0.3"
     }
 }

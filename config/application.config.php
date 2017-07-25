@@ -20,7 +20,7 @@ return array(
         
         'ZendDeveloperTools',
         'BjyProfiler',
-        'SanSessionToolbar',
+        //'SanSessionToolbar',
     ),
 
     // These are various options for the listeners attached to the ModuleManager
